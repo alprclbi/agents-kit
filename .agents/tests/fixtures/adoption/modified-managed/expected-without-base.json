@@ -1,0 +1,7 @@
+{
+  "path": "AGENTS.md",
+  "classification": "base-bytes-unavailable",
+  "currentPreserved": true,
+  "automaticMerge": false,
+  "fallback": "current-new-two-way-diff"
+}

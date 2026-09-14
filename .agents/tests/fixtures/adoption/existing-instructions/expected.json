@@ -1,0 +1,6 @@
+{
+  "recommendation": "merge-required",
+  "overwrite": false,
+  "requiresApproval": true,
+  "conflicts": ["AGENTS.md", "CLAUDE.md"]
+}

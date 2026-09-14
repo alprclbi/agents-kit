@@ -1,0 +1,27 @@
+{
+  "name": "agents-kit",
+  "version": "1.0.0",
+  "description": "Kodlama ajanlari icin tasinabilir kural seti ve is takip sistemi",
+  "author": {
+    "name": "alprclbi",
+    "url": "https://github.com/alprclbi"
+  },
+  "homepage": "https://github.com/alprclbi/agents-kit",
+  "repository": "https://github.com/alprclbi/agents-kit",
+  "license": "MIT",
+  "keywords": [
+    "agents",
+    "rules",
+    "work-tracking",
+    "hooks"
+  ],
+  "skills": "./skills/",
+  "hooks": "./hooks/hooks.json",
+  "interface": {
+    "displayName": "Agents Kit",
+    "shortDescription": "Tasinabilir ajan kurallari ve is takibi",
+    "developerName": "alprclbi",
+    "category": "Productivity",
+    "websiteURL": "https://github.com/alprclbi/agents-kit"
+  }
+}

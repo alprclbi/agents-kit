@@ -1,0 +1,3 @@
+# Agents Kit global veya kullanıcı Codex ayarlarını sessizce değiştirmez.
+# project_doc_max_bytes burada bilinçli olarak ayarlanmaz; kit-doctor etkin değeri
+# belirleyemezse 32768 byte referans eşiğini ve belirsizliği birlikte raporlar.

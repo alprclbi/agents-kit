@@ -1,0 +1,8 @@
+{
+  "id": "123",
+  "title": "Sentetik takım işi A",
+  "status": "in_progress",
+  "profile": "team",
+  "artifacts": { "status": ".agents/changes/active/123/status.md" },
+  "ownership": { "paths": ["src/shared/**"], "resources": ["test-db"], "ports": [], "migrations": ["100-110"] }
+}

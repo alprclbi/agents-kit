@@ -1,0 +1,10 @@
+{
+  "kitVersion": "1.9.0",
+  "files": [
+    {
+      "path": "AGENTS.md",
+      "ownership": "kit-managed",
+      "sha256": "bd920c17b8b97813c0ce006a59100f1c566de4cb6de69b8679d5c16808aef299"
+    }
+  ]
+}

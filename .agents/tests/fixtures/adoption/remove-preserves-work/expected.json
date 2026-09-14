@@ -1,0 +1,8 @@
+{
+  "deleteCandidates": ["AGENTS.md"],
+  "preserved": [
+    ".agents/project.md",
+    ".agents/changes/active/123/status.md"
+  ],
+  "requiresApproval": true
+}

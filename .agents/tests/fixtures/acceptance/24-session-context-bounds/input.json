@@ -1,0 +1,7 @@
+{
+  "id": "24",
+  "name": "session-context-bounds",
+  "profile": "auto",
+  "fixtureData": "synthetic",
+  "containsSecrets": false
+}

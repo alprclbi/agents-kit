@@ -1,0 +1,4 @@
+{
+  "tool_name": "Write",
+  "tool_input": { "path": "src/new.txt", "content": "synthetic" }
+}

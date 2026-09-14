@@ -1,0 +1,33 @@
+# Opt-in örnektir; doğrudan `.github/workflows` altına kopyalanmaz.
+# `{{PINNED_SHA}}`, resmi actions/checkout sürümünün doğrulanmış tam commit SHA'sı ile çözülmelidir.
+# Çözülmemiş token, mevcut workflow diff'i ve açık kullanıcı onayı olmadan etkinleştirme.
+name: Agents Kit validation
+
+on:
+  pull_request:
+    paths:
+      - "AGENTS.md"
+      - "CLAUDE.md"
+      - ".agents/**"
+      - ".codex/**"
+      - ".claude/**"
+
+permissions:
+  contents: read
+
+jobs:
+  unix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@{{PINNED_SHA}}
+      - name: Validate on POSIX shell
+        shell: sh
+        run: sh .agents/tests/run.sh
+
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@{{PINNED_SHA}}
+      - name: Validate on Windows PowerShell
+        shell: powershell
+        run: .agents/tests/run.ps1

@@ -1,0 +1,7 @@
+{
+  "id": "13",
+  "name": "external-spec-backend",
+  "profile": "auto",
+  "fixtureData": "synthetic",
+  "containsSecrets": false
+}

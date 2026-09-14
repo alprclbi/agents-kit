@@ -1,0 +1,9 @@
+native	spec	.agents/changes/active/123-auth/spec.md
+native	plan	.agents/changes/active/123-auth/plan.md
+native	tasks	.agents/changes/active/123-auth/plan.md
+spec-kit	spec	specs/123-auth/spec.md
+spec-kit	plan	specs/123-auth/plan.md
+spec-kit	tasks	specs/123-auth/tasks.md
+openspec	spec	openspec/changes/123-auth/proposal.md
+openspec	plan	openspec/changes/123-auth/design.md
+openspec	tasks	openspec/changes/123-auth/tasks.md

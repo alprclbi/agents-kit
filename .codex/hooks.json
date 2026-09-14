@@ -1,0 +1,47 @@
+{
+  "description": "Agents Kit v2 oturum, mutasyon ve kapanış korumaları.",
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|resume|clear|compact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "root=\"$(git rev-parse --show-toplevel 2>/dev/null || true)\"; if [ -z \"$root\" ] || [ ! -f \"$root/.agents/config.json\" ]; then root=\"$(pwd -P)\"; while [ \"$root\" != / ] && { [ ! -f \"$root/AGENTS.md\" ] || [ ! -f \"$root/.agents/config.json\" ]; }; do root=\"$(dirname \"$root\")\"; done; fi; [ -f \"$root/.agents/validators/sh/agent-kit.sh\" ] || exit 3; /bin/sh \"$root/.agents/validators/sh/agent-kit.sh\" session-context --root \"$root\" --client codex --source hook --format text",
+            "commandWindows": "powershell.exe -NoProfile -ExecutionPolicy Bypass -Command \"$root = $null; $git = Get-Command git -ErrorAction SilentlyContinue; if ($git) { $candidate = (& $git.Source rev-parse --show-toplevel 2>$null); if ($LASTEXITCODE -eq 0) { $root = [string]$candidate } }; if ([string]::IsNullOrWhiteSpace($root) -or -not (Test-Path -LiteralPath (Join-Path $root '.agents\\config.json') -PathType Leaf)) { $root = (Get-Location).Path; while ($true) { if ((Test-Path -LiteralPath (Join-Path $root 'AGENTS.md') -PathType Leaf) -and (Test-Path -LiteralPath (Join-Path $root '.agents\\config.json') -PathType Leaf)) { break }; $parent = Split-Path -Parent $root; if ([string]::IsNullOrEmpty($parent) -or $parent -eq $root) { throw 'AKE900 project root not found' }; $root = $parent } }; & (Join-Path $root '.agents\\validators\\ps\\agent-kit.ps1') session-context -Root $root -Client codex -Source hook -Format text\"",
+            "timeout": 15,
+            "statusMessage": "Agents Kit oturum bağlamını yüklüyor",
+            "additionalContextLimit": 5000
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash|apply_patch|Edit|Write|mcp__.*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "root=\"$(git rev-parse --show-toplevel 2>/dev/null || true)\"; if [ -z \"$root\" ] || [ ! -f \"$root/.agents/config.json\" ]; then root=\"$(pwd -P)\"; while [ \"$root\" != / ] && { [ ! -f \"$root/AGENTS.md\" ] || [ ! -f \"$root/.agents/config.json\" ]; }; do root=\"$(dirname \"$root\")\"; done; fi; [ -f \"$root/.agents/validators/sh/agent-kit.sh\" ] || exit 3; /bin/sh \"$root/.agents/validators/sh/agent-kit.sh\" pre-tool-use --root \"$root\" --client codex --format json",
+            "commandWindows": "powershell.exe -NoProfile -ExecutionPolicy Bypass -Command \"$root = $null; $git = Get-Command git -ErrorAction SilentlyContinue; if ($git) { $candidate = (& $git.Source rev-parse --show-toplevel 2>$null); if ($LASTEXITCODE -eq 0) { $root = [string]$candidate } }; if ([string]::IsNullOrWhiteSpace($root) -or -not (Test-Path -LiteralPath (Join-Path $root '.agents\\config.json') -PathType Leaf)) { $root = (Get-Location).Path; while ($true) { if ((Test-Path -LiteralPath (Join-Path $root 'AGENTS.md') -PathType Leaf) -and (Test-Path -LiteralPath (Join-Path $root '.agents\\config.json') -PathType Leaf)) { break }; $parent = Split-Path -Parent $root; if ([string]::IsNullOrEmpty($parent) -or $parent -eq $root) { throw 'AKE900 project root not found' }; $root = $parent } }; & (Join-Path $root '.agents\\validators\\ps\\agent-kit.ps1') pre-tool-use -Root $root -Client codex -Format json\"",
+            "timeout": 15,
+            "statusMessage": "Agents Kit mutasyon kapısını denetliyor"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "root=\"$(git rev-parse --show-toplevel 2>/dev/null || true)\"; if [ -z \"$root\" ] || [ ! -f \"$root/.agents/config.json\" ]; then root=\"$(pwd -P)\"; while [ \"$root\" != / ] && { [ ! -f \"$root/AGENTS.md\" ] || [ ! -f \"$root/.agents/config.json\" ]; }; do root=\"$(dirname \"$root\")\"; done; fi; [ -f \"$root/.agents/validators/sh/agent-kit.sh\" ] || exit 3; /bin/sh \"$root/.agents/validators/sh/agent-kit.sh\" stop-check --root \"$root\" --client codex --format json",
+            "commandWindows": "powershell.exe -NoProfile -ExecutionPolicy Bypass -Command \"$root = $null; $git = Get-Command git -ErrorAction SilentlyContinue; if ($git) { $candidate = (& $git.Source rev-parse --show-toplevel 2>$null); if ($LASTEXITCODE -eq 0) { $root = [string]$candidate } }; if ([string]::IsNullOrWhiteSpace($root) -or -not (Test-Path -LiteralPath (Join-Path $root '.agents\\config.json') -PathType Leaf)) { $root = (Get-Location).Path; while ($true) { if ((Test-Path -LiteralPath (Join-Path $root 'AGENTS.md') -PathType Leaf) -and (Test-Path -LiteralPath (Join-Path $root '.agents\\config.json') -PathType Leaf)) { break }; $parent = Split-Path -Parent $root; if ([string]::IsNullOrEmpty($parent) -or $parent -eq $root) { throw 'AKE900 project root not found' }; $root = $parent } }; & (Join-Path $root '.agents\\validators\\ps\\agent-kit.ps1') stop-check -Root $root -Client codex -Format json\"",
+            "timeout": 15,
+            "statusMessage": "Agents Kit kapanış tutarlılığını denetliyor"
+          }
+        ]
+      }
+    ]
+  }
+}

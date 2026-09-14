@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agent-kit.local/schemas/manifest.schema.json",
+  "title": "Agents Kit Manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "schemaVersion", "kitVersion", "generatedAt", "compatibility", "files"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "schemaVersion": { "const": "2.0.0" },
+    "kitVersion": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+    "generatedAt": { "type": "string", "format": "date" },
+    "compatibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["codex", "claudeCode"],
+      "properties": {
+        "codex": { "type": "string", "minLength": 1 },
+        "claudeCode": { "type": "string", "minLength": 1 }
+      }
+    },
+    "files": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/manifestEntry" }
+    }
+  },
+  "$defs": {
+    "manifestEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "ownership", "sha256", "hashPolicy"],
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^(?!/)(?![A-Za-z]:[\\\\/])(?!.*(?:^|/)\\.\\.(?:/|$)).+$"
+        },
+        "ownership": { "enum": ["kit-managed", "project-owned", "user-local", "work-generated", "template", "adapter"] },
+        "sha256": {
+          "anyOf": [
+            { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+            { "type": "null" }
+          ]
+        },
+        "hashPolicy": { "enum": ["required", "self-excluded", "not-applicable"] }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "hashPolicy": { "const": "required" } } },
+          "then": { "properties": { "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" } } }
+        },
+        {
+          "if": { "properties": { "hashPolicy": { "enum": ["self-excluded", "not-applicable"] } } },
+          "then": { "properties": { "sha256": { "type": "null" } } }
+        }
+      ]
+    }
+  }
+}

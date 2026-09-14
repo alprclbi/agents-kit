@@ -1,0 +1,7 @@
+{
+  "id": "15",
+  "name": "remove-preserves-work",
+  "profile": "team",
+  "fixtureData": "synthetic",
+  "containsSecrets": false
+}

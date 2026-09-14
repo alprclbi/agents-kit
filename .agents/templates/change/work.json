@@ -1,0 +1,44 @@
+{
+  "$schema": "../../../schemas/work.schema.json",
+  "schemaVersion": "2.0.0",
+  "id": "{{WORK_ID}}",
+  "title": "{{WORK_TITLE}}",
+  "status": "draft",
+  "profile": "{{PROFILE}}",
+  "profileReason": "{{PROFILE_REASON}}",
+  "backend": {
+    "type": "{{BACKEND_TYPE}}",
+    "source": "{{BACKEND_SOURCE}}",
+    "root": "{{BACKEND_ROOT}}"
+  },
+  "artifacts": {
+    "spec": null,
+    "plan": null,
+    "tasks": null,
+    "status": "{{STATUS_PATH}}",
+    "outcome": "{{OUTCOME_PATH}}",
+    "decisions": null,
+    "research": null,
+    "testPlan": null,
+    "evidence": null
+  },
+  "ownership": {
+    "paths": [],
+    "resources": [],
+    "ports": [],
+    "migrations": []
+  },
+  "links": {
+    "issue": null,
+    "pullRequest": null,
+    "externalSpec": null
+  },
+  "git": {
+    "branch": null,
+    "worktree": null,
+    "head": null
+  },
+  "documentationImpact": "possible",
+  "createdAt": "{{CREATED_AT}}",
+  "updatedAt": "{{UPDATED_AT}}"
+}

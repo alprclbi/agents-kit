@@ -1,0 +1,7 @@
+{
+  "id": "08",
+  "name": "claude-plan-runtime",
+  "profile": "solo",
+  "fixtureData": "synthetic",
+  "containsSecrets": false
+}

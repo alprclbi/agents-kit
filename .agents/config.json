@@ -1,0 +1,26 @@
+{
+  "$schema": "./schemas/config.schema.json",
+  "schemaVersion": "2.0.0",
+  "kitVersion": "1.0.0",
+  "language": "tr",
+  "profile": "solo",
+  "artifactBackend": "auto",
+  "instructionBudgets": {
+    "agentsTargetBytes": 12288,
+    "agentsMaxBytes": 16384,
+    "agentsTargetLines": 150,
+    "agentsMaxLines": 200,
+    "sessionContextMaxChars": 8000,
+    "codexDefaultProjectDocMaxBytes": 32768
+  },
+  "workTracking": {
+    "readOnly": "optional",
+    "mutation": "adaptive"
+  },
+  "archiveStrategy": "adaptive",
+  "adapters": {
+    "codex": true,
+    "claude": true,
+    "superpowers": true
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agent-kit.local/schemas/config.schema.json",
+  "title": "Agents Kit Configuration",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "kitVersion",
+    "language",
+    "profile",
+    "artifactBackend",
+    "instructionBudgets",
+    "workTracking",
+    "archiveStrategy",
+    "adapters"
+  ],
+  "properties": {
+    "$schema": { "type": "string" },
+    "schemaVersion": { "const": "2.0.0" },
+    "kitVersion": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+    "language": { "type": "string", "minLength": 2 },
+    "profile": { "enum": ["solo", "team"] },
+    "artifactBackend": { "enum": ["auto", "native", "spec-kit", "openspec", "external"] },
+    "instructionBudgets": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "agentsTargetBytes",
+        "agentsMaxBytes",
+        "agentsTargetLines",
+        "agentsMaxLines",
+        "sessionContextMaxChars",
+        "codexDefaultProjectDocMaxBytes"
+      ],
+      "properties": {
+        "agentsTargetBytes": { "type": "integer", "minimum": 1 },
+        "agentsMaxBytes": { "type": "integer", "minimum": 1 },
+        "agentsTargetLines": { "type": "integer", "minimum": 1 },
+        "agentsMaxLines": { "type": "integer", "minimum": 1 },
+        "sessionContextMaxChars": { "type": "integer", "minimum": 1 },
+        "codexDefaultProjectDocMaxBytes": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "workTracking": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["readOnly", "mutation"],
+      "properties": {
+        "readOnly": { "enum": ["optional", "required"] },
+        "mutation": { "enum": ["optional", "adaptive", "required"] }
+      }
+    },
+    "archiveStrategy": { "enum": ["adaptive", "compact", "full"] },
+    "adapters": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["codex", "claude", "superpowers"],
+      "properties": {
+        "codex": { "type": "boolean" },
+        "claude": { "type": "boolean" },
+        "superpowers": { "type": "boolean" }
+      }
+    }
+  }
+}

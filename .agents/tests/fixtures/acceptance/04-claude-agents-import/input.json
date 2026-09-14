@@ -1,0 +1,7 @@
+{
+  "id": "04",
+  "name": "claude-agents-import",
+  "profile": "solo",
+  "fixtureData": "synthetic",
+  "containsSecrets": false
+}

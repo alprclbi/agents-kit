@@ -1,0 +1,7 @@
+{
+  "kitVersion": "2.0.0",
+  "files": [
+    { "path": "AGENTS.md", "ownership": "kit-managed", "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" },
+    { "path": "CLAUDE.md", "ownership": "adapter", "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb" }
+  ]
+}

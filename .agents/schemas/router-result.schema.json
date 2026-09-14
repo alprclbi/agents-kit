@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agent-kit.local/schemas/router-result.schema.json",
+  "title": "Artifact Router Result",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["workId", "backend", "role", "path", "source", "authorityRequired"],
+  "properties": {
+    "workId": { "type": "string", "minLength": 1 },
+    "backend": { "enum": ["native", "spec-kit", "openspec", "external"] },
+    "role": { "enum": ["spec", "plan", "tasks", "status", "outcome", "decisions", "research", "test-plan", "evidence"] },
+    "path": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?!/)(?![A-Za-z]:[\\\\/])(?!.*(?:^|/)\\.\\.(?:/|$)).+$"
+    },
+    "source": { "enum": ["user", "config", "work", "detected", "fallback"] },
+    "authorityRequired": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "enum": ["commit", "push", "pull-request", "issue", "branch", "worktree", "install", "authenticate", "external-write"] }
+    }
+  }
+}

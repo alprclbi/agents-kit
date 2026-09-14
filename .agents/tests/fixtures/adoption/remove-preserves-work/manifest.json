@@ -1,0 +1,23 @@
+{
+  "kitVersion": "2.0.0",
+  "files": [
+    {
+      "path": "AGENTS.md",
+      "ownership": "kit-managed",
+      "sha256": "8deb8a033db364939fc3960d8a4af4a9c8312ca19364b7575116fb49a97c0d8f",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/project.md",
+      "ownership": "project-owned",
+      "sha256": null,
+      "hashPolicy": "not-applicable"
+    },
+    {
+      "path": ".agents/changes/active/123/status.md",
+      "ownership": "work-generated",
+      "sha256": null,
+      "hashPolicy": "not-applicable"
+    }
+  ]
+}

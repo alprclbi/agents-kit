@@ -1,0 +1,7 @@
+{
+  "id": "07",
+  "name": "superpowers-leak-path",
+  "profile": "team",
+  "fixtureData": "synthetic",
+  "containsSecrets": false
+}

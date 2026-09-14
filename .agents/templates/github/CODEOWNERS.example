@@ -1,0 +1,9 @@
+# ÖRNEK: Doğrudan CODEOWNERS olarak etkin değildir.
+# `{{OWNER}}` değerini doğrulanmış GitHub kullanıcı veya takım adıyla değiştir.
+# Açık yetki olmadan uygulanmaz; mevcut sahiplik dosyasının üzerine yazılmaz.
+# Çözülmemiş token bulunan satırları gerçek `.github/CODEOWNERS` dosyasına kopyalama.
+
+# / {{OWNER}}
+# /.agents/ {{OWNER}}
+# /AGENTS.md {{OWNER}}
+# /CLAUDE.md {{OWNER}}

@@ -1,0 +1,42 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|resume|clear|compact",
+        "hooks": [
+          {
+            "type": "command",
+            "shell": "bash",
+            "command": "/bin/sh \"${CLAUDE_PLUGIN_ROOT}/.agents/validators/sh/agent-kit.sh\" session-context --root \"${CLAUDE_PROJECT_DIR}\" --client claude --source hook --format text --plugin-version \"$(tr -d ' \\r\\n' < \"${CLAUDE_PLUGIN_ROOT}/.agents/VERSION\")\"",
+            "timeout": 15
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash|PowerShell|Write|Edit|MultiEdit|NotebookEdit|mcp__.*",
+        "hooks": [
+          {
+            "type": "command",
+            "shell": "bash",
+            "command": "/bin/sh \"${CLAUDE_PLUGIN_ROOT}/.agents/validators/sh/agent-kit.sh\" pre-tool-use --root \"${CLAUDE_PROJECT_DIR}\" --client claude --format json",
+            "timeout": 15
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "shell": "bash",
+            "command": "/bin/sh \"${CLAUDE_PLUGIN_ROOT}/.agents/validators/sh/agent-kit.sh\" stop-check --root \"${CLAUDE_PROJECT_DIR}\" --client claude --format json",
+            "timeout": 15
+          }
+        ]
+      }
+    ]
+  }
+}

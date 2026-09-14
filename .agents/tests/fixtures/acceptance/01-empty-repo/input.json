@@ -1,0 +1,7 @@
+{
+  "id": "01",
+  "name": "empty-repo-copy",
+  "profile": "solo",
+  "fixtureData": "synthetic",
+  "containsSecrets": false
+}

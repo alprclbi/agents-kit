@@ -1,0 +1,7 @@
+{
+  "id": "12",
+  "name": "adaptive-archive",
+  "profile": "auto",
+  "fixtureData": "synthetic",
+  "containsSecrets": false
+}

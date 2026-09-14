@@ -1,0 +1,1 @@
+Türkçe UTF-8 yol ve içerik doğrulama fixture'ı: ğüşiöç İĞÜŞÖÇ.

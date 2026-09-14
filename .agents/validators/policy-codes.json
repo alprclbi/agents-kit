@@ -1,0 +1,19 @@
+{
+  "AKW101": "AGENTS.md hedef bütçeyi aşıyor",
+  "AKE102": "AGENTS.md kit üst sınırını aşıyor",
+  "AKW110": "Codex etkin talimat limiti belirlenemedi",
+  "AKW111": "Codex talimat zinciri referans limitini aşıyor",
+  "AKE112": "Codex talimat zinciri etkin limiti aşıyor",
+  "AKE120": "Claude import zinciri döngülü veya dört hop sınırını aşıyor",
+  "AKE201": "Birden fazla aktif iş çözümlenemedi",
+  "AKE202": "Kaynak sahipliği çakışıyor",
+  "AKE203": "Profil için gerekli iş kaydı eksik",
+  "AKE301": "Artifact hedefi kayıtlı değil veya proje dışında",
+  "AKE302": "Bilinen kaçak Superpowers yolu",
+  "AKE303": "Backend explicit artifact hedefini desteklemiyor",
+  "AKW401": "Etkin istemci hook güveni veya kapsamı doğrulanamadı",
+  "AKS501": "İstemci veya platform canlı testi çalıştırılamadı",
+  "AKE601": "Manifest eksik veya güncel değil",
+  "AKE900": "Bilinmeyen komut veya seçenek",
+  "AKE901": "Gerekli yerel ayrıştırıcı bulunamadı"
+}

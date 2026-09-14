@@ -1,0 +1,7 @@
+/local/*
+!/local/README.md
+/runtime/*
+!/runtime/README.md
+/logs/
+/tests/results/*
+!/tests/results/.gitignore

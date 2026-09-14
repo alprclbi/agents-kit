@@ -1,0 +1,8 @@
+{
+  "id": "123",
+  "title": "Sentetik solo iş",
+  "status": "in_progress",
+  "profile": "solo",
+  "artifacts": { "spec": null, "plan": null, "tasks": null, "status": ".agents/changes/active/123/status.md" },
+  "ownership": { "paths": ["src/solo/**"], "resources": [], "ports": [], "migrations": [] }
+}

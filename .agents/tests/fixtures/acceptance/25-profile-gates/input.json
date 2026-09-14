@@ -1,0 +1,7 @@
+{
+  "id": "25",
+  "name": "profile-mutation-gates",
+  "profile": "auto",
+  "fixtureData": "synthetic",
+  "containsSecrets": false
+}

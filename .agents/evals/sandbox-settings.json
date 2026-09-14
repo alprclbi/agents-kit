@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(sh fixtures/slug/test.sh)",
+      "Bash(git:*)"
+    ],
+    "deny": []
+  }
+}

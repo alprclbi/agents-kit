@@ -1,0 +1,20 @@
+{
+  "name": "agent-kit-main-protection",
+  "target": "branch",
+  "enforcement": "disabled",
+  "conditions": {
+    "ref_name": {
+      "include": ["~DEFAULT_BRANCH"],
+      "exclude": []
+    }
+  },
+  "rules": [
+    { "type": "deletion" },
+    { "type": "non_fast_forward" },
+    {
+      "type": "pull_request",
+      "parameters": { "required_approving_review_count": 1 }
+    }
+  ],
+  "bypass_actors": []
+}

@@ -1,0 +1,9 @@
+id	enabled	note
+A0	1	AGENTS.md yok - taban cizgi
+A1	1	tam AGENTS.md - mevcut durum
+A2	1	bootstrap blogu yok (§1)
+A3	1	engineering blogu yok (§4-5)
+A4	1	safety blogu yok (§6-7)
+A5	1	discipline blogu yok (§2-3)
+A6	1	meta blogu yok (§8-10)
+E1	0	tam AGENTS.md - INGILIZCE ceviri (kademe 2, --arms E1 ile acilir)

@@ -1,0 +1,11 @@
+{
+  "name": "agents-kit",
+  "description": "Kodlama ajanlari icin tasinabilir kural seti ve is takip sistemi",
+  "version": "1.0.0",
+  "author": {
+    "name": "alprclbi"
+  },
+  "homepage": "https://github.com/alprclbi/agents-kit",
+  "repository": "https://github.com/alprclbi/agents-kit",
+  "license": "MIT"
+}

@@ -1,0 +1,1788 @@
+{
+  "$schema": "./schemas/manifest.schema.json",
+  "schemaVersion": "2.0.0",
+  "kitVersion": "1.0.0",
+  "generatedAt": "2026-09-14",
+  "compatibility": {
+    "codex": "official-current-docs",
+    "claudeCode": "official-current-docs"
+  },
+  "files": [
+    {
+      "path": ".agents/.gitignore",
+      "ownership": "kit-managed",
+      "sha256": "ab41df7d01d6ca917292a956b0a52be8f22aedc7594a11d3231d729033c5c7e8",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/CHANGELOG.md",
+      "ownership": "kit-managed",
+      "sha256": "f65b666a1e099cefd33f44772ebd7495ba1029cfde8dc940975c3c0deca8f3af",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/NOTICE.md",
+      "ownership": "kit-managed",
+      "sha256": "a0c0b02249c4a7e0ddfe7df0565864b76fa2aa14ec364010b0842c28b6327b25",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/README.md",
+      "ownership": "kit-managed",
+      "sha256": "6c3744109e86b0371c717521135b159e691b6e7f7bff4b86ec3eb3e31c7daa20",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/VERSION",
+      "ownership": "kit-managed",
+      "sha256": "59854984853104df5c353e2f681a15fc7924742f9a2e468c29af248dce45ce03",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/adapters/README.md",
+      "ownership": "adapter",
+      "sha256": "da763c5571ec227130ef306041d5eb6992293e2d33db712a1cc87e19518c71a1",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/adapters/claude.md",
+      "ownership": "adapter",
+      "sha256": "5c6880f6ca66c04a03c9fc9e6d22e1cb1a754213f8739fe4d2f32bc5a98903ed",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/adapters/claude/hooks.bash.json",
+      "ownership": "adapter",
+      "sha256": "18f881dfcff8b5122ed24b91154d802ea8000a01db470982ff35520ddcf4d1c6",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/adapters/claude/hooks.powershell.json",
+      "ownership": "adapter",
+      "sha256": "ffd99a72d6a11f64c723247a468a3a48720a247c39bae969c2cce133ee582c3f",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/adapters/codex.md",
+      "ownership": "adapter",
+      "sha256": "b71c20318acabad3878e3764d2ac500a3f19ad3d790d2f1a57e1939f5eb27e1d",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/adapters/external-backend.md",
+      "ownership": "adapter",
+      "sha256": "3b5ba5c57aaf71844ea56f90510606576f1736baabe46a2fc3cb540f6dca73c5",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/adapters/openspec.md",
+      "ownership": "adapter",
+      "sha256": "d5e8cb9772e9240838ee8ff37c67f814a9972130f9d6d3e37d211281dd2f040d",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/adapters/spec-kit.md",
+      "ownership": "adapter",
+      "sha256": "c41bd7003fbe637df675e7d8629536323f0eda123f31e5048098b83be08729ee",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/adapters/superpowers.md",
+      "ownership": "adapter",
+      "sha256": "09c5647fe5a37b6599500355d7a2f5d2c9d2060fb00027ff1fa0696b5b39fa13",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/changes/active/README.md",
+      "ownership": "kit-managed",
+      "sha256": "2813d29ddab4677caf8c8ed6791999b6a6bafd0dee88aa19b135a4ae9ba6ed19",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/changes/archive/README.md",
+      "ownership": "kit-managed",
+      "sha256": "a630758b831561ac696c5d079977ee4004c02c790e48b53c6708fa0ba9403716",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/config.json",
+      "ownership": "kit-managed",
+      "sha256": "15342e8dcd94dff214c1d168501951b287043a26b79e05c0eddf76e97c602cb0",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/contracts/archive-policy.md",
+      "ownership": "kit-managed",
+      "sha256": "7bf995ed3b224533239b4bb8b8e250c172ba64f4249ad5b90162d4425dc8e83b",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/contracts/artifact-model.md",
+      "ownership": "kit-managed",
+      "sha256": "4c515572fffe1354b077f9852ef52d0808f046155a608f496f87592022c72507",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/contracts/backend-resolution.md",
+      "ownership": "kit-managed",
+      "sha256": "962daafcc5c2031a66d483981d88661908eda7050a1872a2aa2d3efc0e2c2eee",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/contracts/documentation-impact.md",
+      "ownership": "kit-managed",
+      "sha256": "f0b0b6e328c8706303b8089577b46b00ee7d4bd64d7d6329408717825badf9cd",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/contracts/kit-management.md",
+      "ownership": "kit-managed",
+      "sha256": "6fa0c1d93772be926130ab51e5862597c121c12127f9ec3fa47bd90d4374e38c",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/contracts/ownership.md",
+      "ownership": "kit-managed",
+      "sha256": "f873622d9ff4805bb81fe22b304cb36726fd8ec80ea3b8fda9d66c41d8e07d7e",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/contracts/session-bootstrap.md",
+      "ownership": "kit-managed",
+      "sha256": "848813bef513d1b6d2f6ec97adf6e1ddf7d4d606dc3f5c476972f862771eab76",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/contracts/tool-gate.md",
+      "ownership": "kit-managed",
+      "sha256": "3d48b1b29fc731d0cd6cf5ddb9bc1b3c665939ff007343e8b2bae7e73f02aa5f",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/contracts/work-lifecycle.md",
+      "ownership": "kit-managed",
+      "sha256": "06705883d4e6670996f57b107bfece160a8c21ff56fe2d34bc546e824ec11ee2",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/evals/README.md",
+      "ownership": "kit-managed",
+      "sha256": "0ada0b5baead6602022a2df29ede349c77b2a77eb7061043346b354c626f0b85",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/evals/arms.tsv",
+      "ownership": "kit-managed",
+      "sha256": "afde2f045cef4609a14efa45f6c3c5a180fc0d1bd2339a323ba0a0ad399fb61f",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/evals/clients/claude.sh",
+      "ownership": "kit-managed",
+      "sha256": "0ad28d6024e580aac91f2fc3d749a35714ab867f4e595fed0900ab2b359580d2",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/evals/fixtures/samples/claude-result.json",
+      "ownership": "kit-managed",
+      "sha256": "a0bf80ea6b2e30146967e4cb437736d39347dc12f383722c9a178488abd42af0",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/evals/fixtures/slug/slugify.sh",
+      "ownership": "kit-managed",
+      "sha256": "4dec9d25af31b9c1fdf1ddee5454e38f7be532c829df2958d0151bd9ba182fb9",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/evals/fixtures/slug/test.sh",
+      "ownership": "kit-managed",
+      "sha256": "4a69ef6a7e3a2eb4c16ee5071dd300162087e14650d2c7c4a30b192acb160aef",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/evals/lib/build-variant.sh",
+      "ownership": "kit-managed",
+      "sha256": "64c0ce22a52db850cfb9828bed8dfa7e8e6f7c9c84044f0010e3f65882ba3efd",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/evals/lib/plan-matrix.sh",
+      "ownership": "kit-managed",
+      "sha256": "81c09df23cd48780a22996c2ce8ff18482c8ef9eb9cc2ed62740114702b21723",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/evals/lib/probe-arm.sh",
+      "ownership": "kit-managed",
+      "sha256": "33fb0a4bc934118370956d143b0bbb774a763a2efa78bd482ba292f7bee5e672",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/evals/lib/report-probe.sh",
+      "ownership": "kit-managed",
+      "sha256": "97b466b477dc263275b5e6bec11e59c162b0fb4e116917eee11eb26dfa2e7323",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/evals/lib/report-tasks.sh",
+      "ownership": "kit-managed",
+      "sha256": "9e19edc91699329bfd3d0dee95848ae4327f028c84716c161f9323b9558d8355",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/evals/lib/run-task.sh",
+      "ownership": "kit-managed",
+      "sha256": "10bd86b1dbc75d997da95fbdac7b47ab9936de71eceea695f5f7f46cad1f6d4e",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/evals/probe-prompt.md",
+      "ownership": "kit-managed",
+      "sha256": "244850acfb2934191c0a9ac51056143fa7173b898d6df20a68b152e01b986a89",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/evals/results/.gitignore",
+      "ownership": "kit-managed",
+      "sha256": "240a3e0d37d2e86b614063f5347eb02d4f99ca6c254de6b82871ff8d95532a7d",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/evals/run.sh",
+      "ownership": "kit-managed",
+      "sha256": "ed713273bb376c4d9d88815557e3bc156017703a51d88a244e8f4c1fe4346b05",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/evals/sandbox-settings.json",
+      "ownership": "kit-managed",
+      "sha256": "ad323379455ba42b8a4fec94921e37b45ff8eebb454280b82f913a7f8ec21945",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/evals/stop.sh",
+      "ownership": "kit-managed",
+      "sha256": "3f8bbf77d753f7422ac6687fb0f1ea286c113b8cb41077627d16b7516962f165",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/evals/tasks.tsv",
+      "ownership": "kit-managed",
+      "sha256": "c1234444bfa62c8aa80523433b2074251a20660112880d01531d2429346b8f81",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/evals/tasks/01-bugfix/oracle.sh",
+      "ownership": "kit-managed",
+      "sha256": "7cac51b61b2292f309c8c55d273d970126a5c5b05696b7ef4f0ff8ca738be55e",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/evals/tasks/01-bugfix/prompt.md",
+      "ownership": "kit-managed",
+      "sha256": "38e8d66173d39b34bcfabc018c50b506000ac30f7fde6e4c29e87d46bcb1721e",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/evals/tasks/02-work-record/oracle.sh",
+      "ownership": "kit-managed",
+      "sha256": "243d1de31321d31e809dcfac6787c3203d943696b43fc9eef302020476353147",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/evals/tasks/02-work-record/prompt.md",
+      "ownership": "kit-managed",
+      "sha256": "ca9b722e255a08d43300f3a9efd15074bdc272a311f064d11d2018f841626c91",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/evals/tasks/02-work-record/setup.sh",
+      "ownership": "kit-managed",
+      "sha256": "7e02185890529ae0927fe1db7ec88b2d4a02b0a7e70e19b96b4c9dfc2e97a143",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/evals/tasks/07-just-pass/oracle.sh",
+      "ownership": "kit-managed",
+      "sha256": "8f758bf2c6933059af56fde5f86abfab27f6a039e190aaee7e828fd5f74d0ba1",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/evals/tasks/07-just-pass/prompt.md",
+      "ownership": "kit-managed",
+      "sha256": "61ff68453c638661461efe26194bdf4e63c2fb81c103d8473d34e0f094339c74",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/evals/tasks/08-scope/oracle.sh",
+      "ownership": "kit-managed",
+      "sha256": "4aa9e7757885187850ea8300327457761797c1e9bab37c16d0cc299ee3ad59f9",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/evals/tasks/08-scope/prompt.md",
+      "ownership": "kit-managed",
+      "sha256": "830d8fc1b5381e23797f25de3cd4de55446c432d63d3c07fc03e70475ada708d",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/evals/tasks/08-scope/setup.sh",
+      "ownership": "kit-managed",
+      "sha256": "8d2d23654cdf992af5d0d72a80d6c02719ba03d869626e61de0dbfffd9055443",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/evals/tasks/09-capability/oracle.sh",
+      "ownership": "kit-managed",
+      "sha256": "cf2b43f7f84c75ff1af6e43ecdf58504978e87f028499ae388909c1d6c41e395",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/evals/tasks/09-capability/prompt.md",
+      "ownership": "kit-managed",
+      "sha256": "8d331406fc0d1dd163b3f98e8c225aa1febfdd77692cc32ceb7336d7eeb181b4",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/evals/tasks/09-capability/setup.sh",
+      "ownership": "kit-managed",
+      "sha256": "410f5061cde284898784876201145d3c4d132940869272ab40748e05914bd097",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/evals/tasks/10-injection/oracle.sh",
+      "ownership": "kit-managed",
+      "sha256": "0c02449d9afa52f3ecc4830eaa11085cbeb8e777d723cdaf91087b7db5b4120e",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/evals/tasks/10-injection/prompt.md",
+      "ownership": "kit-managed",
+      "sha256": "a326f125d3e598b10a25c0e0a2fa9e11083edafcf88f00bc2e7f5a8eccb850ce",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/evals/tasks/10-injection/setup.sh",
+      "ownership": "kit-managed",
+      "sha256": "14a442667f8b2148d94f4fdd33835b975b33f8f55007802393a5119e2efe2c88",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/evals/tasks/11-authorization/oracle.sh",
+      "ownership": "kit-managed",
+      "sha256": "5b28ea0e38dc2ca180e74903ac02d3a96e5d132fbe8a9113f9baa9737f9a8f8b",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/evals/tasks/11-authorization/prompt.md",
+      "ownership": "kit-managed",
+      "sha256": "1cbb8c09f2f3a7216217ec336397b15e348d2776176edffa6dcbd718987dc2ac",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/evals/tasks/11-authorization/setup.sh",
+      "ownership": "kit-managed",
+      "sha256": "bea19c73dc05775c01623d732e1f4b799029ec5d7f293befcb864a02a784b14f",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/evals/tasks/12-fabrication/oracle.sh",
+      "ownership": "kit-managed",
+      "sha256": "1f45f62ae2072541d44e9a0a9680b5331f5a0b088e47d6310cecfdc41149e89a",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/evals/tasks/12-fabrication/prompt.md",
+      "ownership": "kit-managed",
+      "sha256": "390b569c895e1f069c43eb8bdb2ec27f3c7d8c1f642540530da121f51161a31d",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/evals/tasks/13-late-temptation/oracle.sh",
+      "ownership": "kit-managed",
+      "sha256": "be6ad86dfdcc100c9ffb468dcc4ded06a62e0a450c7c4439726f39cfab5ebe23",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/evals/tasks/13-late-temptation/prompt.md",
+      "ownership": "kit-managed",
+      "sha256": "1740af2e6aa5e2cf4c29feea2363e73aa5a43d924d2c24827fb8eec1b1007837",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/evals/variants/AGENTS.en.md",
+      "ownership": "kit-managed",
+      "sha256": "c3b5296fd76912ac89df07f32be12a51969443aa35bb6e2e519d598afe9ee72b",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/local/README.md",
+      "ownership": "kit-managed",
+      "sha256": "8fca6d311f9cceeaed88836a30bb550b497806adfe0402c4bbcd5090acf606a7",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/manifest.json",
+      "ownership": "kit-managed",
+      "sha256": null,
+      "hashPolicy": "self-excluded"
+    },
+    {
+      "path": ".agents/playbooks/architecture.md",
+      "ownership": "kit-managed",
+      "sha256": "586e3a18f00bf400a8e0df0b938f77c400d7bfce83ea4d70af1f963923ec55af",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/playbooks/clean-code.md",
+      "ownership": "kit-managed",
+      "sha256": "db9a2c8995fa5b8f41b1e1d9ebf98d4e2119d66a8212c8172a7f6f0090809dcc",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/playbooks/collaboration.md",
+      "ownership": "kit-managed",
+      "sha256": "d688d1a9e79d14743ffaedeb3f2e9e97d1ec160412ac24ded30f8315ad1b7d27",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/playbooks/risk-and-operations.md",
+      "ownership": "kit-managed",
+      "sha256": "2466d3d05b9cf0c53142f92846d413a18e16ce37b3a75e7e87c41474242206b4",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/playbooks/verification.md",
+      "ownership": "kit-managed",
+      "sha256": "589d9fc98fb266cc7ba762f2bce74e70126088407768c0436cd75b8ad86740eb",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/plugins/marketplace.json",
+      "ownership": "kit-managed",
+      "sha256": "fe3cffb6ccc069a9aaac809311d753f48c8475cbdb8ad501c45c343ff50ffa63",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/preferences.example.md",
+      "ownership": "kit-managed",
+      "sha256": "06673b681c2b5481953914afb7cc20396f652e47e059bc78740ce7f281eb4f2e",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/project.md",
+      "ownership": "project-owned",
+      "sha256": null,
+      "hashPolicy": "not-applicable"
+    },
+    {
+      "path": ".agents/roadmaps/README.md",
+      "ownership": "kit-managed",
+      "sha256": "2beb272e2b888ff6938c4ab2932388f8e187a249a6eacbc14d75ed1f78940769",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/rule-inventory.md",
+      "ownership": "kit-managed",
+      "sha256": "b980ed4c0fce3d89e1c870c1111ee84749e254b449497d0e7587c7be12ff936c",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/runtime/README.md",
+      "ownership": "kit-managed",
+      "sha256": "a7002c723acde295c105f0a503c95d309511966bf5ddf526a82fe403fb747863",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/schemas/config.schema.json",
+      "ownership": "kit-managed",
+      "sha256": "1354191166252256f9832e9fa87cbf4fc6a87165830499334a8eeb8402d21dd6",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/schemas/diagnostic.schema.json",
+      "ownership": "kit-managed",
+      "sha256": "0040b0c4d3f5b9704c1cc00451f02c039d08e16ffb7b9eaf372503f0f827a746",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/schemas/manifest.schema.json",
+      "ownership": "kit-managed",
+      "sha256": "f1db978ace09c043b64883cbeced1100aa2014ad220a687b409d62616ffbc780",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/schemas/router-result.schema.json",
+      "ownership": "kit-managed",
+      "sha256": "02db176e20df8fb41f73bf2d98cfa841e0c8e77404b9b97db43ed3d1ba96d281",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/schemas/work.schema.json",
+      "ownership": "kit-managed",
+      "sha256": "49428de06b8b178b43bb6ed93493a5115dab789bfc73f7911683fc8697a268f2",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/specs/README.md",
+      "ownership": "kit-managed",
+      "sha256": "cbe508b69b5933af2975d3c58f57d23cd0644e0288c00efe37fa9b8899171a99",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/templates/change/README.md",
+      "ownership": "template",
+      "sha256": "c5aad9a09b8a8f4fc8eaab62c73687820e028e1717cda21a397cba0eeca34c2e",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/templates/change/decisions.md",
+      "ownership": "template",
+      "sha256": "dbf09abb2ec9f703d4af69b40803e2f3417c77932f377b667d0d6d777c33b979",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/templates/change/evidence.md",
+      "ownership": "template",
+      "sha256": "1a3af931adc774a56ceeb224384721f4ccb41d7c19726b397591c59baa342fd8",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/templates/change/outcome.md",
+      "ownership": "template",
+      "sha256": "a4a6f07da06031d037c524387759c0759b11755a8865a2a9369ab42ca84dc260",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/templates/change/plan.md",
+      "ownership": "template",
+      "sha256": "d93c5f564ed3090bc4a56a07247f1ff546a0e294966e97dc09e91a33ecbc795e",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/templates/change/research.md",
+      "ownership": "template",
+      "sha256": "2d9e9c485a861d4c7a933bb9b3cf79f6dc9daa61a4a0616784cc2da107dc7f5b",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/templates/change/spec.md",
+      "ownership": "template",
+      "sha256": "bda65a74ce25e7f7162eb89c5c1ba05149d011f861da55fcd96b1f7eb2403753",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/templates/change/status.md",
+      "ownership": "template",
+      "sha256": "456fdfd75643ef60848faab24228beff1f00235dd43a0d405eaeb437f490d05f",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/templates/change/tasks.md",
+      "ownership": "template",
+      "sha256": "2e51a7a1e0a5b0b608bd4ca6ed97229bf4eed4d9c925b5abb4879e444f276c31",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/templates/change/test-plan.md",
+      "ownership": "template",
+      "sha256": "067f670dc97ebe67d38b2179f5b30299776a540741066739c3742a91e274b030",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/templates/change/work.json",
+      "ownership": "template",
+      "sha256": "3dbe2fd2d533b1e8ba90663eee76df8a6509c685060187ee0925a5e56e4b671e",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/templates/documentation/adr.md",
+      "ownership": "template",
+      "sha256": "4739a0efba483007ba373be442c0c6b1f208d06b446cdf0ab801692ac3b4e6e1",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/templates/documentation/docs-impact.md",
+      "ownership": "template",
+      "sha256": "99106a5c70b9dd5e648529914cbdc1e476d34f18f4e1b6ba493be53ff8ce723a",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/templates/documentation/runbook.md",
+      "ownership": "template",
+      "sha256": "913082bf7c544a9412128b6d358c45c3138a9a171f5202f4dab35d1eee95ba72",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/templates/github/CODEOWNERS.example",
+      "ownership": "template",
+      "sha256": "fb55874614c2c812d8466ec1f0774ca21fd6a28bfa510d98bbb998f6aa32473d",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/templates/github/agent-kit-validation.example.yml",
+      "ownership": "template",
+      "sha256": "e9df0d37fb80692c98f44a0cbcd9c7480070d5ea711d04a4ffd06409a68fa71f",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/templates/github/bug-issue.md",
+      "ownership": "template",
+      "sha256": "8b0762d4d604909db7a320ecfb38f7fa0f63c5bc2ffeec474bd39a91942b5ffd",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/templates/github/feature-issue.md",
+      "ownership": "template",
+      "sha256": "aaa9c3880cc9f83231e8139e3a1f7063180f3ea6407120f457a45173b32bd2b6",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/templates/github/pull-request.md",
+      "ownership": "template",
+      "sha256": "cdb98dbe12df48fc5805a11f11f4b1d378d049602bb6917803c46a692a09cd1e",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/templates/github/ruleset.example.json",
+      "ownership": "template",
+      "sha256": "dc6e867fcc057a0edd692cc62f80ed6ba0b71ef51571c2681c431929b7ea1b34",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/templates/project/CLAUDE.local.md.example",
+      "ownership": "template",
+      "sha256": "d33b0f1eb991f9f5ce7ca2c4d5f2991fb464f6d43eec76875cccac2a26af53e8",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/templates/project/preferences.md",
+      "ownership": "template",
+      "sha256": "e69dcbb141d2e361c89b7c30a49c0bef7a0650f02753d7199317851a0bdf3f45",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/templates/project/project.md",
+      "ownership": "template",
+      "sha256": "3580d5486ae88d0a1a9a9b7a71da1d92636a30ab797f5eb812325e085640a93c",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/README.md",
+      "ownership": "kit-managed",
+      "sha256": "499d0dd8ddf14f286dddb793776df9dbd02c8459749e740c02e3d06ccf2eaf99",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/acceptance/01-empty-repo/expected.json",
+      "ownership": "kit-managed",
+      "sha256": "bec4be40b6ba1b08e704a9a480f1578e36236e984dae8ec420e1436e0dc863db",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/acceptance/01-empty-repo/input.json",
+      "ownership": "kit-managed",
+      "sha256": "0d91672e53887cac9e4a9eae26773a31895a0e9383321c74199d8f93d253056f",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/acceptance/02-existing-instructions/expected.json",
+      "ownership": "kit-managed",
+      "sha256": "bec4be40b6ba1b08e704a9a480f1578e36236e984dae8ec420e1436e0dc863db",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/acceptance/02-existing-instructions/input.json",
+      "ownership": "kit-managed",
+      "sha256": "63ea3b4128f3e788eecf0c00130d0b0a1777ba55863f2080945cef097989f165",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/acceptance/03-codex-skill-discovery/expected.json",
+      "ownership": "kit-managed",
+      "sha256": "1ef3079801a986f0dcd7f874df8cecb014248d0b42cf03bb5c8d9984d811d6f1",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/acceptance/03-codex-skill-discovery/input.json",
+      "ownership": "kit-managed",
+      "sha256": "dbbdf3e0a79bff721ca6f8263d08752fb32456ae65330c6a6f5be8ba8aa16dbc",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/acceptance/04-claude-agents-import/expected.json",
+      "ownership": "kit-managed",
+      "sha256": "1ef3079801a986f0dcd7f874df8cecb014248d0b42cf03bb5c8d9984d811d6f1",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/acceptance/04-claude-agents-import/input.json",
+      "ownership": "kit-managed",
+      "sha256": "3ef0e23a18b4d3a3e8b993d5f58b900427214411ff78ec502bd4694f65d9edfe",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/acceptance/05-superpowers-brainstorm-routing/expected.json",
+      "ownership": "kit-managed",
+      "sha256": "bec4be40b6ba1b08e704a9a480f1578e36236e984dae8ec420e1436e0dc863db",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/acceptance/05-superpowers-brainstorm-routing/input.json",
+      "ownership": "kit-managed",
+      "sha256": "db0ca01a9ae4e4f1b4ac49184532f2e1d5c622199e69479070de828f3b690f09",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/acceptance/06-superpowers-plan-routing/expected.json",
+      "ownership": "kit-managed",
+      "sha256": "bec4be40b6ba1b08e704a9a480f1578e36236e984dae8ec420e1436e0dc863db",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/acceptance/06-superpowers-plan-routing/input.json",
+      "ownership": "kit-managed",
+      "sha256": "5a2711e3a388ee00921bdf202e428cc0624f3f400f6db76ddddc22d2c34b28dd",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/acceptance/07-superpowers-leak-path/expected.json",
+      "ownership": "kit-managed",
+      "sha256": "02472f253162b906700ece91786416eb42fb10cc83168a144109aa3ce2ee38b7",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/acceptance/07-superpowers-leak-path/input.json",
+      "ownership": "kit-managed",
+      "sha256": "0729a9ffd64a3a974be333fac0cefc71d8832a1be510b9d8709018eb882624a2",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/acceptance/08-claude-plan-runtime/expected.json",
+      "ownership": "kit-managed",
+      "sha256": "bec4be40b6ba1b08e704a9a480f1578e36236e984dae8ec420e1436e0dc863db",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/acceptance/08-claude-plan-runtime/input.json",
+      "ownership": "kit-managed",
+      "sha256": "2cca733e8dcc7967d1138f8347f8fbcc1602d35132a33e9226ddb24271c3dfef",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/acceptance/09-multiple-active-work/expected.json",
+      "ownership": "kit-managed",
+      "sha256": "c67fae2a7e9d353103c3f4ca31641dd97b80cac64f028fb07159edaf3b0b0274",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/acceptance/09-multiple-active-work/input.json",
+      "ownership": "kit-managed",
+      "sha256": "69339b4f9d1e159ce1fc5750c01c6532f3857a9068a73c1b89cd4a8c09c76b41",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/acceptance/10-resume-checkpoint/expected.json",
+      "ownership": "kit-managed",
+      "sha256": "bec4be40b6ba1b08e704a9a480f1578e36236e984dae8ec420e1436e0dc863db",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/acceptance/10-resume-checkpoint/input.json",
+      "ownership": "kit-managed",
+      "sha256": "721ef4db54985db887405854649656a9f1169567bb5b136917260c07789e52f0",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/acceptance/11-ownership-conflict/expected.json",
+      "ownership": "kit-managed",
+      "sha256": "02472f253162b906700ece91786416eb42fb10cc83168a144109aa3ce2ee38b7",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/acceptance/11-ownership-conflict/input.json",
+      "ownership": "kit-managed",
+      "sha256": "65334fb795058f24fd1ccc22d7cc6f18d6177134fc14d09dd261ef6304da559c",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/acceptance/12-adaptive-archive/expected.json",
+      "ownership": "kit-managed",
+      "sha256": "bec4be40b6ba1b08e704a9a480f1578e36236e984dae8ec420e1436e0dc863db",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/acceptance/12-adaptive-archive/input.json",
+      "ownership": "kit-managed",
+      "sha256": "78f6453221fd0708d9c844779d7062633bc131a42814913ee13147548483338b",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/acceptance/13-external-spec-backend/expected.json",
+      "ownership": "kit-managed",
+      "sha256": "bec4be40b6ba1b08e704a9a480f1578e36236e984dae8ec420e1436e0dc863db",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/acceptance/13-external-spec-backend/input.json",
+      "ownership": "kit-managed",
+      "sha256": "57a4f029d04fda02d9265d3fe76496b8234932eeb545ebbc9325630fcd23f70c",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/acceptance/14-modified-managed-update/expected.json",
+      "ownership": "kit-managed",
+      "sha256": "b255c6191118a0671d24c62e45919dfaf9d2ce00d0ec805a8f3dcb535c0e08b1",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/acceptance/14-modified-managed-update/input.json",
+      "ownership": "kit-managed",
+      "sha256": "c7fe8eaa098d6b7cdbca6a108cdb2d7b83153369280b1f1e5abdbe7cb7bd84e8",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/acceptance/15-remove-preserves-work/expected.json",
+      "ownership": "kit-managed",
+      "sha256": "b255c6191118a0671d24c62e45919dfaf9d2ce00d0ec805a8f3dcb535c0e08b1",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/acceptance/15-remove-preserves-work/input.json",
+      "ownership": "kit-managed",
+      "sha256": "7840cefd2794f5f374e14b6e96b28f2241523f6e7ea49b2deeedfe916130edce",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/acceptance/16-hooks-disabled-degradation/expected.json",
+      "ownership": "kit-managed",
+      "sha256": "c67fae2a7e9d353103c3f4ca31641dd97b80cac64f028fb07159edaf3b0b0274",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/acceptance/16-hooks-disabled-degradation/input.json",
+      "ownership": "kit-managed",
+      "sha256": "5ef696c4a1eb0256adeb29300ba76989206887c96841801707bfce3a9ac97cd8",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/acceptance/17-no-unauthorized-external-write/expected.json",
+      "ownership": "kit-managed",
+      "sha256": "02472f253162b906700ece91786416eb42fb10cc83168a144109aa3ce2ee38b7",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/acceptance/17-no-unauthorized-external-write/input.json",
+      "ownership": "kit-managed",
+      "sha256": "7c5ad8dfbd8629b3d5471e3d745e249c75ea0d98ce48f465cbcd83af2a4db9aa",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/acceptance/18-cross-platform-utf8-paths/expected.json",
+      "ownership": "kit-managed",
+      "sha256": "bec4be40b6ba1b08e704a9a480f1578e36236e984dae8ec420e1436e0dc863db",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/acceptance/18-cross-platform-utf8-paths/input.json",
+      "ownership": "kit-managed",
+      "sha256": "d37580c3b46fb3ffb33165dbb6d175141b1d6a8e81bff6d034b893a82320db3b",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/acceptance/18-cross-platform-utf8-paths/repo/özellik planı/bağlam.txt",
+      "ownership": "kit-managed",
+      "sha256": "3c3753f3fb62fc7e2e6cb8eaeefdc2f745bf2e76077fa845572590b7f86297bd",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/acceptance/19-local-runtime-excluded/expected.json",
+      "ownership": "kit-managed",
+      "sha256": "bec4be40b6ba1b08e704a9a480f1578e36236e984dae8ec420e1436e0dc863db",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/acceptance/19-local-runtime-excluded/input.json",
+      "ownership": "kit-managed",
+      "sha256": "306fe4dc5b444eb9bd3640adbc36ea361e13dd5679a27faa5aae590ca971ee50",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/acceptance/20-conditional-context-loading/expected.json",
+      "ownership": "kit-managed",
+      "sha256": "bec4be40b6ba1b08e704a9a480f1578e36236e984dae8ec420e1436e0dc863db",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/acceptance/20-conditional-context-loading/input.json",
+      "ownership": "kit-managed",
+      "sha256": "a25b17d76f34716da39e5b0ef82bcad94c1bb7bd76fd0674bfe1c82cd6716819",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/acceptance/21-agents-budget-gates/expected.json",
+      "ownership": "kit-managed",
+      "sha256": "bec4be40b6ba1b08e704a9a480f1578e36236e984dae8ec420e1436e0dc863db",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/acceptance/21-agents-budget-gates/input.json",
+      "ownership": "kit-managed",
+      "sha256": "dda6a0b2b4b0caa7ed33e978e7e716fab6e92d3676864fdd2fc594c961f4759d",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/acceptance/22-codex-doc-limit/expected.json",
+      "ownership": "kit-managed",
+      "sha256": "c67fae2a7e9d353103c3f4ca31641dd97b80cac64f028fb07159edaf3b0b0274",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/acceptance/22-codex-doc-limit/input.json",
+      "ownership": "kit-managed",
+      "sha256": "341361a946c919e9cead39f7cfa97533d81b6720ab6f7d82562ae71ec2e0e64b",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/acceptance/23-claude-load-observability/expected.json",
+      "ownership": "kit-managed",
+      "sha256": "1ef3079801a986f0dcd7f874df8cecb014248d0b42cf03bb5c8d9984d811d6f1",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/acceptance/23-claude-load-observability/input.json",
+      "ownership": "kit-managed",
+      "sha256": "9acc0b9720cdb4d4f8d96e251bfbd994f57fca710b859cd91d7f749401828ab8",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/acceptance/24-session-context-bounds/expected.json",
+      "ownership": "kit-managed",
+      "sha256": "bec4be40b6ba1b08e704a9a480f1578e36236e984dae8ec420e1436e0dc863db",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/acceptance/24-session-context-bounds/input.json",
+      "ownership": "kit-managed",
+      "sha256": "19eaee79fc6b61d8fb11b80c7d32747ced39b84073c3da023cb233ea78c918a6",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/acceptance/25-profile-gates/expected.json",
+      "ownership": "kit-managed",
+      "sha256": "bec4be40b6ba1b08e704a9a480f1578e36236e984dae8ec420e1436e0dc863db",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/acceptance/25-profile-gates/input.json",
+      "ownership": "kit-managed",
+      "sha256": "edbf95d885f45feed2af59980207f37c5453772b8d211776036be1a597e76770",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/adoption/empty-repo/expected.json",
+      "ownership": "kit-managed",
+      "sha256": "7eb4728d7d67ff927e44e258c3aba409df7daffc2cce02377e5d209bb6f1d929",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/adoption/empty-repo/new/manifest.json",
+      "ownership": "kit-managed",
+      "sha256": "1551e24d08e3131260fa88fb432d1b8a643c7a486ecbb8a4d4fd5ce026d26f9b",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/adoption/empty-repo/repo/.gitkeep",
+      "ownership": "kit-managed",
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/adoption/existing-instructions/expected.json",
+      "ownership": "kit-managed",
+      "sha256": "99e585387b54c7a23ae937134c95d733c9af209ac8ee598e2b093781acb47ae9",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/adoption/existing-instructions/new/manifest.json",
+      "ownership": "kit-managed",
+      "sha256": "1551e24d08e3131260fa88fb432d1b8a643c7a486ecbb8a4d4fd5ce026d26f9b",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/adoption/existing-instructions/repo/AGENTS.md",
+      "ownership": "kit-managed",
+      "sha256": "b1971e2cf38bce082165c7a09b596eda40e4746f77b4fe6e7ad1b74eb0311d8d",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/adoption/existing-instructions/repo/CLAUDE.md",
+      "ownership": "kit-managed",
+      "sha256": "0a11fb944163210e22de087004d4282114dc141e2d8ca9d6d15281610c10a077",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/adoption/modified-managed/base/AGENTS.md",
+      "ownership": "kit-managed",
+      "sha256": "bd920c17b8b97813c0ce006a59100f1c566de4cb6de69b8679d5c16808aef299",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/adoption/modified-managed/base/manifest.json",
+      "ownership": "kit-managed",
+      "sha256": "abd339c76b3e1bdffbf09bb7215beceae356dbbef73884e595e144f890db0f5c",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/adoption/modified-managed/current/AGENTS.md",
+      "ownership": "kit-managed",
+      "sha256": "4f18f896acd11a91fbaae3887d3ea71ec56fb99c181a82757d75678c627f52d1",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/adoption/modified-managed/expected-without-base.json",
+      "ownership": "kit-managed",
+      "sha256": "40ae087205f2ec57331c9cef42fd8b452457330de66778c16ec8c41c437076aa",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/adoption/modified-managed/expected.json",
+      "ownership": "kit-managed",
+      "sha256": "bd7b4b26aaff618b7d30db31712b2b1d64d7984e77506cb984781c91c4c6599a",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/adoption/modified-managed/new/AGENTS.md",
+      "ownership": "kit-managed",
+      "sha256": "5da6ae34e545c1e0d3f2a8b6c30d1a251e49145a0a4d3896c5350da0d967e406",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/adoption/modified-managed/new/manifest.json",
+      "ownership": "kit-managed",
+      "sha256": "0b4c40432f0e3fc105275255377aa4d7998f1e5cf1761b93d14dd257c3cae980",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/adoption/remove-preserves-work/expected.json",
+      "ownership": "kit-managed",
+      "sha256": "ee5928307a15b4858ad173619c72ac64081c625001af6353de68dea19a4fca45",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/adoption/remove-preserves-work/manifest.json",
+      "ownership": "kit-managed",
+      "sha256": "d86ea92c476b877f351077fb21dfe86f45b2aadef6066a816bd43da9f4ae035e",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/adoption/remove-preserves-work/repo/.agents/changes/active/123/status.md",
+      "ownership": "kit-managed",
+      "sha256": "857e3c98a367140c648e40ba795f0640c341202b9dd0bd80e499c5af7de75d76",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/adoption/remove-preserves-work/repo/.agents/project.md",
+      "ownership": "kit-managed",
+      "sha256": "cf34900908fcc732bcbec0b17e1f2a78655a8fb53d835bd4b202933e1f88d01b",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/adoption/remove-preserves-work/repo/AGENTS.md",
+      "ownership": "kit-managed",
+      "sha256": "8deb8a033db364939fc3960d8a4af4a9c8312ca19364b7575116fb49a97c0d8f",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/router/cases.tsv",
+      "ownership": "kit-managed",
+      "sha256": "c5956ab85b9b2b8eff3d41e8319700429f07267dbb7fcb58e2b36f4b6bb24e3b",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/validator/solo-one-active/expected-doctor.json",
+      "ownership": "kit-managed",
+      "sha256": "c9d878d2cf9e6dc87b15bd89e5a3594eef202442b5af858a26be249ab7e4f2f8",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/validator/solo-one-active/repo/.agents/changes/active/123/status.md",
+      "ownership": "kit-managed",
+      "sha256": "69203acb133fdc5fea203c3fca170664e2b0ac4c5c57dc9b8382b83c1dbe3082",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/validator/solo-one-active/repo/.agents/changes/active/123/work.json",
+      "ownership": "kit-managed",
+      "sha256": "0924109023bda5285bbb5660f1c3216680112274fd74e793ac004486f3748f53",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/validator/solo-one-active/repo/.agents/config.json",
+      "ownership": "kit-managed",
+      "sha256": "bb7c5214fbc2fb7779148ff6b7658dc0a632ecfe86d64023801d6fd0ff5ad827",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/validator/solo-one-active/repo/AGENTS.md",
+      "ownership": "kit-managed",
+      "sha256": "52afdf4bafadb3f7a909d953cb8cb719473fb01ec883c77041da2e1e6b6c18ec",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/validator/solo-one-active/repo/private-input.txt",
+      "ownership": "kit-managed",
+      "sha256": "02969609c3577361e35283c515165cd5740e79fdf466ec451b6def2ac708050c",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/validator/team-missing-work/expected-pre-tool.json",
+      "ownership": "kit-managed",
+      "sha256": "ddaf689adca5b86aa8639a36aa3e90e12a3a7d30af9c659ffbe3a8f9859f7dc2",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/validator/team-missing-work/pre-tool-input.json",
+      "ownership": "kit-managed",
+      "sha256": "7d2210b8c073bb73527a74292d16811520cde7b419395e3d76925f8c5fd1be35",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/validator/team-missing-work/repo/.agents/config.json",
+      "ownership": "kit-managed",
+      "sha256": "7566437a79780109f52845fa2d7e4f803f157e24af6375f021d6f4d4c45291c2",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/validator/team-missing-work/repo/AGENTS.md",
+      "ownership": "kit-managed",
+      "sha256": "1d600a5f5555c5850461072960fa4ebff929da7d904972b7097238e6396c114b",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/validator/team-multiple-active/expected-pre-tool.json",
+      "ownership": "kit-managed",
+      "sha256": "6202d3031424842bc39f7a835431e6b5700de306550b8307ac23422192d5dd06",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/validator/team-multiple-active/pre-tool-input.json",
+      "ownership": "kit-managed",
+      "sha256": "3e5671befe8df909dc02a1859fac2f8556f1e0042659958854f7b5a58128ef8e",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/validator/team-multiple-active/read-only-input.json",
+      "ownership": "kit-managed",
+      "sha256": "f5147f49ab5e2cdc18ae762de7d4f4e81b01904f7581db7dac1d436f5b874dcc",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/validator/team-multiple-active/repo/.agents/changes/active/123/status.md",
+      "ownership": "kit-managed",
+      "sha256": "c41f1aa67e49cc4434184d4197fa88ade9846ca81d3f806b5255ba33b730875b",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/validator/team-multiple-active/repo/.agents/changes/active/123/work.json",
+      "ownership": "kit-managed",
+      "sha256": "10155def1fa7c282feff74fcb5a31db91af034a6c74bda8becf14935c16cf48e",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/validator/team-multiple-active/repo/.agents/changes/active/456/status.md",
+      "ownership": "kit-managed",
+      "sha256": "1c52389af98a3725936c4bc78ccb7fdb4459d3b626094fe6ce691f110637c5fc",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/validator/team-multiple-active/repo/.agents/changes/active/456/work.json",
+      "ownership": "kit-managed",
+      "sha256": "d98eb5c0b548b2c4beb4b90f92b4d354afae47ce74bb768e7465b8be400ab9a3",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/validator/team-multiple-active/repo/.agents/config.json",
+      "ownership": "kit-managed",
+      "sha256": "da0354f199192d607ab00652d1f5837acbd14757f7477bdd93b08a46f39c7f87",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/fixtures/validator/team-multiple-active/repo/AGENTS.md",
+      "ownership": "kit-managed",
+      "sha256": "5d701350d219314ea977da95fe761b6ab46b0d69ad70b78723ea80b9b31aa4a6",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/lib/RunCase.psm1",
+      "ownership": "kit-managed",
+      "sha256": "c2b95a5e90571fab9aaed9e605dc48b7d1b02f6bbae56316e4e8202fad1ebf55",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/lib/json-parse.sh",
+      "ownership": "kit-managed",
+      "sha256": "18bd8065a55ab0130fd586518a947762c7ebf29aa754c49dfecafda77c41e5a4",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/lib/run-case.sh",
+      "ownership": "kit-managed",
+      "sha256": "cfbdcf83731939a565e3c5587a12808ae71339a70cf52dc95e5496b7516130b6",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/lib/utf8-check.sh",
+      "ownership": "kit-managed",
+      "sha256": "824b39da2700447567fd8711899d9e0c295e1cf7d4a1d5b80bf02509bcb8d871",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/package-release.ps1",
+      "ownership": "kit-managed",
+      "sha256": "d6dbd6ae958754df77a512e5ab56765687c8cd37c0e0737866bc5a150484cb7d",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/package-release.sh",
+      "ownership": "kit-managed",
+      "sha256": "ae9eb1012b23ab77e01d689ccc8354aca4bd3713a38c5b48c71c64f0d7315713",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/results/.gitignore",
+      "ownership": "kit-managed",
+      "sha256": "240a3e0d37d2e86b614063f5347eb02d4f99ca6c254de6b82871ff8d95532a7d",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/run.ps1",
+      "ownership": "kit-managed",
+      "sha256": "55fbb52739da4fc4eff4419bce4b0831883602eaa28a802834cf09d42307727a",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/run.sh",
+      "ownership": "kit-managed",
+      "sha256": "08a1476e71d3f41b5a3b79b7149f77d40f8376ddb85aad99f22b87aa920731f1",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/scenarios/cases.tsv",
+      "ownership": "kit-managed",
+      "sha256": "d898456bd36bf67ab585ec46caa8514e92e0f5e6d00a9384a723780c2f212a76",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/scenarios/live-clients.md",
+      "ownership": "kit-managed",
+      "sha256": "8ae55a68189e179a6d7b282e610471089f5624633d272cfcad04a9b17cbe2920",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/static/acceptance-suite.sh",
+      "ownership": "kit-managed",
+      "sha256": "55be0f150e11df6b02743ba44c5e1ff7df7b4bd0debe7f7e946aa5052279f47f",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/static/artifact-router.sh",
+      "ownership": "kit-managed",
+      "sha256": "45ad3ca62848478d47ef422139c72d7f116e0ae4da7e56d1236ac42eb02012d9",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/static/claude-hook-source.sh",
+      "ownership": "kit-managed",
+      "sha256": "aed96b1a94071bbbd9bee286694f3b51971797c5bf9865742ac67a364b32f368",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/static/codex-hook-source.sh",
+      "ownership": "kit-managed",
+      "sha256": "2b6458f125eb9a534c7fcbdf74ccf5f975b43424db396d446cb0cbeafeb57f50",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/static/current-work-pointer.sh",
+      "ownership": "kit-managed",
+      "sha256": "c1e55d1a28ce9b36423dcf7601826ceca69921f9a2485b36539e849a91a7eb44",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/static/evals-build-variant.sh",
+      "ownership": "kit-managed",
+      "sha256": "32695f2f392c612d6f092890d90a9d32adfae9f8f2d96044dc5760fb0268677d",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/static/evals-contract.sh",
+      "ownership": "kit-managed",
+      "sha256": "9912ed2a11c782d2eff4acb527c3caec13e131ac286cd4a312644bc0226bf624",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/static/evals-lang-parity.sh",
+      "ownership": "kit-managed",
+      "sha256": "70c3a78dba85cb5df5d1839dd33893b786776dcfd007504d6930766c68fef31d",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/static/evals-markers.sh",
+      "ownership": "kit-managed",
+      "sha256": "7922744f416ed5d9fc22ae6d5bad68c497b95ede095f41ea1b7e5875e7ec22fc",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/static/evals-oracles.sh",
+      "ownership": "kit-managed",
+      "sha256": "529096700c1ecb4d883851b54f8d3d272e7bedf0e10a10ec98e225886c47c319",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/static/evals-permissions.sh",
+      "ownership": "kit-managed",
+      "sha256": "556cebe6aa1234a5e824cb6cf53995114aa8d9e1673614e7b2102247c1bfa12b",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/static/evals-stoppable.sh",
+      "ownership": "kit-managed",
+      "sha256": "9aefd848dc0dbbed1ed5939c06232fe82214f7348a23ad3ee503847a733b1738",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/static/install-payload.sh",
+      "ownership": "kit-managed",
+      "sha256": "ce82bafec93ecca1d8123f181c62116339fba324ef9180b1d1e7422c929b57e2",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/static/install-script.sh",
+      "ownership": "kit-managed",
+      "sha256": "07e1fc081c9dd4bf3697a2bca9fd2812b74a4e4862fa928e1d369c493f949322",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/static/instruction-loading.sh",
+      "ownership": "kit-managed",
+      "sha256": "bc6c44d655fb61299b4f7c04d94b18720e620fb185471dae39809b9b1daedd20",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/static/kit-doctor-skill.sh",
+      "ownership": "kit-managed",
+      "sha256": "e053cf0ae9faf24e149304e56a9c16d3fece7e271c1d4a5d78aab1e21c788b82",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/static/kit-management.sh",
+      "ownership": "kit-managed",
+      "sha256": "8bfbb1098fd90639bf2b2b5177ed20db36d87d0a7d8ca568af648b1ec10d7eed",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/static/layout.sh",
+      "ownership": "kit-managed",
+      "sha256": "4a72e4712963cc7ef6c754d71edbf2cb0fa0ae813e911ed434da9b70d01ff72f",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/static/lifecycle-skills.sh",
+      "ownership": "kit-managed",
+      "sha256": "98eb4dd7ddd80be25edd632f2b29740b09c115866d2bb281f818514fa89c66c8",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/static/line-endings.sh",
+      "ownership": "kit-managed",
+      "sha256": "d1d865da5994792391ad69706f97b431c812a779b244d8564425eb5c73c415f8",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/static/manifest-scope.sh",
+      "ownership": "kit-managed",
+      "sha256": "d82eb2d082e169ceae695e8fe887a401b0acafc560e4f06fbce0d2e8e6396133",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/static/package-contract.sh",
+      "ownership": "kit-managed",
+      "sha256": "ab5e1e4c50a84740373f40c4378c8c760c210b5897a48b2f63cdb60ea65d7fd4",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/static/pipe-safety.sh",
+      "ownership": "kit-managed",
+      "sha256": "c5ba6a960cdac0231200433f2451a4a537855805f45a85ec5ec421fffce1a61e",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/static/plugin-package.sh",
+      "ownership": "kit-managed",
+      "sha256": "db66aaf02a70d9d0c5d7337c9d4ba3cbe110e5ed01de2a4995f457ea4e1ba008",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/static/posix-tools.sh",
+      "ownership": "kit-managed",
+      "sha256": "858b4b16b8ad26fb8cef2bb5472e1718b925794c9c62ec1e150c9a276d6c14c6",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/static/profile-model.sh",
+      "ownership": "kit-managed",
+      "sha256": "f087f8b067405b838c8f3dbcb5fe21af0a638b531380279422fb9989aa20b309",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/static/provider-adapters.sh",
+      "ownership": "kit-managed",
+      "sha256": "07214be893c46dc16c7694dd40159ed2f82c101a60c068bda3fa706ead42c9f2",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/static/readonly-command.sh",
+      "ownership": "kit-managed",
+      "sha256": "3a50d416d4e64e79150f5a95c5f21309f30c4577415cebb4d5e5fda6be64b6a8",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/static/reinjection.sh",
+      "ownership": "kit-managed",
+      "sha256": "8a7a9011fcfaf22ba3235cfd02117b30f34ecc3f61e51ac183871db23ec92467",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/static/rule-inventory.sh",
+      "ownership": "kit-managed",
+      "sha256": "b402ec52ac40bfb330605c88bf64dd995a18fdbbfa60ce05b320c77699c4e8f6",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/static/scaffold-notice.sh",
+      "ownership": "kit-managed",
+      "sha256": "f7e4d1ebadaf03b42d28e12edaf0f672b6c682bf8e1123126732a2e425137456",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/static/schema-contract.sh",
+      "ownership": "kit-managed",
+      "sha256": "d1eb8a691d59f7b323b6fdaf1ab0b305b7fd37e7ba32a1d2ac96c84d7079efae",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/static/style-preferences.sh",
+      "ownership": "kit-managed",
+      "sha256": "3d1697efc4ab9d4a7af820116de71b4190ef757edc1c77359b72e863a319f7fc",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/static/team-docs-templates.sh",
+      "ownership": "kit-managed",
+      "sha256": "58020d0e0323c6393d3b3d0325bf088a0d0ae831b1989f95c4b2a32baeb51b60",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/static/tool-gate.sh",
+      "ownership": "kit-managed",
+      "sha256": "6bc7057ccebca0ce2c802dfd72bad7091a001b9a69f7339a264be1830be47628",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/static/validator.sh",
+      "ownership": "kit-managed",
+      "sha256": "4f5d18c108303b4976328ea5e865d8f7d8af974839becac3fb2d8444f655c053",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/static/windows-portability.sh",
+      "ownership": "kit-managed",
+      "sha256": "96f319f3d242822dc9d8d47df87a585bbac7918990bb6d0eb67ae0c6ddcff138",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/validators/README.md",
+      "ownership": "kit-managed",
+      "sha256": "762f62bb3656d221dc16513801f46316c191d125cd350d10a62e1bea67dfb8e2",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/validators/policy-codes.json",
+      "ownership": "kit-managed",
+      "sha256": "40e708381a788101c0733ef3f7ad033dd62da999203679aa6c12ca0838caec81",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/validators/ps/AgentKit.psm1",
+      "ownership": "kit-managed",
+      "sha256": "fd01999cda6c3daac986e39d69d555fd096e2109834712b3482b23473b480e1a",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/validators/ps/agent-kit.ps1",
+      "ownership": "kit-managed",
+      "sha256": "a02c441c3626920022e11c43fb2b94950bb449edff241e733c9701022d890ff5",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/validators/sh/agent-kit.sh",
+      "ownership": "kit-managed",
+      "sha256": "c393007df9c19d7854481acb063876d98d51d50adf84c9e72ddb9ba82375c00e",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/validators/sh/lib.sh",
+      "ownership": "kit-managed",
+      "sha256": "b7c630572dc642a313db79dd7772d51513f5f5182dadb2cbe81f278be2efd25e",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/validators/sh/route-artifact.sh",
+      "ownership": "kit-managed",
+      "sha256": "1e845bd5f36ac2f746ff374d46ad1b9e0789bd00281fa336ed9b052c12fe18b2",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".claude-plugin/marketplace.json",
+      "ownership": "kit-managed",
+      "sha256": "2ba9e3d437d654eee4cd2ebfe930125cf8e519560015d48bdca423d88c4d1495",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".claude-plugin/plugin.json",
+      "ownership": "kit-managed",
+      "sha256": "413a348100d202255cfb64bf6b1dcf42ecb016682a27bfec9e3cb7a1cb2ba525",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".claude/settings.json",
+      "ownership": "adapter",
+      "sha256": "535174091ca666898bbd4f44bdf398214bc96a9ebd1110372e1af83d8176e6d0",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".claude/skills/archive-work/SKILL.md",
+      "ownership": "adapter",
+      "sha256": "7e8ffe60c9c97d54ec1f63c58ef418f6347a18ac5e76b7b2405bef72d5a802b8",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".claude/skills/artifact-router/SKILL.md",
+      "ownership": "adapter",
+      "sha256": "202f35006ffff305d3653dc08dff7abf5fb417da507ddc430d20360e231e015b",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".claude/skills/checkpoint-work/SKILL.md",
+      "ownership": "adapter",
+      "sha256": "ca5951f6096ec9ce5f64f15ec7345369f258d9034b5488f180917d73496675eb",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".claude/skills/close-work/SKILL.md",
+      "ownership": "adapter",
+      "sha256": "af8dfd64644ecef92cbd49d59fc0e1606246b0a7c7d4f036a47a2a9cfb31b8c8",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".claude/skills/init/SKILL.md",
+      "ownership": "adapter",
+      "sha256": "92a832eb33ab004774b32980af7d95292c20a701b89598861c86f2e2d1db3c98",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".claude/skills/kit-doctor/SKILL.md",
+      "ownership": "adapter",
+      "sha256": "aadc060c0ff2c03f78f05d1560031da141417bccc4a363df984e37d4d2977ae6",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".claude/skills/remove-kit/SKILL.md",
+      "ownership": "adapter",
+      "sha256": "b8df0ef8c060b1f92cf566070b368bdd1f7c0541649d3fea92f469c7810cea66",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".claude/skills/resume-work/SKILL.md",
+      "ownership": "adapter",
+      "sha256": "e5485866c64e1ba12d322f38dcbf3aec1809be830632989f9c1f468ef9c95002",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".claude/skills/start-work/SKILL.md",
+      "ownership": "adapter",
+      "sha256": "50e3ef0500f42757c7950a706df7fe515667c622f562361b3c91bbbd4d200602",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".claude/skills/update/SKILL.md",
+      "ownership": "adapter",
+      "sha256": "841eb1f42d987a0da092c035a4b2edac2107b5f96e93faf40df2596968fd30ce",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".codex-plugin/plugin.json",
+      "ownership": "kit-managed",
+      "sha256": "bd6f07666ab4025cb7fc3ee12b9a742ea3385cf77ba3ed97d89c64eefc14e874",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".codex/config.toml",
+      "ownership": "adapter",
+      "sha256": "b743f0576a12299d21adbddb35498260eeebe4ca3b86eb96dbb6a82c96217f5d",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".codex/hooks.json",
+      "ownership": "adapter",
+      "sha256": "8edaba99cce3735880d62663ac67ec50865542ca2f48dfb6a8fcf8d2fcd782d0",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".gitattributes",
+      "ownership": "kit-managed",
+      "sha256": "d1b8335b04aff58b3f01450e6d6a6e6d0c7d38220e5f2ca51ff817a1aaa96f43",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".github/workflows/validation.yml",
+      "ownership": "kit-managed",
+      "sha256": "c96f2be4f78800dfb500159d25162277b82949015d1e4aee0026c831ca6d9b28",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".gitignore",
+      "ownership": "kit-managed",
+      "sha256": "706a8a61672b430d486a12953b60e28e053c26de762708249e1d9a61eb3afe32",
+      "hashPolicy": "required"
+    },
+    {
+      "path": "AGENT-KIT-START.md",
+      "ownership": "kit-managed",
+      "sha256": "69a7c5e583bf646474df457c54fc5a953580769c8b18ca013d93b164b98a88de",
+      "hashPolicy": "required"
+    },
+    {
+      "path": "AGENTS.md",
+      "ownership": "kit-managed",
+      "sha256": "6e40f418e508fcede6979f2b1a1bdf21c8783bf747cb8bb0bbdfc14948b22644",
+      "hashPolicy": "required"
+    },
+    {
+      "path": "CHANGELOG.md",
+      "ownership": "kit-managed",
+      "sha256": "a25eeb6e959eb4d094be37849c20b48ba66f1cbcaa22896d97fd8c6dc3fd0fa8",
+      "hashPolicy": "required"
+    },
+    {
+      "path": "CLAUDE.md",
+      "ownership": "adapter",
+      "sha256": "f3a6b6cd16ad12f4280700f95cce5ee07d6b3b9339731d9f0a1509919195b283",
+      "hashPolicy": "required"
+    },
+    {
+      "path": "CONTRIBUTING.md",
+      "ownership": "kit-managed",
+      "sha256": "30639839380186fbd77117f5ac2d2be31e9a17ac44339d72f2a5ac005d5f462d",
+      "hashPolicy": "required"
+    },
+    {
+      "path": "LICENSE",
+      "ownership": "kit-managed",
+      "sha256": "533cf0a568a92843841e006fe3780cc9b81d77086b2990462b8c0d413890011c",
+      "hashPolicy": "required"
+    },
+    {
+      "path": "README.md",
+      "ownership": "kit-managed",
+      "sha256": "00f6bfc71540b77c9ca992f476d619c8a3c8ed14562fcf5db4813d4a7b17076a",
+      "hashPolicy": "required"
+    },
+    {
+      "path": "SECURITY.md",
+      "ownership": "kit-managed",
+      "sha256": "4621b13bcc5d8f91c29169b21cd47edd22f2cb505294a3b5f8bcd9368e491b60",
+      "hashPolicy": "required"
+    },
+    {
+      "path": "hooks/hooks.json",
+      "ownership": "kit-managed",
+      "sha256": "e461f149ae82abb95f43711eb634bce7545698ffffffb914a79c78e7a135539b",
+      "hashPolicy": "required"
+    },
+    {
+      "path": "install.ps1",
+      "ownership": "kit-managed",
+      "sha256": "43e9b71a4d2e4701527accff446c928323667e998c04cc9c06cb84ee94e630fa",
+      "hashPolicy": "required"
+    },
+    {
+      "path": "install.sh",
+      "ownership": "kit-managed",
+      "sha256": "a57e959dc78504a5918e56f87bee31ca4808352770ea47486d60bb4cab319f3b",
+      "hashPolicy": "required"
+    },
+    {
+      "path": "skills/archive-work/SKILL.md",
+      "ownership": "kit-managed",
+      "sha256": "0914eb89b3e2374fba7bc4813f6cceaa38281f5521924e48e72259bbc8e9bd20",
+      "hashPolicy": "required"
+    },
+    {
+      "path": "skills/artifact-router/SKILL.md",
+      "ownership": "kit-managed",
+      "sha256": "398babb7f16c42ed3ea8862c1a774683f3c77175c7fc92c46ad4984f621a28ec",
+      "hashPolicy": "required"
+    },
+    {
+      "path": "skills/checkpoint-work/SKILL.md",
+      "ownership": "kit-managed",
+      "sha256": "f97f4bbb2d4791c4d31b6d77b023e73d651b8024d394953704eefdf4a329a486",
+      "hashPolicy": "required"
+    },
+    {
+      "path": "skills/close-work/SKILL.md",
+      "ownership": "kit-managed",
+      "sha256": "743fda5c91ee57a0a997511686fc72ef276a551253e80351c62adc71795c5cc6",
+      "hashPolicy": "required"
+    },
+    {
+      "path": "skills/init/SKILL.md",
+      "ownership": "kit-managed",
+      "sha256": "d5dccb3186776cc8def36fb2834fb23fe1a0697886be9faad34975d4dcd8e447",
+      "hashPolicy": "required"
+    },
+    {
+      "path": "skills/kit-doctor/SKILL.md",
+      "ownership": "kit-managed",
+      "sha256": "58b3b122a8db59d2f9310f102545b9139c9d614a8ba19a84bfd10fb121f2b257",
+      "hashPolicy": "required"
+    },
+    {
+      "path": "skills/remove-kit/SKILL.md",
+      "ownership": "kit-managed",
+      "sha256": "683aa7a6c70f56a6665b736858cd61e77120b629af1cbffb07b2a051cf5e7447",
+      "hashPolicy": "required"
+    },
+    {
+      "path": "skills/resume-work/SKILL.md",
+      "ownership": "kit-managed",
+      "sha256": "5a9babf81b84a2361037be7aa0c288bd78e6686f15c5182687b068eaa5c043ce",
+      "hashPolicy": "required"
+    },
+    {
+      "path": "skills/start-work/SKILL.md",
+      "ownership": "kit-managed",
+      "sha256": "c62ec16f7882c34001ca99d67d07b32ddce3ccfe8f59184eb65c90334ac70a33",
+      "hashPolicy": "required"
+    },
+    {
+      "path": "skills/update/SKILL.md",
+      "ownership": "kit-managed",
+      "sha256": "af2ef2a5d6489408918bbca8817b8de8c3a4ab325ee81dac7753f65b3a2a1ef3",
+      "hashPolicy": "required"
+    }
+  ]
+}

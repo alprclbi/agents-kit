@@ -1,0 +1,7 @@
+{
+  "id": "23",
+  "name": "claude-load-observability",
+  "profile": "auto",
+  "fixtureData": "synthetic",
+  "containsSecrets": false
+}

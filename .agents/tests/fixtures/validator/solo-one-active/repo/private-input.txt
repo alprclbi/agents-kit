@@ -1,0 +1,1 @@
+SYNTHETIC_NON_SECRET_SENTINEL=must-not-appear-in-output

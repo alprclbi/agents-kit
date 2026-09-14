@@ -1,0 +1,108 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agent-kit.local/schemas/work.schema.json",
+  "title": "Agents Kit Work Record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "id",
+    "title",
+    "status",
+    "profile",
+    "profileReason",
+    "backend",
+    "artifacts",
+    "ownership",
+    "links",
+    "git",
+    "documentationImpact",
+    "createdAt",
+    "updatedAt"
+  ],
+  "$defs": {
+    "relativePath": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?!/)(?![A-Za-z]:[\\\\/])(?!.*(?:^|/)\\.\\.(?:/|$)).+$"
+    },
+    "nullableRelativePath": {
+      "anyOf": [
+        { "$ref": "#/$defs/relativePath" },
+        { "type": "null" }
+      ]
+    },
+    "nullableString": {
+      "type": ["string", "null"]
+    }
+  },
+  "properties": {
+    "$schema": { "type": "string" },
+    "schemaVersion": { "const": "2.0.0" },
+    "id": { "type": "string", "pattern": "^[0-9A-Za-z][0-9A-Za-z._-]*$" },
+    "title": { "type": "string", "minLength": 1 },
+    "status": { "enum": ["draft", "ready", "in_progress", "blocked", "review", "done", "cancelled", "archived"] },
+    "profile": { "enum": ["solo", "team"] },
+    "profileReason": { "type": "string", "minLength": 1 },
+    "backend": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "source", "root"],
+      "properties": {
+        "type": { "enum": ["native", "spec-kit", "openspec", "external"] },
+        "source": { "enum": ["user", "config", "work", "detected", "fallback"] },
+        "root": { "$ref": "#/$defs/relativePath" }
+      }
+    },
+    "artifacts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["spec", "plan", "tasks", "status", "outcome", "decisions", "research", "testPlan", "evidence"],
+      "properties": {
+        "spec": { "$ref": "#/$defs/nullableRelativePath" },
+        "plan": { "$ref": "#/$defs/nullableRelativePath" },
+        "tasks": { "$ref": "#/$defs/nullableRelativePath" },
+        "status": { "$ref": "#/$defs/relativePath" },
+        "outcome": { "$ref": "#/$defs/nullableRelativePath" },
+        "decisions": { "$ref": "#/$defs/nullableRelativePath" },
+        "research": { "$ref": "#/$defs/nullableRelativePath" },
+        "testPlan": { "$ref": "#/$defs/nullableRelativePath" },
+        "evidence": { "$ref": "#/$defs/nullableRelativePath" }
+      }
+    },
+    "ownership": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["paths", "resources", "ports", "migrations"],
+      "properties": {
+        "paths": { "type": "array", "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+        "resources": { "type": "array", "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+        "ports": { "type": "array", "uniqueItems": true, "items": { "type": "integer", "minimum": 1, "maximum": 65535 } },
+        "migrations": { "type": "array", "uniqueItems": true, "items": { "type": "string", "minLength": 1 } }
+      }
+    },
+    "links": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["issue", "pullRequest", "externalSpec"],
+      "properties": {
+        "issue": { "$ref": "#/$defs/nullableString" },
+        "pullRequest": { "$ref": "#/$defs/nullableString" },
+        "externalSpec": { "$ref": "#/$defs/nullableString" }
+      }
+    },
+    "git": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["branch", "worktree", "head"],
+      "properties": {
+        "branch": { "$ref": "#/$defs/nullableString" },
+        "worktree": { "$ref": "#/$defs/nullableString" },
+        "head": { "$ref": "#/$defs/nullableString" }
+      }
+    },
+    "documentationImpact": { "enum": ["none", "possible", "required", "generated"] },
+    "createdAt": { "type": "string", "format": "date-time" },
+    "updatedAt": { "type": "string", "format": "date-time" }
+  }
+}

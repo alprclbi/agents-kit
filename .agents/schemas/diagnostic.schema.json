@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agent-kit.local/schemas/diagnostic.schema.json",
+  "title": "Agents Kit Diagnostic",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["code", "severity", "blocking", "message", "path", "remediation"],
+  "properties": {
+    "code": { "type": "string", "pattern": "^AK[EWIS][0-9]{3}$" },
+    "severity": { "enum": ["error", "warning", "info", "skip"] },
+    "blocking": { "type": "boolean" },
+    "message": { "type": "string", "minLength": 1 },
+    "path": {
+      "anyOf": [
+        {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^(?!/)(?![A-Za-z]:[\\\\/])(?!.*(?:^|/)\\.\\.(?:/|$)).+$"
+        },
+        { "type": "null" }
+      ]
+    },
+    "remediation": { "type": ["string", "null"] }
+  }
+}

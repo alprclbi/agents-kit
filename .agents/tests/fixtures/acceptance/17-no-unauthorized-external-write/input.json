@@ -1,0 +1,7 @@
+{
+  "id": "17",
+  "name": "no-unauthorized-external-write",
+  "profile": "high-assurance",
+  "fixtureData": "synthetic",
+  "containsSecrets": false
+}

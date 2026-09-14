@@ -1,0 +1,72 @@
+# Agents Kit dogrulamasi.
+#
+# actions/checkout SHA ile pinlenir, tag ile degil: tag tasinabilir ve
+# ele gecirilmis bir tag CI icinde rastgele kod calistirir. SHA
+# degistirilemez.
+#   3d3c42e5aac5ba805825da76410c181273ba90b1 = v7.0.1 (2026-07-20)
+# Guncellerken yeni SHA'yi soyle coz ve bu yorumu da guncelle:
+#   gh api repos/actions/checkout/git/refs/tags/<tag> --jq .object.sha
+
+name: Agents Kit validation
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  unix:
+    name: POSIX kabuk (ubuntu)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+
+      - name: Test paketi
+        run: sh .agents/tests/run.sh
+
+      # Hata halinde hangi vakanin dustugunu goster. Sonuc TSV'si
+      # repoya girmez; log'a basilmazsa CI'da tahmin yurutmek gerekir.
+      - name: Basarisiz vakalar
+        if: failure()
+        run: |
+          echo '--- .agents/tests/results/unix.tsv ---'
+          cat .agents/tests/results/unix.tsv || echo '(dosya yok)'
+
+      - name: Manifest butunlugu
+        run: sh .agents/validators/sh/agent-kit.sh manifest --root "$PWD" --check
+
+      - name: Tani (bilgi amacli)
+        run: sh .agents/validators/sh/agent-kit.sh doctor --root "$PWD" --format text
+
+  windows:
+    name: PowerShell (windows)
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+
+      - name: Test paketi
+        shell: powershell
+        run: .agents\tests\run.ps1
+
+      - name: Basarisiz vakalar
+        if: failure()
+        shell: powershell
+        run: |
+          $tsv = '.agents\tests\results\windows.tsv'
+          if (Test-Path $tsv) { Get-Content $tsv } else { Write-Output '(dosya yok)' }
+
+  line-endings:
+    name: Satir sonlari
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+
+      # Manifest hash dogrulamasi ve kabuk betikleri LF'e bagli. CRLF
+      # sizarsa klonlayan herkeste manifest --check duser ve betikler
+      # tasima hatasi verir. Ayni kontrol yerelde de var:
+      # .agents/tests/static/line-endings.sh
+      - name: CRLF sizmis mi
+        run: sh .agents/tests/static/line-endings.sh "$PWD"

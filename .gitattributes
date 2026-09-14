@@ -1,0 +1,17 @@
+# Satir sonlari her platformda LF kalir.
+#
+# Gerekce: kit manifest'i dosya hash'lerini tutuyor. Git checkout sirasinda
+# LF'i CRLF'e cevirirse her dosyanin hash'i degisir ve `manifest --check`
+# klonlayan herkeste duser. Ayrica CRLF'e cevrilen kabuk betikleri
+# Linux/macOS'ta `\r` hatasiyla calismaz.
+* text=auto eol=lf
+
+# PowerShell dosyalari BOM tasiyor; iceriklerine dokunulmaz.
+*.ps1  text eol=lf
+*.psm1 text eol=lf
+
+# Ikili dosyalar
+*.zip  binary
+*.png  binary
+*.jpg  binary
+*.pdf  binary

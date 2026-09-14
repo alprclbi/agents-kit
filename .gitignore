@@ -1,0 +1,27 @@
+# Ajan is kayitlari ve gelistirme artifact'lari repoya girmez.
+# Kiti indiren kisi sifir bir kit alir; senin veya baskasinin is gecmisi
+# onun deposunda birikmez.
+.agents/changes/active/*
+!.agents/changes/active/README.md
+.agents/changes/archive/*
+!.agents/changes/archive/README.md
+
+# Kisisel tercihler, calisma zamani, gunlukler
+.agents/local/*
+!.agents/local/README.md
+.agents/runtime/*
+!.agents/runtime/README.md
+.agents/logs/
+
+# Uretilmis test ve olcum ciktilari
+.agents/tests/results/*
+!.agents/tests/results/.gitignore
+.agents/evals/results/*
+!.agents/evals/results/.gitignore
+
+# Dagitim paketi
+agents-kit.zip
+
+# Isletim sistemi
+.DS_Store
+Thumbs.db
