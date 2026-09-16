@@ -1,7 +1,7 @@
 {
   "$schema": "./schemas/manifest.schema.json",
   "schemaVersion": "2.0.0",
-  "kitVersion": "1.0.0",
+  "kitVersion": "1.0.1",
   "generatedAt": "2026-09-16",
   "compatibility": {
     "codex": "official-current-docs",
@@ -35,7 +35,7 @@
     {
       "path": ".agents/VERSION",
       "ownership": "kit-managed",
-      "sha256": "59854984853104df5c353e2f681a15fc7924742f9a2e468c29af248dce45ce03",
+      "sha256": "44e161e4495cac2cf7858043e9e6418e9579f0ddcfae826f9a372622968ce066",
       "hashPolicy": "required"
     },
     {
@@ -107,7 +107,7 @@
     {
       "path": ".agents/config.json",
       "ownership": "kit-managed",
-      "sha256": "15342e8dcd94dff214c1d168501951b287043a26b79e05c0eddf76e97c602cb0",
+      "sha256": "cc60a653b5ff52c4c35ed9aa9177706b969f8bee708c7dbf2dc11eb777b4b39c",
       "hashPolicy": "required"
     },
     {
@@ -1547,13 +1547,13 @@
     {
       "path": ".claude-plugin/marketplace.json",
       "ownership": "kit-managed",
-      "sha256": "2ba9e3d437d654eee4cd2ebfe930125cf8e519560015d48bdca423d88c4d1495",
+      "sha256": "6af386c21a20fb511d53ac1b2d464de8a713c500eca265ffd6a84ae2abd127c7",
       "hashPolicy": "required"
     },
     {
       "path": ".claude-plugin/plugin.json",
       "ownership": "kit-managed",
-      "sha256": "413a348100d202255cfb64bf6b1dcf42ecb016682a27bfec9e3cb7a1cb2ba525",
+      "sha256": "502297e815fd5fc0213c27fabc599dc717f2bd8e12f6853590baeb9e664b4bbb",
       "hashPolicy": "required"
     },
     {
@@ -1625,7 +1625,7 @@
     {
       "path": ".codex-plugin/plugin.json",
       "ownership": "kit-managed",
-      "sha256": "bd6f07666ab4025cb7fc3ee12b9a742ea3385cf77ba3ed97d89c64eefc14e874",
+      "sha256": "5eb16a86bcf4087f1f468aceea25cf636038e787176d1e2dd6b5f67b84f239f7",
       "hashPolicy": "required"
     },
     {
@@ -1673,7 +1673,7 @@
     {
       "path": "CHANGELOG.md",
       "ownership": "kit-managed",
-      "sha256": "65dc6d8b6e9e68665c68b0e982f3ad8d1a46e944987021cac357bdd451510b63",
+      "sha256": "739249ffdaba49219bfa568101ec6b068c619824a39351ddac4532aa43ae8ec9",
       "hashPolicy": "required"
     },
     {

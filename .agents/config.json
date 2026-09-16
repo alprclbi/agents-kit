@@ -1,7 +1,7 @@
 {
   "$schema": "./schemas/config.schema.json",
   "schemaVersion": "2.0.0",
-  "kitVersion": "1.0.0",
+  "kitVersion": "1.0.1",
   "language": "tr",
   "profile": "solo",
   "artifactBackend": "auto",

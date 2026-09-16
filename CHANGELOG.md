@@ -6,6 +6,12 @@ Kapalı geliştirme dönemine ait mühendislik günlüğü [`.agents/CHANGELOG.m
 
 ## [Yayınlanmadı]
 
+Henüz kayıt yok.
+
+## [1.0.1] - 2026-09-16
+
+Yama sürümü. Kit kurulu olmayan projelerde hook'lar artık sessiz.
+
 ### Düzeltildi
 
 - **Kit kurulu olmayan projelerde hook'lar artık sessizce geçiyor.** Plugin kullanıcı kapsamında etkinleştirildiğinde `hooks/hooks.json` her projede çalışır. `pre-tool-use` ve `stop-check`, `.agents/config.json` yokluğunu denetlemeden profil okuduğu için iskelesi olmayan projede 2 ile düşüyor ve istemci her mutasyon aracında hook hatası gösteriyordu. Üç giriş noktası da artık kapıdan geçiyor: çıktı yok, çıkış 0.
