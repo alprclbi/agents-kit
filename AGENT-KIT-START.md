@@ -83,6 +83,11 @@ Hook çalışmazsa kurallar yine geçerlidir — yalnız mekanik denetim düşer
 Ağa çıkmaz. Global ayarlarını değiştirmez. Kendi başına commit, push, PR veya
 issue oluşturmaz. Bunların hepsi ayrıca senin onayını gerektirir.
 
+**Başka projelerine karışmaz.** Plugin kullanıcı kapsamında kurulu olsa bile
+kit yalnız `.agents/config.json` bulunan projede çalışır. Diğer projelerde üç
+hook da hiçbir çıktı vermeden geçer. İstediğin projede `/agents-kit:init` ile
+açarsın.
+
 ---
 
 ## Sistemin ayrıntısı

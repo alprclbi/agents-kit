@@ -2,7 +2,7 @@
   "$schema": "./schemas/manifest.schema.json",
   "schemaVersion": "2.0.0",
   "kitVersion": "1.0.0",
-  "generatedAt": "2026-09-14",
+  "generatedAt": "2026-09-16",
   "compatibility": {
     "codex": "official-current-docs",
     "claudeCode": "official-current-docs"
@@ -1463,7 +1463,7 @@
     {
       "path": ".agents/tests/static/scaffold-notice.sh",
       "ownership": "kit-managed",
-      "sha256": "f7e4d1ebadaf03b42d28e12edaf0f672b6c682bf8e1123126732a2e425137456",
+      "sha256": "5313ef5e7445f89a2d281d4abb0d7475776de5a8e59a3a223f61bbf3c8ac0a26",
       "hashPolicy": "required"
     },
     {
@@ -1523,19 +1523,19 @@
     {
       "path": ".agents/validators/ps/agent-kit.ps1",
       "ownership": "kit-managed",
-      "sha256": "a02c441c3626920022e11c43fb2b94950bb449edff241e733c9701022d890ff5",
+      "sha256": "144d34b732fc2f6ab519172d35f7623aa163592fbb8b47a21e0950269f283ba1",
       "hashPolicy": "required"
     },
     {
       "path": ".agents/validators/sh/agent-kit.sh",
       "ownership": "kit-managed",
-      "sha256": "c393007df9c19d7854481acb063876d98d51d50adf84c9e72ddb9ba82375c00e",
+      "sha256": "348e2965ee942b050400f926aceb86582da2af55cbf140579368c57044c6a918",
       "hashPolicy": "required"
     },
     {
       "path": ".agents/validators/sh/lib.sh",
       "ownership": "kit-managed",
-      "sha256": "b7c630572dc642a313db79dd7772d51513f5f5182dadb2cbe81f278be2efd25e",
+      "sha256": "4f35af01064d29936a0e301dbf3c938813dd1869a593da74c2bbd28c66fcea4c",
       "hashPolicy": "required"
     },
     {
@@ -1661,7 +1661,7 @@
     {
       "path": "AGENT-KIT-START.md",
       "ownership": "kit-managed",
-      "sha256": "69a7c5e583bf646474df457c54fc5a953580769c8b18ca013d93b164b98a88de",
+      "sha256": "4ab771b055453d06e3a77c764f5ad7e24ad8e629ff1056dd0ecf3e6f844e47c7",
       "hashPolicy": "required"
     },
     {
@@ -1673,7 +1673,7 @@
     {
       "path": "CHANGELOG.md",
       "ownership": "kit-managed",
-      "sha256": "a25eeb6e959eb4d094be37849c20b48ba66f1cbcaa22896d97fd8c6dc3fd0fa8",
+      "sha256": "65dc6d8b6e9e68665c68b0e982f3ad8d1a46e944987021cac357bdd451510b63",
       "hashPolicy": "required"
     },
     {
@@ -1697,7 +1697,7 @@
     {
       "path": "README.md",
       "ownership": "kit-managed",
-      "sha256": "00f6bfc71540b77c9ca992f476d619c8a3c8ed14562fcf5db4813d4a7b17076a",
+      "sha256": "44233d948d0195d9412141b5d74cbca25795a398ef8b71e51fc184a890257747",
       "hashPolicy": "required"
     },
     {

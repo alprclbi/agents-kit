@@ -192,19 +192,18 @@ emit_session_context() {
     fi
     case "$source" in startup|resume|clear|compact) ;; *) source=startup ;; esac
   fi
-  # Iskele hic yoksa dogrulayici config.json okuyamaz. Cokmek yerine
-  # durumu bildir: kullanici plugin'i kurmus ama projede henuz hicbir
-  # sey yok. Ajan bunu gorup kurulumu teklif eder.
-  if [ ! -f "$root/.agents/config.json" ]; then
-    context="Agents Kit oturum başlangıcı
-Proje kökü: $root
-Kaynak: $source
-Iskele: yok"
+  # Kit bu projede kurulu degilse dogrulayicinin bildirecegi bir sey yoktur.
+  # Plugin kullanici seviyesinde etkinlestirildiginde hook HER projede
+  # calisir; iskelesi olmayan projede tek satirlik bildirim bile her oturumda
+  # tekrarlanan gurultuye donusur. Kit istenen projede /agents-kit:init ile
+  # acilir; kesif yolu odur, oturum baglami degil.
+  #
+  # JSON sozlesmesi korunur, yalniz context bos kalir: programatik tuketici
+  # alan yoklugu yerine bos deger gorur. Metin bicimi hic cikti vermez.
+  if ! ak_kit_installed "$root"; then
     if [ "$format" = json ]; then
-      jq -cn --arg context "$context" --arg client "$client" --arg source "$source" \
-        '{context:$context,profile:null,resolvedWorkId:null,workSource:"none",client:$client,source:$source,diagnostics:[]}'
-    else
-      printf '%s\n' "$context"
+      jq -cn --arg client "$client" --arg source "$source" \
+        '{context:"",profile:null,resolvedWorkId:null,workSource:"none",client:$client,source:$source,diagnostics:[]}'
     fi
     return 0
   fi
@@ -286,6 +285,16 @@ Sert sınırlar (bağlam sıkıştırıldı, yeniden bildiriliyor):
 
 emit_pre_tool_use() {
   hook_input=$(cat)
+  # Kit bu projede kurulu degil: kapinin denetleyecegi sozlesme yok. Karar
+  # ak_profile'a birakilamaz, cunku o config.json'i okuyamayinca 2 ile duser
+  # ve istemci her mutasyon aracinda hook hatasi gosterir.
+  #
+  # Bos hookSpecificOutput jq'suz basilir: kurulu olmayan projede jq sarti
+  # aramak kapinin kendi amacini bozardi.
+  if ! ak_kit_installed "$root"; then
+    printf '{"hookSpecificOutput":{"hookEventName":"PreToolUse"}}\n'
+    return 0
+  fi
   if command -v jq >/dev/null 2>&1; then
     tool_name=$(printf '%s' "$hook_input" | jq -er '.tool_name // .toolName // empty') || { printf 'AKE901 geçersiz hook JSON\n' >&2; exit 3; }
   else
@@ -335,6 +344,13 @@ $details"
 }
 
 emit_stop_check() {
+  # Kit bu projede kurulu degil: kapatilacak is kaydi da, uzlastirilacak
+  # artifact yolu da yok. pre-tool-use ile ayni gerekce: ak_profile burada
+  # cagrilirsa her Stop olayinda hook hatasi cikar.
+  if ! ak_kit_installed "$root"; then
+    [ "$format" != json ] || printf '{"continue":true}\n'
+    return 0
+  fi
   profile=$(ak_profile "$root") || exit $?
   for leak in docs/superpowers/specs docs/superpowers/plans; do
     if [ -d "$root/$leak" ] && find "$root/$leak" -type f -print -quit 2>/dev/null | grep . >/dev/null; then

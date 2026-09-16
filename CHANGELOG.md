@@ -6,7 +6,13 @@ Kapalı geliştirme dönemine ait mühendislik günlüğü [`.agents/CHANGELOG.m
 
 ## [Yayınlanmadı]
 
-Henüz kayıt yok.
+### Düzeltildi
+
+- **Kit kurulu olmayan projelerde hook'lar artık sessizce geçiyor.** Plugin kullanıcı kapsamında etkinleştirildiğinde `hooks/hooks.json` her projede çalışır. `pre-tool-use` ve `stop-check`, `.agents/config.json` yokluğunu denetlemeden profil okuduğu için iskelesi olmayan projede 2 ile düşüyor ve istemci her mutasyon aracında hook hatası gösteriyordu. Üç giriş noktası da artık kapıdan geçiyor: çıktı yok, çıkış 0.
+
+### Değişti
+
+- **Oturum başındaki `Iskele: yok` satırı kaldırıldı.** Kit kurulu olmayan projede oturum bağlamı hiçbir şey basmaz. Keşif yolu `/agents-kit:init` komutunun her projede görünür olmasıdır. JSON biçiminde sözleşme korunur, `context` boş döner.
 
 ## [1.0.0] - 2026-09-14
 

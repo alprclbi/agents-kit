@@ -41,6 +41,15 @@ if ($PSBoundParameters.ContainsKey('Cwd')) {
 
 function Get-Config { return Read-AgentKitJson -Path (Join-Path $Root '.agents\config.json') }
 
+# Kit bu projede kurulu mu? sh/lib.sh icindeki ak_kit_installed ile PARITE.
+# Plugin kullanici seviyesinde etkinlestirildiginde hook HER projede calisir;
+# iskelesi olmayan projede dogrulayicinin yapacagi is yoktur.
+#
+# Isaret olarak config.json secilir cunku Get-Profile'in okudugu dosya odur;
+# daha gevsek bir isaret kapiyi gercek ihtiyactan genis acar ve kitin kurulu
+# oldugu projede denetimi sessizce dusurebilir.
+function Test-KitInstalled { return (Test-Path -LiteralPath (Join-Path $Root '.agents\config.json') -PathType Leaf) }
+
 # Profil yalniz BEYANDAN cozulur. Aktif is sayisi burada hic okunmaz.
 # ak_profile (lib.sh) ile birebir ayni davranir.
 function Get-Profile {
@@ -148,13 +157,14 @@ function Invoke-SessionContext {
       } catch { $actualSource = 'startup' }
     }
   }
-  # Iskele hic yoksa config.json okunamaz. Cokmek yerine durumu bildir.
-  if (-not (Test-Path -LiteralPath (Join-Path $Root '.agents\config.json') -PathType Leaf)) {
-    $context = "Agents Kit oturum başlangıcı`nProje kökü: $Root`nKaynak: $actualSource`nIskele: yok"
+  # Kit bu projede kurulu degilse bildirilecek bir sey yoktur. Tek satirlik
+  # bildirim bile iskelesi olmayan her projede her oturumda tekrarlanan
+  # gurultuye donusur; kit istenen projede /agents-kit:init ile acilir.
+  #
+  # JSON sozlesmesi korunur, yalniz context bos kalir. sh PARITE.
+  if (-not (Test-KitInstalled)) {
     if ($Format -eq 'json') {
-      Write-Result ([pscustomobject]@{ context = $context; profile = $null; resolvedWorkId = $null; workSource = 'none'; client = $Client; source = $actualSource; diagnostics = @() })
-    } else {
-      Write-Output $context
+      Write-Result ([pscustomobject]@{ context = ''; profile = $null; resolvedWorkId = $null; workSource = 'none'; client = $Client; source = $actualSource; diagnostics = @() })
     }
     return
   }
@@ -217,6 +227,13 @@ function Invoke-SessionContext {
 
 function Invoke-PreToolUse {
   $raw = [Console]::In.ReadToEnd()
+  # Kit kurulu degil: kapinin denetleyecegi sozlesme yok. Karar Get-Profile'a
+  # birakilamaz, cunku o config.json'i okuyamayinca firlatir ve istemci her
+  # mutasyon aracinda hook hatasi gosterir. sh PARITE.
+  if (-not (Test-KitInstalled)) {
+    Write-Output '{"hookSpecificOutput":{"hookEventName":"PreToolUse"}}'
+    return
+  }
   $hook = $raw | ConvertFrom-Json
   $toolName = if ($hook.PSObject.Properties.Name -contains 'tool_name') { [string]$hook.tool_name } elseif ($hook.PSObject.Properties.Name -contains 'toolName') { [string]$hook.toolName } else { throw 'AKE901 hook tool adı eksik' }
   # Kabuk araclarinda karar arac adindan degil komuttan verilir; salt
@@ -265,6 +282,12 @@ function Invoke-PreToolUse {
 }
 
 function Invoke-StopCheck {
+  # Kit kurulu degil: kapatilacak is kaydi da, uzlastirilacak artifact yolu
+  # da yok. Invoke-PreToolUse ile ayni gerekce. sh PARITE.
+  if (-not (Test-KitInstalled)) {
+    if ($Format -eq 'json') { Write-Output '{"continue":true}' }
+    return
+  }
   $profile = Get-Profile
   $diagnostics = New-Object 'System.Collections.Generic.List[object]'
   foreach ($relative in @('docs\superpowers\specs', 'docs\superpowers\plans')) {
