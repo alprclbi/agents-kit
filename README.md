@@ -75,6 +75,23 @@ projelerinde geçerli olur.
 
 Codex'te kapsam bayrağı yoktur.
 
+### Kurmak, aktif etmek değildir
+
+Plugin kullanıcı kapsamında kurulduğunda araçlar her projede **erişilebilir**
+olur; kurallar ve hook'lar hiçbir projede kendiliğinden **devreye girmez**.
+
+Kit yalnız `.agents/config.json` dosyasının bulunduğu projede çalışır. O dosya
+yoksa üç hook da hiçbir çıktı vermeden geçer: oturum başında satır basmaz,
+araç çağrılarını denetlemez, kapanışta konuşmaz.
+
+Bir projede aktif etmek için orada `/agents-kit:init` çalıştır. Kaldırmak için
+`/agents-kit:remove-kit`; plugin'i kaldırmak gerekmez.
+
+| Durum | Sonuç |
+| --- | --- |
+| Plugin kurulu, projede `.agents/` yok | Skill'ler görünür, hook'lar sessiz |
+| Plugin kurulu, projede `/agents-kit:init` çalıştırılmış | Kurallar ve hook'lar etkin |
+
 ---
 
 ## İlk kullanım
@@ -229,6 +246,7 @@ Hiçbir şeyi değiştirmez, sadece durumu söyler.
 | Belirti | Sebebi | Ne yapmalı |
 | --- | --- | --- |
 | Komutlar görünmüyor | İstemci yeniden başlatılmadı | Claude Code'u kapat aç |
+| Projede hiçbir şey olmuyor | Kit o projede kurulu değil | `/agents-kit:init` — plugin kurulumu yetmez |
 | `Iskele: ... (plugin ...)` satırı | Kurallar geride kaldı | `/agents-kit:update` |
 | `AKE203` uyarısı | Aktif iş kaydı yok | `/agents-kit:start-work` veya salt okunur çalış |
 | Manifest hatası | Bir kit dosyası elle değişti | `/agents-kit:update` — değişikliğin yedeklenir |

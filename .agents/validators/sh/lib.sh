@@ -114,6 +114,19 @@ ak_readonly_command() {
   esac
 }
 
+# Kit bu projede kurulu mu? Plugin kullanici seviyesinde etkinlestirildiginde
+# hooks/hooks.json HER projede calisir, yalniz iskelenin bulundugu projede
+# degil. Kurulu olmayan projede dogrulayicinin yapacagi is yoktur: hicbir
+# cikti vermeden cekilir.
+#
+# Isaret olarak config.json secilir cunku ak_profile'in okudugu dosya odur;
+# daha gevsek bir isaret (ornegin yalniz .agents/ dizini) kapiyi gercek
+# ihtiyactan genis acar ve kitin kurulu oldugu projede denetimi sessizce
+# dusurebilir.
+ak_kit_installed() {
+  [ -f "$1/.agents/config.json" ]
+}
+
 # Profil yalniz BEYANDAN cozulur. Aktif is sayisi burada hic okunmaz:
 # tek gelistirici on isi acik tutup ayri oturumlarda yurutebilir ve bu
 # onu ekip yapmaz. Sayimdan cikarim yapmak kullaniciyi kilitliyordu.
