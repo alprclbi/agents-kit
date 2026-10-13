@@ -65,7 +65,9 @@ printf '%s' "$codex_deny" | jq -e '.hookSpecificOutput.permissionDecision == "de
 cleanup_codex
 trap - EXIT HUP INT TERM
 
-printf '%s' "$(jq -r '.hooks.SessionStart[0].hooks[0].commandWindows' .codex/hooks.json)" | grep -Fq 'AGENTS.md' || { printf 'E_CODEX_WINDOWS_ROOT_FALLBACK\n' >&2; exit 2; }
+# Windows kok cozumu (Git, sonra isaretci) dogrulayicida: -DiscoverRoot.
+# Ayrintili sozlesme codex-hook-root.sh icinde.
+printf '%s' "$(jq -r '.hooks.SessionStart[0].hooks[0].commandWindows' .codex/hooks.json)" | grep -Fq -- '-DiscoverRoot' || { printf 'E_CODEX_WINDOWS_ROOT_FALLBACK\n' >&2; exit 2; }
 
 grep -Fq 'Git deposu gerektirmez' .agents/adapters/claude.md || { printf 'E_CLAUDE_GIT_INDEPENDENCE_DOC\n' >&2; exit 2; }
 grep -Fq 'Claude Code içinde `/hooks`' AGENT-KIT-START.md || { printf 'E_CLAUDE_HOOK_ACTIVATION_DOC\n' >&2; exit 2; }

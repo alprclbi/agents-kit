@@ -12,6 +12,8 @@ probe_cost='0.07'
 arms_filter='' tasks_filter=''
 # Spike/tanilama icin sandbox korunur; normal kosuda kapalidir.
 keep=0
+# Olculen ajan istemcisi. Kollar ve gorevler ayni; yalniz istemci degisir.
+client=claude
 
 while [ $# -gt 0 ]; do
   case $1 in
@@ -25,12 +27,23 @@ while [ $# -gt 0 ]; do
     --arms)       arms_filter=$2;  shift 2 ;;
     --tasks)      tasks_filter=$2; shift 2 ;;
     --keep-sandbox) keep=1; shift ;;
+    --client)     client=$2;  shift 2 ;;
     *) printf 'E_RS_ARG %s\n' "$1" >&2; exit 3 ;;
   esac
 done
 
+case "$client" in claude|codex) ;; *) printf 'E_RS_CLIENT %s\n' "$client" >&2; exit 3 ;; esac
+
 evals="$root/.agents/evals"
 arms_file="$evals/arms.tsv"
+
+# Butce birikimi. Maliyet basmayan istemci (cost_reported=false, Codex)
+# sifir sayilirsa butce kapisi hic calismaz ve kosu sinirsiz harcar; bu
+# durumda kosu basi tahmin eklenir.
+add_cost() {
+  printf '%s' "$1" | jq -r --argjson s "$2" --argjson est "$3" \
+    '$s + (if .cost_reported == false then $est else (.total_cost_usd // 0) end)'
+}
 
 # ---------------------------------------------------------------- sonda modu
 # Yalniz TALIMAT YUKUNU olcer: kol basina tek turluk trivial istem.
@@ -61,11 +74,11 @@ if [ "$probe" = 1 ]; then
   spent=0
   while read -r arm; do
     [ -n "$arm" ] || continue
-    set -- --root "$root" --arm "$arm"
+    set -- --root "$root" --arm "$arm" --client "$client"
     [ -n "$model" ] && set -- "$@" --model "$model"
     line=$(sh "$evals/lib/probe-arm.sh" "$@")
     printf '%s\n' "$line" >> "$pout"
-    spent=$(printf '%s' "$line" | jq -r --argjson s "$spent" '$s + (.total_cost_usd // 0)')
+    spent=$(add_cost "$line" "$spent" "$probe_cost")
     printf 'sonda %s -> cache_creation=%s tur=%s  (%s USD)\n' "$arm" \
       "$(printf '%s' "$line" | jq -r '.cache_creation_tokens')" \
       "$(printf '%s' "$line" | jq -r '.num_turns')" "$spent" >&2
@@ -78,6 +91,7 @@ if [ "$probe" = 1 ]; then
 
   printf '\nSonuc: %s\n' "$pout"
   printf 'Harcanan: %s USD\n' "$spent"
+  [ "$client" != codex ] || printf 'Not: Codex maliyet basmaz; harcanan kol basi tahmindir (%s USD).\n' "$probe_cost"
   exit 0
 fi
 
@@ -154,7 +168,7 @@ while read -r arm task repeat; do
     break
   fi
 
-  set -- --root "$root" --arm "$arm" --task "$task" --repeat "$repeat"
+  set -- --root "$root" --arm "$arm" --task "$task" --repeat "$repeat" --client "$client"
   [ -n "$model" ] && set -- "$@" --model "$model"
   [ "$keep" = 1 ] && set -- "$@" --keep-sandbox
   line=$(sh "$evals/lib/run-task.sh" "$@")
@@ -165,7 +179,7 @@ while read -r arm task repeat; do
   [ "$delay" -gt 0 ] && sleep "$delay"
 
   done_n=$((done_n + 1))
-  spent=$(printf '%s' "$line" | jq -r --argjson s "$spent" '$s + (.total_cost_usd // 0)')
+  spent=$(add_cost "$line" "$spent" "$cost")
   printf '[%s/%s] %s %s r%s -> %s  (%s USD)\n' \
     "$done_n" "$total" "$arm" "$task" "$repeat" \
     "$(printf '%s' "$line" | jq -r '.oracle')" "$spent" >&2
@@ -178,3 +192,4 @@ done < "$work"
 
 printf '\nSonuc: %s\n' "$out"
 printf 'Kosu: %s/%s   Harcanan: %s USD\n' "$done_n" "$total" "$spent"
+[ "$client" != codex ] || printf 'Not: Codex maliyet basmaz; harcanan kosu basi tahmindir (%s USD).\n' "$cost"

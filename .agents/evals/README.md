@@ -36,11 +36,28 @@ sh .agents/evals/lib/report-probe.sh
 sh .agents/evals/lib/report-tasks.sh results/runs.jsonl
 ```
 
-Bayraklar: `--repeats N`, `--model <ad>`, `--delay-secs N` (ardışık oturumlar limit patlamasına yol açabiliyor; varsayılan 5), `--probe`, `--arms <liste>`, `--tasks <liste>`, `--keep-sandbox`.
+Bayraklar: `--client claude|codex` (varsayılan `claude`), `--repeats N`, `--model <ad>`, `--delay-secs N` (ardışık oturumlar limit patlamasına yol açabiliyor; varsayılan 5), `--probe`, `--arms <liste>`, `--tasks <liste>`, `--keep-sandbox`.
 
 `--arms` ve `--tasks` virgüllü listedir ve katalogdaki `enabled` sütununu **ezer** — kademeli koşu `enabled=0` kolları (örneğin `E1`) böyle açar. `--keep-sandbox` tanılama içindir: koşu sonrası sandbox silinmez, hangi dosyanın oluşup oluşmadığına bakılabilir.
 
 Yeni bir parti başlatmadan önce mevcut `results/runs.jsonl` zaman damgalı bir ada taşınır; önceki kademe sessizce silinmez.
+
+## İstemciler
+
+Kollar ve görevler istemciden bağımsızdır; `--client` yalnız ajanı çağıran betiği seçer (`clients/<ad>.sh`). İki istemci aynı normalize satırı üretir, rapor betikleri istemciyi bilmeden okur.
+
+| | `claude` | `codex` |
+| --- | --- | --- |
+| Çağrı | `claude -p --output-format json` | `codex exec --json` |
+| İzolasyon | `--strict-mcp-config`, ağ araçları kapalı, izin listesi | `--ignore-user-config` (MCP, plugin, hook yok), `--ephemeral`, `workspace-write` sandbox |
+| Tur sınırı | `--max-turns` | **yok**; Codex'te karşılığı yok |
+| İzin yüzeyi | `sandbox-settings.json` | **uygulanmaz**; sandbox içinde her komut çalışabilir |
+| Maliyet | `total_cost_usd` | **raporlanmaz**; bütçe kapısı koşu başı tahmini (`0.15`, sondada `0.07`) kullanır |
+| Talimat yükü | `cache_creation_tokens` | `input_tokens - cached_input_tokens` |
+
+Codex sayıları kollar **arası** karşılaştırılabilir; Claude sayılarıyla doğrudan karşılaştırılamaz. Tur sayısı da aynı şey değildir: Codex'te tamamlanan araç ve mesaj öğesi sayısıdır.
+
+`turn.completed` olayı gelmeyen Codex koşusu `ok: false` ve `stop_reason: "incomplete"` döner; oracle'a gitmez, `invalid` sayılır. Üst düzey `error` olayları çoğunlukla yeniden bağlanma bildirimidir ve tek başına başarısızlık sayılmaz.
 
 ## Kollar
 
@@ -168,7 +185,7 @@ Ayırt etmeyen sondada dil kolu koşturmak, tanımı gereği anlamsız bir fark�
 - **İstatistiksel güç düşük.** Az görev ve az tekrarla yalnız büyük etkiler ayırt edilir. Rapor bu sınırı her çıktıda beyan eder.
 - **`A0` temiz taban değil.** Sandbox `CLAUDE.md` ve `.agents/skills/` taşımaya devam eder; rakamlar `AGENTS.md` farkıdır, kitin toplam bedeli değil.
 - **Sınava çalışma riski.** Görevler kitin kurallarını tetiklemek için yazıldığından sonuçlar gerçek projelere doğrudan genellenemez.
-- **Codex adaptörü doğrulanmamış.** Binary yokken `SKIP` döner; PASS uydurulmaz.
+- **Codex istemcisi ücretli koşuyla doğrulanmadı.** Olay adları ve bayraklar Codex CLI 0.162 ile, ağ hatası akışı gerçek bir koşuyla doğrulandı; başarılı bir koşunun kullanım sayıları henüz ölçülmedi. Binary yokken `SKIP` döner; PASS uydurulmaz. Ağ kesildiğinde `codex exec` yeniden bağlanmayı sınırsız bekleyebilir; durdurmak için `stop.sh` kullan.
 - **Çeviri karıştırıcısı.** `E1` yalnız dilde değil metinde de farklıdır; yapı paritesi zorlanır ama çeviri kalitesi ortadan kaldırılamaz.
 - **Tek model, tek sağlayıcı.** Sonuçlar ölçülen modele aittir.
 

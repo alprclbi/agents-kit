@@ -16,6 +16,10 @@ grep -Fq 'kendiliğinden değiştirme' "$skill" || { printf 'E_KIT_DOCTOR_READ_O
 # oraya bakarsa her cagrida sessizce SKIP verir ve kullanici doctor sonucunu
 # hic goremez. Giris cozumu once plugin kokunu aramali.
 grep -Fq 'CLAUDE_PLUGIN_ROOT' "$skill" || { printf 'E_KIT_DOCTOR_NO_PLUGIN_ROOT\n' >&2; exit 2; }
+# Plugin kokunde .agents/ yoksa (eksik veya bozuk paket) hook'lar her
+# cagrida /bin/sh hatasiyla duser. Bu SKIP degil, kullanicinin cozebilecegi
+# bir Blocker'dir; skill bunu adiyla soylemeli.
+grep -Fq 'plugin paketi eksik' "$skill" || { printf 'E_KIT_DOCTOR_BROKEN_PACKAGE\n' >&2; exit 2; }
 
 [ "$(wc -w < "$skill" | tr -d ' ')" -le 500 ] || { printf 'E_KIT_DOCTOR_TOO_LONG\n' >&2; exit 2; }
 printf 'PASS kit-doctor-skill\n'

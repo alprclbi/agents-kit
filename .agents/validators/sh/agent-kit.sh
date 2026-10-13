@@ -19,6 +19,7 @@ codex_doc_limit=''
 manifest_mode=check
 generated_at=''
 plugin_version=''
+discover_root=false
 
 while [ "$#" -gt 0 ]; do
   case "$1" in
@@ -34,6 +35,7 @@ while [ "$#" -gt 0 ]; do
     --write) manifest_mode=write; shift ;;
     --generated-at) [ "$#" -ge 2 ] || exit 3; generated_at=$2; shift 2 ;;
     --plugin-version) [ "$#" -ge 2 ] || exit 3; plugin_version=$2; shift 2 ;;
+    --discover-root) discover_root=true; shift ;;
     *) printf 'AKE900 bilinmeyen seçenek: %s\n' "$1" >&2; exit 3 ;;
   esac
 done
@@ -43,6 +45,11 @@ case "$client" in codex|claude) ;; *) printf 'AKE900 geçersiz istemci\n' >&2; e
 case "$source" in startup|resume|clear|compact|manual|hook) ;; *) printf 'AKE900 geçersiz kaynak\n' >&2; exit 3 ;; esac
 case "$codex_doc_limit" in ''|*[!0-9]*) [ -z "$codex_doc_limit" ] || { printf 'AKE900 geçersiz Codex limiti\n' >&2; exit 3; } ;; esac
 
+# --discover-root hook girisleri icindir: once Git koku, sonra isaretci
+# aramasi. Kok bulma mantigi boylece hook komutlarinda degil burada durur.
+if [ -z "$root" ] && [ "$discover_root" = true ]; then
+  root=$(ak_discover_root "${cwd:-$(pwd)}") || { printf 'AKE900 proje kökü bulunamadı\n' >&2; exit 3; }
+fi
 if [ -z "$root" ]; then root=$(ak_find_root "${cwd:-$(pwd)}") || { printf 'AKE900 proje kökü bulunamadı\n' >&2; exit 3; }; fi
 root=$(CDPATH= cd -- "$root" 2>/dev/null && pwd -P) || { printf 'AKE900 geçersiz proje kökü\n' >&2; exit 3; }
 [ -n "$cwd" ] || cwd=$root
@@ -88,9 +95,8 @@ resolve_for_profile() {
   case "$resolve_code" in
     0) ;;
     1)
-      if [ "$profile" = solo ]; then
-        append_diag AKE203 warning false 'Aktif iş kaydı bulunamadı; salt okunur çalışma ile sınırlı kal.' '.agents/changes/active' 'Kalıcı mutasyon için start-work kullan.'
-      else
+      # solo profilde aktif is zorunlu degil; uyari gurultuden ibaret.
+      if [ "$profile" != solo ]; then
         append_diag AKE203 error true 'Profil için gerekli aktif iş kaydı bulunamadı.' '.agents/changes/active' 'İşi açık work-id ile başlat veya çözümle.'
       fi
       ;;
@@ -234,6 +240,9 @@ Iskele: $installed_version (plugin $plugin_version)"
     context="$context
 Aktif iş: $resolved_work — $title
 Durum: $state"
+    summary=$(ak_work_summary "$root" "$resolved_work")
+    context="$context
+$summary"
     if [ -f "$status_file" ]; then
       excerpt=$(sed -n '1,80p' "$status_file")
       context="$context
@@ -309,6 +318,9 @@ emit_pre_tool_use() {
       command_text=$(printf '%s' "$hook_input" | jq -r '.tool_input.command // .toolInput.command // empty')
       if ak_readonly_command "$command_text"; then mutating=false; else mutating=true; fi
       ;;
+    mcp__*)
+      if ak_readonly_mcp_tool "$tool_name"; then mutating=false; else mutating=true; fi
+      ;;
     *) mutating=true ;;
   esac
   permission=allow
@@ -343,6 +355,37 @@ $details"
   fi
 }
 
+# Kayit gunceligi: aktif is varken calisma agacinda status.md'den daha
+# yeni bir degisiklik varsa checkpoint atlanmistir. Oturum bitince sohbet
+# kaybolur; sonraki oturum yalniz diske guvenebilir. Uyaridir, hicbir
+# profilde kapi degildir: kapanisi engellemek kullaniciyi kilitler.
+#
+# Kaynak git: degismis ve izlenmeyen (ignore disi) dosyalar. Git yoksa veya
+# kok depo degilse sessiz gecer; tahminle uyari uretmez.
+# ps/agent-kit.ps1 Add-StatusFreshnessDiagnostics ile PARITE.
+check_status_freshness() {
+  command -v git >/dev/null 2>&1 || return 0
+  fresh_work=$(ak_resolve_work_id "$root" "$branch" "$explicit_work" 2>/dev/null) || fresh_work=''
+  [ -n "$fresh_work" ] || return 0
+  fresh_status="$root/.agents/changes/active/$fresh_work/status.md"
+  [ -f "$fresh_status" ] || return 0
+  fresh_changed=$(git -C "$root" -c core.quotepath=off ls-files -m -o --exclude-standard 2>/dev/null) || return 0
+  fresh_newer=''
+  while IFS= read -r fresh_rel; do
+    [ -n "$fresh_rel" ] || continue
+    case "$fresh_rel" in .agents/changes/*|.agents/runtime/*|.agents/local/*) continue ;; esac
+    [ -f "$root/$fresh_rel" ] || continue
+    if [ -n "$(find "$root/$fresh_rel" -prune -newer "$fresh_status" -print 2>/dev/null)" ]; then
+      fresh_newer=$fresh_rel
+      break
+    fi
+  done <<EOF
+$fresh_changed
+EOF
+  [ -n "$fresh_newer" ] || return 0
+  append_diag AKW301 warning false "Aktif işte status.md son değişiklikten eski: $fresh_work ($fresh_newer)" ".agents/changes/active/$fresh_work/status.md" 'checkpoint-work ile status.md dosyasını güncelle.'
+}
+
 emit_stop_check() {
   # Kit bu projede kurulu degil: kapatilacak is kaydi da, uzlastirilacak
   # artifact yolu da yok. pre-tool-use ile ayni gerekce: ak_profile burada
@@ -357,6 +400,7 @@ emit_stop_check() {
       if [ "$profile" = solo ]; then append_diag AKE302 warning false "Kaçak Superpowers artifact yolu bulundu: $leak" "$leak" 'Artifact-router ile kanonik yolu uzlaştır.'; else append_diag AKE302 error true "Kaçak Superpowers artifact yolu bulundu: $leak" "$leak" 'Kapanıştan önce kanonik yolu uzlaştır.'; fi
     fi
   done
+  check_status_freshness
   diag=$(diagnostics_json)
   blocking=false; has_blocking && blocking=true
   if [ "$format" = json ]; then
@@ -365,7 +409,10 @@ emit_stop_check() {
       reason="Agents Kit kapanış kapısı engelledi: $codes. Artifact yollarını uzlaştır ve yeniden doğrula."
       jq -cn --arg reason "$reason" '{decision:"block",reason:$reason,systemMessage:$reason}'
     elif [ -n "$codes" ]; then
-      message="Agents Kit kapanış uyarısı: $codes."
+      # Kod tek basina anlamsizdir; uyarinin kendisi de basilir.
+      details=$(printf '%s' "$diag" | jq -r '[.[] | "\(.code): \(.message)"] | join("\n")')
+      message="Agents Kit kapanış uyarısı: $codes.
+$details"
       jq -cn --arg message "$message" '{continue:true,systemMessage:$message}'
     else
       jq -cn '{continue:true}'

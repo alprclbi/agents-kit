@@ -16,6 +16,32 @@ function Find-AgentKitRoot {
   }
 }
 
+# Hook girisleri icin kok kesfi. Once Git koku denenir ve orada iskele
+# varsa o secilir; yoksa Find-AgentKitRoot ile yukari isaretci aranir.
+# ak_discover_root (lib.sh) ile PARITE.
+function Resolve-AgentKitDiscoveredRoot {
+  [CmdletBinding()]
+  param([Parameter(Mandatory = $true)][string]$Start)
+
+  $git = Get-Command git -ErrorAction SilentlyContinue
+  if ($git) {
+    # Windows PowerShell 5.1'de Stop tercihiyle yerel komutun stderr'i
+    # sonlandirici hataya donusur; Git deposu disinda git hep stderr yazar.
+    $previousPreference = $ErrorActionPreference
+    $ErrorActionPreference = 'Continue'
+    $candidate = $null
+    try {
+      Push-Location -LiteralPath $Start
+      try { $candidate = [string](& $git.Source rev-parse --show-toplevel 2>$null) } finally { Pop-Location }
+      if ($LASTEXITCODE -ne 0) { $candidate = $null }
+    } catch { $candidate = $null } finally { $ErrorActionPreference = $previousPreference }
+    if (-not [string]::IsNullOrWhiteSpace($candidate) -and (Test-Path -LiteralPath (Join-Path $candidate '.agents\config.json') -PathType Leaf)) {
+      return [IO.Path]::GetFullPath($candidate)
+    }
+  }
+  return Find-AgentKitRoot -Start $Start
+}
+
 function Read-AgentKitJson {
   [CmdletBinding()]
   param([Parameter(Mandatory = $true)][string]$Path)
@@ -115,6 +141,82 @@ function Test-AgentKitOwnership {
   return @($conflicts)
 }
 
+# Markdown bolumunun ilk anlamli satiri; ak_md_section_first (lib.sh) ile
+# parite. Bolum yoksa veya bossa $null.
+function Get-AgentKitMarkdownSectionFirst {
+  param([string[]]$Lines, [string]$Heading)
+  $inside = $false
+  foreach ($line in $Lines) {
+    $line = $line -replace "`r$", ''
+    if ($line -eq "## $Heading") { $inside = $true; continue }
+    if (-not $inside) { continue }
+    if ($line.StartsWith('## ')) { break }
+    if ([string]::IsNullOrWhiteSpace($line) -or $line.StartsWith('#')) { continue }
+    return ($line -replace '^\s*[-*]\s+', '')
+  }
+  return $null
+}
+
+# Kabul kriterleri bolumundeki isaretlenmemis maddeler; ak_md_open_criteria ile parite.
+function Get-AgentKitOpenCriteria {
+  param([string[]]$Lines)
+  $inside = $false
+  $open = @()
+  foreach ($line in $Lines) {
+    $line = $line -replace "`r$", ''
+    if ($line -eq '## Kabul kriterleri') { $inside = $true; continue }
+    if (-not $inside) { continue }
+    if ($line.StartsWith('## ')) { break }
+    if ($line -match '^\s*[-*]\s+\[\s\]\s*') { $open += ($line -replace '^\s*[-*]\s+\[\s\]\s*', '') }
+  }
+  return $open
+}
+
+# Oturum basi "nerede kalmistik" ozeti. ak_work_summary (lib.sh) ile
+# METIN PARITESI tasir; tahmin uretmez, eksik alan "kayıtlı değil" yazar.
+function Get-AgentKitWorkSummary {
+  [CmdletBinding()]
+  param(
+    [Parameter(Mandatory = $true)][string]$Root,
+    [Parameter(Mandatory = $true)][string]$WorkId
+  )
+  $missing = 'kayıtlı değil'
+  $dir = Join-Path $Root ".agents\changes\active\$WorkId"
+  $phase = $null
+  $next = $null
+  $statusPath = Join-Path $dir 'status.md'
+  if (Test-Path -LiteralPath $statusPath -PathType Leaf) {
+    $statusLines = @(Get-Content -LiteralPath $statusPath -Encoding UTF8)
+    $phase = Get-AgentKitMarkdownSectionFirst -Lines $statusLines -Heading 'Mevcut aşama'
+    $next = Get-AgentKitMarkdownSectionFirst -Lines $statusLines -Heading 'Sıradaki en küçük güvenli adım'
+  }
+  $work = Read-AgentKitJson -Path (Join-Path $dir 'work.json')
+  # updatedAt ham metinden okunur: PowerShell 7 ConvertFrom-Json ISO
+  # tarihini DateTime'a cevirip yerel bicimde basar ve sh ile ayrisir.
+  $updated = $null
+  $workRaw = Get-Content -LiteralPath (Join-Path $dir 'work.json') -Raw -Encoding UTF8
+  if ($workRaw -match '"updatedAt"\s*:\s*"([^"]*)"') { $updated = $Matches[1] }
+  $spec = $null
+  if ($work.PSObject.Properties.Name -contains 'artifacts' -and $null -ne $work.artifacts -and $work.artifacts.PSObject.Properties.Name -contains 'spec') { $spec = [string]$work.artifacts.spec }
+  if (-not [string]::IsNullOrEmpty($spec) -and ($spec.StartsWith('/') -or $spec.Contains('..') -or $spec.Contains('\') -or $spec -match '^[A-Za-z]:')) { $spec = $null }
+  $lines = New-Object 'System.Collections.Generic.List[string]'
+  $lines.Add('Özet:')
+  $lines.Add('- Aşama: ' + $(if ([string]::IsNullOrEmpty($phase)) { $missing } else { $phase }))
+  $lines.Add('- Son checkpoint: ' + $(if ([string]::IsNullOrEmpty($updated)) { $missing } else { $updated }))
+  $lines.Add('- Sıradaki adım: ' + $(if ([string]::IsNullOrEmpty($next)) { $missing } else { $next }))
+  $specPath = $null
+  if (-not [string]::IsNullOrEmpty($spec)) { $specPath = Join-Path $Root ($spec -replace '/', '\') }
+  if ($null -ne $specPath -and (Test-Path -LiteralPath $specPath -PathType Leaf)) {
+    $open = @(Get-AgentKitOpenCriteria -Lines @(Get-Content -LiteralPath $specPath -Encoding UTF8) | Where-Object { -not [string]::IsNullOrWhiteSpace($_) })
+    $lines.Add('- Açık kabul ölçütü: ' + $open.Count)
+    foreach ($item in @($open | Select-Object -First 5)) { $lines.Add('  - ' + $item) }
+    if ($open.Count -gt 5) { $lines.Add('  - (+' + ($open.Count - 5) + ' daha)') }
+  } else {
+    $lines.Add('- Açık kabul ölçütü: spec kayıtlı değil')
+  }
+  return ($lines -join "`n")
+}
+
 function New-AgentKitDiagnostic {
   [CmdletBinding()]
   param(
@@ -142,20 +244,63 @@ function Limit-AgentKitContext {
 # Salt okunur kabuk komutu siniflandirmasi. ak_readonly_command (lib.sh)
 # ile birebir ayni davranir; parite testi readonly-command.sh icinde.
 # Fail-closed: taninmayan her komut mutasyondur.
+#
+# Boru hatti yalniz HER parcasi salt okunursa salt okunurdur. Satir sonu
+# ikinci bir komut demektir; parantez PowerShell'de alt ifade calistirir
+# (echo (Remove-Item x) silmeyi calistirir).
 function Test-AgentKitReadOnlyCommand {
   [CmdletBinding()]
   param([AllowEmptyString()][AllowNull()][string]$Command)
   if ([string]::IsNullOrWhiteSpace($Command)) { return $false }
-  foreach ($mark in '>', '<', '|', '&', ';', '`', '$(', '${') {
+  foreach ($mark in '>', '<', '||', '&', ';', '`', '$(', '${', '(', "`n", "`r") {
     if ($Command.Contains($mark)) { return $false }
   }
-  $parts = $Command.Trim() -split '\s+'
+  foreach ($segment in $Command.Split('|')) {
+    if (-not (Test-AgentKitReadOnlySegment -Segment $segment)) { return $false }
+  }
+  return $true
+}
+
+# Tek bir boru parcasi. Bayrak kontrolu tirnak ve ters bolu silinmis metin
+# uzerinde yapilir: kabuk '-ex''ec' yazimini -exec olarak calistirir.
+# ak_readonly_segment (lib.sh) ile parite.
+function Test-AgentKitReadOnlySegment {
+  [CmdletBinding()]
+  param([AllowEmptyString()][AllowNull()][string]$Segment)
+  if ([string]::IsNullOrWhiteSpace($Segment)) { return $false }
+  $plain = $Segment -replace "['`"\\]", ''
+  $parts = $Segment.Trim() -split '\s+'
   $verb = $parts[0]
-  if (@('ls', 'cat', 'head', 'tail', 'wc', 'pwd', 'echo') -contains $verb) { return $true }
+  if (@('ls', 'cat', 'head', 'tail', 'wc', 'pwd', 'echo', 'grep', 'jq') -contains $verb) { return $true }
+  if ($verb -eq 'rg') {
+    # --pre her dosya icin keyfi bir komut calistirir.
+    return (-not $plain.Contains('--pre'))
+  }
+  if ($verb -eq 'find') {
+    foreach ($flag in '-exec', '-ok', '-delete', '-fprint', '-fls') {
+      if ($plain.Contains($flag)) { return $false }
+    }
+    return $true
+  }
   if ($verb -eq 'git' -and $parts.Count -ge 2) {
-    return (@('status', 'log', 'diff', 'show') -contains $parts[1])
+    # --output diff/log ciktisini dosyaya yazar.
+    if ($plain.Contains('--output')) { return $false }
+    return (@('status', 'log', 'diff', 'show', 'rev-parse') -contains $parts[1])
   }
   return $false
+}
+
+# Salt okunur MCP araci siniflandirmasi. ak_readonly_mcp_tool (lib.sh) ile
+# birebir ayni davranir; parite testi readonly-command.sh icinde. Karar
+# yalniz mcp__<sunucu>__<eylem> adindaki eylemin fiilinden verilir.
+# Fail-closed: taninmayan her MCP araci mutasyondur.
+function Test-AgentKitReadOnlyMcpTool {
+  [CmdletBinding()]
+  param([AllowEmptyString()][AllowNull()][string]$Tool)
+  if ([string]::IsNullOrEmpty($Tool) -or $Tool -cnotmatch '^mcp__.+__.+$') { return $false }
+  $action = $Tool.Substring($Tool.LastIndexOf('__') + 2)
+  if ($action -cmatch '_and_|_or_') { return $false }
+  return ($action -cmatch '^(get|list|read|search)(_.+|[A-Z].*)?$')
 }
 
 # --- Claude hook kaynagi ---------------------------------------------------
@@ -323,12 +468,15 @@ function Get-AgentKitCodexHookSource {
 
 Export-ModuleMember -Function @(
   'Find-AgentKitRoot',
+  'Resolve-AgentKitDiscoveredRoot',
   'Read-AgentKitJson',
   'Resolve-AgentKitWork',
   'Test-AgentKitOwnership',
   'New-AgentKitDiagnostic',
   'Limit-AgentKitContext',
+  'Get-AgentKitWorkSummary',
   'Test-AgentKitReadOnlyCommand',
+  'Test-AgentKitReadOnlyMcpTool',
   'Get-AgentKitClaudeHookSource',
   'Get-AgentKitCodexHookSource'
 )

@@ -43,9 +43,17 @@ Bunlara hiçbir koşulda yazma.
 7. Hedef manifesti gerçekten kurulu dosyalara indir; kaynak manifest kitin kendi deposunu anlatır.
 8. `kit-doctor` ve manifest check çalıştır. Başarısızlıkta yedekten geri dönüş yolunu göster.
 
+## Önizleme (kuru çalıştırma)
+
+Kullanıcı `önizle` veya `dry-run` derse adım 1-7'yi **yazmadan** uygula: yalnız sınıflandır. Yazma, yedekleme, taşıma, silme yok; `.agents/runtime/` dahil hiçbir yere yazma.
+
+`Yol | Eylem | Neden` tablosu ver. Eylemler: `yaz` (değişmemiş), `yedekle+yaz` (elle değişmiş), `ekle`, `kaldır`, `yedeğe taşı` (çıkarılmış ama değişmiş), `import bloğu` (`CLAUDE.md`), `atla` (zaten güncel). Dokunulmayan üç alan tek satır. Sonda `/agents-kit:update` komutunu göster.
+
+Önizleme de soru sormaz; uygulama ayrı çağrıdır ve yeniden sınıflandırır.
+
 ## Rapor kuralı
 
-Beş satırı geçme: kaç dosya güncellendi, kaç eklendi, kaç kaldırıldı, yedeklenen yollar, doctor ve manifest sonucu. Dosya listesi dökme; kullanıcı isterse ver.
+Beş satırı geçme: kaç dosya güncellendi, kaç eklendi, kaç kaldırıldı, yedeklenen yollar, doctor ve manifest sonucu. Dosya listesi dökme; kullanıcı isterse ver. Önizleme bu kuralın tek istisnasıdır: amacı dosya listesidir.
 
 ## Yetki sınırı
 

@@ -36,8 +36,8 @@ printf 'MIT\n' > "$proje/LICENSE"
 printf 'node_modules\n' > "$proje/.gitignore"
 
 # Kullanicinin KIT DIZINLERI ICINDE actigi kendi icerigi. .agents/ altinda
-# olmasi kitin sahibi oldugu anlamina gelmez: ornegin bir projede
-# .agents/ads/ altinda gunluk nobet notlari tutulabilir. Bunlar manifeste girerse
+# olmasi kitin sahibi oldugu anlamina gelmez: RobotChessAcademy projesinde
+# .agents/ads/ altinda gunluk nobet notlari var. Bunlar manifeste girerse
 # kullanici her not yazdiginda butunluk kontrolu duser.
 mkdir -p "$proje/.agents/ads/anlik" "$proje/.agents/specs" "$proje/.agents/roadmaps" "$proje/.agents/changes/active/123" "$proje/.agents/local"
 printf 'gunluk not\n' > "$proje/.agents/ads/2026-09-06.md"
