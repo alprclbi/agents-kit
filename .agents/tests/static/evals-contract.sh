@@ -66,6 +66,72 @@ sh "$cl" --dry-run --cwd . --prompt /dev/null --max-turns 1 --settings /dev/null
   jq -e '.client == "claude" and .dry_run == true' >/dev/null \
   || { printf 'E_CL_DRYRUN\n' >&2; exit 2; }
 
+# CODEX ISTEMCISI. Ayni arayuz, ayni normalize alanlari; rapor betikleri
+# istemciyi bilmeden okur. Ornek akis Codex 0.162 olay adlariyla yazildi
+# (thread.started, item.completed, turn.completed.usage); eksik akis
+# ornegi gercek bir ag hatasi kosusundan kirpildi.
+cx=.agents/evals/clients/codex.sh
+[ -f "$cx" ] || { printf 'E_CX_MISSING\n' >&2; exit 2; }
+cxnorm=$(sh "$cx" --normalize .agents/evals/fixtures/samples/codex-events.jsonl test-model)
+printf '%s' "$cxnorm" | jq -e '
+  .client == "codex"
+  and .ok == true
+  and .num_turns == 4
+  and .context_tokens == 45468
+  and .cache_read_tokens == 35002
+  and .cache_creation_tokens == 10466
+  and .output_tokens == 1847
+  and .thinking_tokens == 512
+  and .cost_reported == false
+  and .model == "test-model"
+  and .response_chars == 46 and .response_turkish_chars == 9
+' >/dev/null || { printf 'E_CX_NORMALIZE %s\n' "$cxnorm" >&2; exit 2; }
+# Claude satiriyla ayni alan kumesi: rapor bir istemcide olmayan alana
+# takilmamali.
+claude_keys=$(printf '%s' "$norm" | jq -c 'keys - ["cost_reported"]')
+codex_keys=$(printf '%s' "$cxnorm" | jq -c 'keys - ["cost_reported"]')
+[ "$claude_keys" = "$codex_keys" ] || { printf 'E_CX_FIELDS %s != %s\n' "$codex_keys" "$claude_keys" >&2; exit 2; }
+printf '%s' "$cxnorm" | jq -e '(has("result") or has("prompt") or has("transcript") or has("thread_id") or has("text")) | not' >/dev/null \
+  || { printf 'E_CX_LEAK\n' >&2; exit 2; }
+# Yeniden baglanma "error" olaylari kosuyu basarisiz saymaz; turn.completed
+# yoksa kosu tamamlanmamistir ve oracle'a gitmez.
+sh "$cx" --normalize .agents/evals/fixtures/samples/codex-events-incomplete.jsonl \
+  | jq -e '.ok == false and .stop_reason == "incomplete" and .num_turns == 0' >/dev/null \
+  || { printf 'E_CX_INCOMPLETE\n' >&2; exit 2; }
+sh "$cx" --dry-run --cwd . --prompt /dev/null --max-turns 1 --settings /dev/null |
+  jq -e '.client == "codex" and .dry_run == true' >/dev/null \
+  || { printf 'E_CX_DRYRUN\n' >&2; exit 2; }
+sh .agents/evals/lib/run-task.sh --root "$root" --arm A1 --task 01-bugfix --repeat 1 --dry-run --client codex \
+  | jq -e '.client == "codex" and .arm == "A1"' >/dev/null \
+  || { printf 'E_CX_RUN_TASK\n' >&2; exit 2; }
+if sh .agents/evals/lib/run-task.sh --root "$root" --arm A1 --task 01-bugfix --dry-run --client ../x >/dev/null 2>&1; then
+  printf 'E_CX_CLIENT_NOT_VALIDATED\n' >&2; exit 2
+fi
+# Butce kapisi: maliyet basmayan kosu sifir sayilmamali. Sahte codex
+# ikilisi ornek akisi basar; gercek ag cagrisi ve ucret yok. Kosu kitin
+# kopyasinda yapilir, gercek results/ dizinine dokunulmaz. 7 kol x 0.07
+# tahmin, 0.10 butce: ikinci koldan sonra durmali.
+fake="$tmp/fake"
+mkdir -p "$fake/bin" "$fake/kit/.agents"
+cp AGENTS.md "$fake/kit/AGENTS.md"
+cp .agents/config.json .agents/project.md "$fake/kit/.agents/"
+cp -R .agents/evals .agents/templates "$fake/kit/.agents/"
+rm -rf "$fake/kit/.agents/evals/results"
+mkdir -p "$fake/kit/.agents/evals/results"
+cp -R skills "$fake/kit/skills"
+sample="$root/.agents/evals/fixtures/samples/codex-events.jsonl"
+printf '#!/bin/sh\ncat >/dev/null\ncat "%s"\n' "$sample" > "$fake/bin/codex"
+chmod +x "$fake/bin/codex"
+PATH="$fake/bin:$PATH" sh "$fake/kit/.agents/evals/run.sh" --root "$fake/kit" --probe --execute \
+  --budget-usd 0.10 --client codex --delay-secs 0 > "$fake/out" 2>&1 \
+  || { printf 'E_CX_FAKE_RUN %s\n' "$(tail -3 "$fake/out")" >&2; exit 2; }
+grep -Fq 'BUTCE ASILDI' "$fake/out" \
+  || { printf 'E_CX_BUDGET_ESTIMATE butce kapisi calismadi\n' >&2; exit 2; }
+[ "$(awk 'END {print NR}' "$fake/kit/.agents/evals/results/probe.jsonl")" = 2 ] \
+  || { printf 'E_CX_BUDGET_COUNT %s\n' "$(awk 'END {print NR}' "$fake/kit/.agents/evals/results/probe.jsonl")" >&2; exit 2; }
+jq -e -s 'all(.[]; .client == "codex" and .ok == true and .kind == "probe")' "$fake/kit/.agents/evals/results/probe.jsonl" >/dev/null \
+  || { printf 'E_CX_FAKE_LINES\n' >&2; exit 2; }
+
 rt=.agents/evals/lib/run-task.sh
 [ -f "$rt" ] || { printf 'E_RT_MISSING\n' >&2; exit 2; }
 

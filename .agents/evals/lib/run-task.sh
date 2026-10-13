@@ -1,7 +1,7 @@
 #!/bin/sh
 set -eu
 
-root='' arm='' task='' repeat=1 dry=0 model='' keep=0
+root='' arm='' task='' repeat=1 dry=0 model='' keep=0 client=claude
 while [ $# -gt 0 ]; do
   case $1 in
     --root)         root=$2;   shift 2 ;;
@@ -9,6 +9,7 @@ while [ $# -gt 0 ]; do
     --task)         task=$2;   shift 2 ;;
     --repeat)       repeat=$2; shift 2 ;;
     --model)        model=$2;  shift 2 ;;
+    --client)       client=$2; shift 2 ;;
     --dry-run)      dry=1;     shift ;;
     --keep-sandbox) keep=1;    shift ;;
     *) printf 'E_RT_ARG %s\n' "$1" >&2; exit 2 ;;
@@ -17,6 +18,8 @@ done
 [ -n "$root" ] && [ -n "$arm" ] && [ -n "$task" ] || { printf 'E_RT_ARGS\n' >&2; exit 2; }
 
 evals="$root/.agents/evals"
+# Istemci adi dosya yoluna donusur; listede olmayan deger reddedilir.
+case "$client" in claude|codex) ;; *) printf 'E_RT_CLIENT %s\n' "$client" >&2; exit 2 ;; esac
 taskdir="$evals/tasks/$task"
 [ -d "$taskdir" ] || { printf 'E_RT_NO_TASK %s\n' "$task" >&2; exit 2; }
 fixture=$(awk -F '\t' -v t="$task" 'NR>1 && $1==t {print $2}' "$evals/tasks.tsv")
@@ -59,7 +62,7 @@ set -- --cwd "$sandbox" --prompt "$taskdir/prompt.md" --max-turns "$max_turns" -
 [ -n "$model" ] && set -- "$@" --model "$model"
 [ "$dry" = 1 ] && set -- "$@" --dry-run
 
-metrics=$(sh "$evals/clients/claude.sh" "$@")
+metrics=$(sh "$evals/clients/$client.sh" "$@")
 
 run_ok=$(printf '%s' "$metrics" | jq -r '.ok // false')
 

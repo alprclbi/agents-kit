@@ -7,7 +7,7 @@ description: Use when installing Agents Kit scaffolding into a project, includin
 
 ## Amaç
 
-İskeleyi projeye kur, kullanıcıyı uğraştırma. **En çok iki soru sor.**
+İskeleyi projeye kur, kullanıcıyı uğraştırma. **En çok iki soru sor.** Komut adayı varsa kapanışta tek onay eklenir.
 
 ## Rapor kuralı
 
@@ -52,7 +52,8 @@ Kullanıcı niyetini baştan bildirdiyse sorma.
 8. Hedef manifesti kurulan dosyalara indir. `.agents/local/preferences.md` yoksa `preferences.example.md` dosyasından oluştur. `.gitattributes` yoksa kit yolları için LF kuralıyla oluştur.
 9. **Öz denetim:** seçim [1] ise eski dosyadaki her madde yeni yerlerden birinde bulunmalı; bulunmayanı raporda işaretle.
 10. `kit-doctor` çalıştır. Göç yapıldıysa hook'un **tam bir kez** yüklendiğini ve skill listesinde kopya olmadığını raporla.
-11. Kapanış: kaç dosya, doctor sonucu, yedek yolu, geri alma komutu, kalan adım.
+11. **Proje komutları:** `.agents/project.md` komut bölümü boşsa `.agents/contracts/kit-management.md` içindeki kuralla doldur.
+12. Kapanış: kaç dosya, doctor sonucu, yedek yolu, geri alma komutu, kalan adım.
 
 ## Yetki sınırı
 

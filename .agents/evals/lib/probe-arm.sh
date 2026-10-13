@@ -9,12 +9,13 @@ set -eu
 # spec G5-DUZELTME). Tek turluk sonda ayni sayiyi ~5 kat ucuza ve
 # tekrar gerektirmeyecek kadar dusuk varyansla verir.
 
-root='' arm='' dry=0 model=''
+root='' arm='' dry=0 model='' client=claude
 while [ $# -gt 0 ]; do
   case $1 in
     --root)    root=$2;  shift 2 ;;
     --arm)     arm=$2;   shift 2 ;;
     --model)   model=$2; shift 2 ;;
+    --client)  client=$2; shift 2 ;;
     --dry-run) dry=1;    shift ;;
     *) printf 'E_PB_ARG %s\n' "$1" >&2; exit 2 ;;
   esac
@@ -22,6 +23,8 @@ done
 [ -n "$root" ] && [ -n "$arm" ] || { printf 'E_PB_ARGS\n' >&2; exit 2; }
 
 evals="$root/.agents/evals"
+# Istemci adi dosya yoluna donusur; listede olmayan deger reddedilir.
+case "$client" in claude|codex) ;; *) printf 'E_PB_CLIENT %s\n' "$client" >&2; exit 2 ;; esac
 prompt="$evals/probe-prompt.md"
 [ -f "$prompt" ] || { printf 'E_PB_NO_PROMPT\n' >&2; exit 2; }
 
@@ -46,7 +49,7 @@ set -- --cwd "$sandbox" --prompt "$prompt" --max-turns 1 --settings "$evals/sand
 [ -n "$model" ] && set -- "$@" --model "$model"
 [ "$dry" = 1 ] && set -- "$@" --dry-run
 
-metrics=$(sh "$evals/clients/claude.sh" "$@")
+metrics=$(sh "$evals/clients/$client.sh" "$@")
 
 printf '%s' "$metrics" | jq -c \
   --arg arm "$arm" --argjson ab "$agents_bytes" \

@@ -150,7 +150,7 @@ case "$case_id" in
     if [ "$length" -eq 8000 ] && printf '%s' "$clipped" | iconv -f UTF-8 -t UTF-8 >/dev/null; then actual=PASS; evidence=utf8-8000-char-bound; fi
     ;;
   25)
-    # Ayni kosul, iki profil: fark yalniz uyari/deny olmali. Kosul olarak
+    # Ayni kosul, iki profil: solo sessiz, team deny olmali. Kosul olarak
     # AKE203 (aktif is kaydi yok) kullanilir; team fixture'i solo'ya
     # cevrilerek birebir karsilastirma yapilir.
     tmp_dir=$(mktemp -d "$project_root/.agents/runtime/acceptance.XXXXXX") || { printf '%s\tBLOCKED\tBLOCKED\tAKS502-temp-dir-unavailable\n' "$case_id"; exit 2; }
@@ -161,8 +161,8 @@ case "$case_id" in
     solo=$(sh "$validator" pre-tool-use --root "$tmp_dir/solo-repo" --client codex --format json < "$input")
     team=$(sh "$validator" pre-tool-use --root "$test_root/fixtures/validator/team-missing-work/repo" --client codex --format json < "$input")
     rm -rf "$tmp_dir"
-    if printf '%s' "$solo" | jq -e '(.hookSpecificOutput | has("permissionDecision") | not) and (.hookSpecificOutput.additionalContext | contains("AKE203"))' >/dev/null \
-       && printf '%s' "$team" | jq -e '.hookSpecificOutput.permissionDecision == "deny" and (.hookSpecificOutput.permissionDecisionReason | contains("AKE203"))' >/dev/null; then actual=PASS; evidence=solo-warn-team-deny; fi
+    if printf '%s' "$solo" | jq -e '((.hookSpecificOutput // {}) | has("permissionDecision") | not) and (((.hookSpecificOutput.additionalContext // "") | contains("AKE203")) | not)' >/dev/null \
+       && printf '%s' "$team" | jq -e '.hookSpecificOutput.permissionDecision == "deny" and (.hookSpecificOutput.permissionDecisionReason | contains("AKE203"))' >/dev/null; then actual=PASS; evidence=solo-silent-team-deny; fi
     ;;
   *)
     printf '%s\tFAIL\tE_CASE_UNKNOWN\tunknown-case-id\n' "$case_id"

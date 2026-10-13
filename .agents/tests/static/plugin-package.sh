@@ -77,5 +77,18 @@ if [ -f "$root/hooks/hooks.json" ]; then
   done
 fi
 
+# --- Hook'larin plugin kokunde bekledigi her dosya bulunmali ----------
+# hooks.json dogrulayiciyi ve VERSION dosyasini ${CLAUDE_PLUGIN_ROOT}
+# altinda arar. Paket .agents/ olmadan dagitilirsa her hook /bin/sh
+# hatasiyla duser; bu kontrol kaynakta eksik yolu yakalar.
+if [ -f "$root/hooks/hooks.json" ]; then
+  refs=$(jq -r '.. | .command? // empty' "$root/hooks/hooks.json" \
+    | grep -oE '[$][{]CLAUDE_PLUGIN_ROOT[}]/[^" ]+' | sed 's/^[$][{]CLAUDE_PLUGIN_ROOT[}]\///' | LC_ALL=C sort -u)
+  [ -n "$refs" ] || { printf 'FAIL hooks.json CLAUDE_PLUGIN_ROOT altinda dosya gostermiyor\n' >&2; fail=1; }
+  for ref in $refs; do
+    [ -f "$root/$ref" ] || { printf 'FAIL hook plugin kokunde eksik dosya bekliyor: %s\n' "$ref" >&2; fail=1; }
+  done
+fi
+
 [ "$fail" -eq 0 ] || exit 1
 printf 'PASS plugin-package\n'

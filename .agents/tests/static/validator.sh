@@ -62,6 +62,13 @@ printf '%s' "$team_result" | jq -e '.hookSpecificOutput.hookEventName == "PreToo
 readonly_result=$(sh "$entry" pre-tool-use --root "$team" --client codex --format json < .agents/tests/fixtures/validator/team-multiple-active/read-only-input.json)
 printf '%s' "$readonly_result" | jq -e '(has("permissionDecision") | not) and .hookSpecificOutput.hookEventName == "PreToolUse" and (.hookSpecificOutput | has("permissionDecision") | not)' >/dev/null
 
+# Salt okunur MCP araci team profilinde aktif is olmadan da gecer; yazan
+# MCP araci reddedilir. Iki yonlu: kapi gevsemedi, yalniz okumayi taniyor.
+mcp_read=$(printf '%s' '{"tool_name":"mcp__github__list_issues","tool_input":{}}' | sh "$entry" pre-tool-use --root "$high" --client claude --format json)
+printf '%s' "$mcp_read" | jq -e '(.hookSpecificOutput | has("permissionDecision") | not) and (.hookSpecificOutput | has("additionalContext") | not)' >/dev/null
+mcp_write=$(printf '%s' '{"tool_name":"mcp__github__create_issue","tool_input":{}}' | sh "$entry" pre-tool-use --root "$high" --client claude --format json)
+printf '%s' "$mcp_write" | jq -e '.hookSpecificOutput.permissionDecision == "deny" and (.hookSpecificOutput.permissionDecisionReason | contains("AKE203"))' >/dev/null
+
 ownership_result=$(sh "$entry" pre-tool-use --root "$team" --client codex --work-id 123 --format json < .agents/tests/fixtures/validator/team-multiple-active/pre-tool-input.json)
 printf '%s' "$ownership_result" | jq -e '.hookSpecificOutput.permissionDecision == "deny" and (.hookSpecificOutput.permissionDecisionReason | contains("AKE202"))' >/dev/null
 

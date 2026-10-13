@@ -46,6 +46,19 @@ grep -Fq 'preferences.example.md' "$init" \
 for marker in 'gocis-yedek' 'tam bir kez' 'hash' 'hook bloğunu'; do
   grep -Fq "$marker" "$init" || { printf 'E_MANAGEMENT_INIT_MIGRATION %s\n' "$marker" >&2; exit 2; }
 done
+# PROJE KOMUTLARI. 2026-10-13: kurulumdan sonra .agents/project.md bos
+# sablon kaliyordu, ajan her oturumda komutu yeniden tahmin ediyordu.
+# init adaylari bulur ama kural geregi tahmin YAZMAZ: aday kaynaksiz
+# onerilmez, calistirilmaz ve yalniz onaylanan satir yazilir. Bu
+# sinirlar metinden duserse init dogrulanmamis komut yazmaya kayar.
+contract=.agents/contracts/kit-management.md
+grep -Fq '**Proje komutları:**' "$init" && grep -Fq 'kit-management.md` içindeki kuralla doldur' "$init" \
+  || { printf 'E_MANAGEMENT_INIT_COMMANDS init proje komutlari adimini tasimiyor\n' >&2; exit 2; }
+grep -Fq '## Proje komutları' "$contract" \
+  || { printf 'E_MANAGEMENT_COMMANDS_SECTION %s\n' "$contract" >&2; exit 2; }
+for marker in 'yer tutucu' 'Kaynağı olmayan komut önerilmez' 'çalıştırılmaz' 'Yalnız onaylanan satırlar yazılır' '`update` bu adımı hiç çalıştırmaz'; do
+  grep -Fq "$marker" "$contract" || { printf 'E_MANAGEMENT_COMMANDS_CONTRACT %s\n' "$marker" >&2; exit 2; }
+done
 
 # update SORU SORMAZ sozlesmesi. 2026-09-11: onceki hali her
 # guncellemede onay istiyordu ve elle degistirilmis dosyayi hic
@@ -59,6 +72,15 @@ done
 for guarded in '.agents/project.md' '.agents/local/' '.agents/changes/'; do
   grep -Fq "$guarded" "$upd" || { printf 'E_MANAGEMENT_UPDATE_GUARD %s\n' "$guarded" >&2; exit 2; }
 done
+# ONIZLEME sozlesmesi. Kuru calistirma hicbir yere yazmaz, yedek de
+# almaz; varsayilan "soru sorma" davranisini da degistirmez. Eylem
+# sozlugu sabit olmali ki rapor her calistirmada ayni dili konussun.
+for marker in '## Önizleme (kuru çalıştırma)' '**yazmadan**' '`.agents/runtime/` dahil hiçbir yere yazma' 'Önizleme de soru sormaz' '`yaz`' '`yedekle+yaz`' '`ekle`' '`kaldır`' '`yedeğe taşı`' '`import bloğu`' '`atla`'; do
+  grep -Fq -- "$marker" "$upd" || { printf 'E_MANAGEMENT_UPDATE_PREVIEW %s\n' "$marker" >&2; exit 2; }
+done
+grep -Fq 'agents-kit:update önizle' README.md \
+  || { printf 'E_MANAGEMENT_UPDATE_PREVIEW_DOC\n' >&2; exit 2; }
+
 # Kaynak plugin kokunden gelir; kullanicidan yol istemek ve agdan surum
 # indirmek YASAK. Klon zorunlulugu tam olarak bu yuzden kalkti.
 grep -Fq 'CLAUDE_PLUGIN_ROOT' "$upd" \

@@ -6,7 +6,7 @@ Kanonik kurallar kök `AGENTS.md`, sözleşmeler ve `.agents/skills/` altındad�
 
 - Codex proje katmanını yalnız güvenilen projelerde yükler. `/hooks` ile üç hook'u ve tam komutlarını inceleyip güven kararını kullanıcı verir.
 - Hook'lar varsayılan olarak etkindir; kuruluş politikası veya `[features] hooks = false` bunları kapatabilir. `kit-doctor` bunu düşürülmüş koruma olarak raporlar.
-- Unix ve Windows komutları önce Git kökünü dener. Git yoksa oturum `cwd`'sinden yukarı doğru birlikte bulunan `AGENTS.md` ve `.agents/config.json` işaretçilerini arar; validator bulunamazsa açık hata ile durur. Proje `.codex` katmanının istemci tarafından keşfi ve trust kararı yine Codex yapılandırma kurallarına bağlıdır.
+- Hook komutu yalnız doğrulayıcı betiği oturum `cwd`'sinden yukarı doğru arar ve `--discover-root` (Windows'ta `-DiscoverRoot`) ile çağırır. Kök çözümü doğrulayıcıdadır: önce Git kökü denenir, orada `.agents/config.json` yoksa `cwd`'den yukarı doğru birlikte bulunan `AGENTS.md` ve `.agents/config.json` işaretçileri aranır. Betik veya kök bulunamazsa komut açık hata ile durur (`AKE900`, çıkış 3). Proje `.codex` katmanının istemci tarafından keşfi ve trust kararı yine Codex yapılandırma kurallarına bağlıdır.
 - `PreToolUse` yerel araç yollarını kapsayan bir guardrail'dir. Hosted araçlar ve istemcinin hook yolundan geçirmediği özel araçlar için tam güvenlik sınırı sayılmaz.
 
 ## Tanılama

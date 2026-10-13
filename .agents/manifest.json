@@ -1,8 +1,8 @@
 {
   "$schema": "./schemas/manifest.schema.json",
   "schemaVersion": "2.0.0",
-  "kitVersion": "1.0.1",
-  "generatedAt": "2026-09-16",
+  "kitVersion": "1.1.0",
+  "generatedAt": "2026-10-13",
   "compatibility": {
     "codex": "official-current-docs",
     "claudeCode": "official-current-docs"
@@ -35,7 +35,7 @@
     {
       "path": ".agents/VERSION",
       "ownership": "kit-managed",
-      "sha256": "44e161e4495cac2cf7858043e9e6418e9579f0ddcfae826f9a372622968ce066",
+      "sha256": "1575e1af4a95f12f70b4ee6a6adce8160953d93ea17dc2611b90883ccc3ad3b8",
       "hashPolicy": "required"
     },
     {
@@ -65,7 +65,7 @@
     {
       "path": ".agents/adapters/codex.md",
       "ownership": "adapter",
-      "sha256": "b71c20318acabad3878e3764d2ac500a3f19ad3d790d2f1a57e1939f5eb27e1d",
+      "sha256": "28adef53cc57153a7903a08daa06d1876ad41f0d2d3c581cdae96e120b59af86",
       "hashPolicy": "required"
     },
     {
@@ -107,7 +107,7 @@
     {
       "path": ".agents/config.json",
       "ownership": "kit-managed",
-      "sha256": "cc60a653b5ff52c4c35ed9aa9177706b969f8bee708c7dbf2dc11eb777b4b39c",
+      "sha256": "ec3b8acee17e084a622962eda2519814c5398b5be9ff2cedc1c4f6b5af46766c",
       "hashPolicy": "required"
     },
     {
@@ -137,7 +137,7 @@
     {
       "path": ".agents/contracts/kit-management.md",
       "ownership": "kit-managed",
-      "sha256": "6fa0c1d93772be926130ab51e5862597c121c12127f9ec3fa47bd90d4374e38c",
+      "sha256": "ad7872bb92635485508abe2decf7116bd1792203186e26cb441002f31226f601",
       "hashPolicy": "required"
     },
     {
@@ -155,7 +155,7 @@
     {
       "path": ".agents/contracts/tool-gate.md",
       "ownership": "kit-managed",
-      "sha256": "3d48b1b29fc731d0cd6cf5ddb9bc1b3c665939ff007343e8b2bae7e73f02aa5f",
+      "sha256": "f39fc2115ea6960494209b3f7dd5b98d70f0613a9c41afdd89b16153a62a1738",
       "hashPolicy": "required"
     },
     {
@@ -167,7 +167,7 @@
     {
       "path": ".agents/evals/README.md",
       "ownership": "kit-managed",
-      "sha256": "0ada0b5baead6602022a2df29ede349c77b2a77eb7061043346b354c626f0b85",
+      "sha256": "16074180f87ea09a270e078f1c5f4c8b61f7ef476c4cc485c2271d171343c063",
       "hashPolicy": "required"
     },
     {
@@ -183,9 +183,27 @@
       "hashPolicy": "required"
     },
     {
+      "path": ".agents/evals/clients/codex.sh",
+      "ownership": "kit-managed",
+      "sha256": "e206439588883c1d5a4008cf53d8372cc55608eec0033da71cd086228480bd2f",
+      "hashPolicy": "required"
+    },
+    {
       "path": ".agents/evals/fixtures/samples/claude-result.json",
       "ownership": "kit-managed",
       "sha256": "a0bf80ea6b2e30146967e4cb437736d39347dc12f383722c9a178488abd42af0",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/evals/fixtures/samples/codex-events-incomplete.jsonl",
+      "ownership": "kit-managed",
+      "sha256": "ebf469787becf3de81d1aaf6f485cb4947044f2150408194d112c2d4e0d1378f",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/evals/fixtures/samples/codex-events.jsonl",
+      "ownership": "kit-managed",
+      "sha256": "5b5711429ee46e159389a9e72d1660b9e25e163788647d3863605473ea9f6579",
       "hashPolicy": "required"
     },
     {
@@ -215,7 +233,7 @@
     {
       "path": ".agents/evals/lib/probe-arm.sh",
       "ownership": "kit-managed",
-      "sha256": "33fb0a4bc934118370956d143b0bbb774a763a2efa78bd482ba292f7bee5e672",
+      "sha256": "2d051b722d7f12b3ff7be44c500dbb32e0ba46a150307d67f4fe811a7440b4bf",
       "hashPolicy": "required"
     },
     {
@@ -233,7 +251,7 @@
     {
       "path": ".agents/evals/lib/run-task.sh",
       "ownership": "kit-managed",
-      "sha256": "10bd86b1dbc75d997da95fbdac7b47ab9936de71eceea695f5f7f46cad1f6d4e",
+      "sha256": "ffd6e6647d190f5e1c687dbd9b6c1f75bb70c95da7534fa7859cd11edabd30d7",
       "hashPolicy": "required"
     },
     {
@@ -251,7 +269,7 @@
     {
       "path": ".agents/evals/run.sh",
       "ownership": "kit-managed",
-      "sha256": "ed713273bb376c4d9d88815557e3bc156017703a51d88a244e8f4c1fe4346b05",
+      "sha256": "331e7bb13951941c9ced2e671a21406aaa3aecf64bf108b6f96f205153405224",
       "hashPolicy": "required"
     },
     {
@@ -1217,7 +1235,7 @@
     {
       "path": ".agents/tests/lib/RunCase.psm1",
       "ownership": "kit-managed",
-      "sha256": "c2b95a5e90571fab9aaed9e605dc48b7d1b02f6bbae56316e4e8202fad1ebf55",
+      "sha256": "58b0b521839edb0e79cd9591e4980bb65a20af79ea16e9617fa4aa2ede052dd8",
       "hashPolicy": "required"
     },
     {
@@ -1229,7 +1247,7 @@
     {
       "path": ".agents/tests/lib/run-case.sh",
       "ownership": "kit-managed",
-      "sha256": "cfbdcf83731939a565e3c5587a12808ae71339a70cf52dc95e5496b7516130b6",
+      "sha256": "929c7d5c1b536ad80778bd11b81dc9cc8103e54bab6607a4905f0cf3fb9db7b4",
       "hashPolicy": "required"
     },
     {
@@ -1259,7 +1277,7 @@
     {
       "path": ".agents/tests/run.ps1",
       "ownership": "kit-managed",
-      "sha256": "55fbb52739da4fc4eff4419bce4b0831883602eaa28a802834cf09d42307727a",
+      "sha256": "0bd83578fc84150493a6805ecba3e6f162b10f04660d46b9798270858db3188e",
       "hashPolicy": "required"
     },
     {
@@ -1299,6 +1317,12 @@
       "hashPolicy": "required"
     },
     {
+      "path": ".agents/tests/static/codex-hook-root.sh",
+      "ownership": "kit-managed",
+      "sha256": "20d6a191674d72888ae9642c02a6e238689d6928b375460063b338fb6d6e55e0",
+      "hashPolicy": "required"
+    },
+    {
       "path": ".agents/tests/static/codex-hook-source.sh",
       "ownership": "kit-managed",
       "sha256": "2b6458f125eb9a534c7fcbdf74ccf5f975b43424db396d446cb0cbeafeb57f50",
@@ -1319,7 +1343,7 @@
     {
       "path": ".agents/tests/static/evals-contract.sh",
       "ownership": "kit-managed",
-      "sha256": "9912ed2a11c782d2eff4acb527c3caec13e131ac286cd4a312644bc0226bf624",
+      "sha256": "f36d7c21546a9689ef800ae785c0430854b396f570ed60b3b43ab4f4c26bfd3f",
       "hashPolicy": "required"
     },
     {
@@ -1373,13 +1397,13 @@
     {
       "path": ".agents/tests/static/kit-doctor-skill.sh",
       "ownership": "kit-managed",
-      "sha256": "e053cf0ae9faf24e149304e56a9c16d3fece7e271c1d4a5d78aab1e21c788b82",
+      "sha256": "72138dc62a520a77917657020fe5637fbb7ae54d01cded7069086e2e0cc7081a",
       "hashPolicy": "required"
     },
     {
       "path": ".agents/tests/static/kit-management.sh",
       "ownership": "kit-managed",
-      "sha256": "8bfbb1098fd90639bf2b2b5177ed20db36d87d0a7d8ca568af648b1ec10d7eed",
+      "sha256": "c52c5aa95ff730346402199c8d396fa499f78e16f3f82804c1f64113a02d09aa",
       "hashPolicy": "required"
     },
     {
@@ -1403,7 +1427,7 @@
     {
       "path": ".agents/tests/static/manifest-scope.sh",
       "ownership": "kit-managed",
-      "sha256": "d82eb2d082e169ceae695e8fe887a401b0acafc560e4f06fbce0d2e8e6396133",
+      "sha256": "c128e51145a8aeda1bfb3cfbede2d46fd8720c0faf8cc3640744c8f24f270d22",
       "hashPolicy": "required"
     },
     {
@@ -1421,7 +1445,19 @@
     {
       "path": ".agents/tests/static/plugin-package.sh",
       "ownership": "kit-managed",
-      "sha256": "db66aaf02a70d9d0c5d7337c9d4ba3cbe110e5ed01de2a4995f457ea4e1ba008",
+      "sha256": "31d3fac7b7515c9a4be89d949d55a2fb4541926548d3481a0640641dd2aeaa08",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/static/policy-codes-doc.sh",
+      "ownership": "kit-managed",
+      "sha256": "7d5cc2407826db32fc9f5051b7404d5897f2ac7e89f2b0ed6f775dfc626533cc",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/static/policy-codes.sh",
+      "ownership": "kit-managed",
+      "sha256": "3e2accd1438b14561f7b8cdc58f244136903b7993f3cc9b50154144ecf54ab30",
       "hashPolicy": "required"
     },
     {
@@ -1439,13 +1475,19 @@
     {
       "path": ".agents/tests/static/provider-adapters.sh",
       "ownership": "kit-managed",
-      "sha256": "07214be893c46dc16c7694dd40159ed2f82c101a60c068bda3fa706ead42c9f2",
+      "sha256": "c7faa50b8bbfc1fe5c59e66b6ee08295d7d86477223009ff51a3fc19903ac28a",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/static/readme-parity.sh",
+      "ownership": "kit-managed",
+      "sha256": "847970323b514fb011e181a00d56e61276dbc7b7faf42634901def767904692f",
       "hashPolicy": "required"
     },
     {
       "path": ".agents/tests/static/readonly-command.sh",
       "ownership": "kit-managed",
-      "sha256": "3a50d416d4e64e79150f5a95c5f21309f30c4577415cebb4d5e5fda6be64b6a8",
+      "sha256": "c3bb8aa343856297735f30343899b3ba6818e910fceee0a678d4e2389dc895a4",
       "hashPolicy": "required"
     },
     {
@@ -1473,6 +1515,24 @@
       "hashPolicy": "required"
     },
     {
+      "path": ".agents/tests/static/session-summary.sh",
+      "ownership": "kit-managed",
+      "sha256": "b2179f2503c10afa5161572ebe6968cce15709a9e7d42205125e93d340457c5a",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/static/skill-adapters.sh",
+      "ownership": "kit-managed",
+      "sha256": "2a6100d28e26531d6b0cc219176a1fef8be41bbe6b2ecce3b552005f91d3e286",
+      "hashPolicy": "required"
+    },
+    {
+      "path": ".agents/tests/static/status-freshness.sh",
+      "ownership": "kit-managed",
+      "sha256": "9e2ec0fba3fb393ee51e2058db7585d69b37c9bb34ec8013dbb295d8832e1fda",
+      "hashPolicy": "required"
+    },
+    {
       "path": ".agents/tests/static/style-preferences.sh",
       "ownership": "kit-managed",
       "sha256": "3d1697efc4ab9d4a7af820116de71b4190ef757edc1c77359b72e863a319f7fc",
@@ -1493,7 +1553,7 @@
     {
       "path": ".agents/tests/static/validator.sh",
       "ownership": "kit-managed",
-      "sha256": "4f5d18c108303b4976328ea5e865d8f7d8af974839becac3fb2d8444f655c053",
+      "sha256": "190dceee7dc48c83d0ae8f2faa85cf0164e82ec6dd4ac3741d00378526153be3",
       "hashPolicy": "required"
     },
     {
@@ -1511,31 +1571,31 @@
     {
       "path": ".agents/validators/policy-codes.json",
       "ownership": "kit-managed",
-      "sha256": "40e708381a788101c0733ef3f7ad033dd62da999203679aa6c12ca0838caec81",
+      "sha256": "5a63c0924baf72046d1283222e5478eb82ce152d1f49541e7dc1be1d9f3fcc21",
       "hashPolicy": "required"
     },
     {
       "path": ".agents/validators/ps/AgentKit.psm1",
       "ownership": "kit-managed",
-      "sha256": "fd01999cda6c3daac986e39d69d555fd096e2109834712b3482b23473b480e1a",
+      "sha256": "31ab27a2e53f2fb541c6b582c81e8d88360b36ba0931d9d3de38fd58f17af8e0",
       "hashPolicy": "required"
     },
     {
       "path": ".agents/validators/ps/agent-kit.ps1",
       "ownership": "kit-managed",
-      "sha256": "144d34b732fc2f6ab519172d35f7623aa163592fbb8b47a21e0950269f283ba1",
+      "sha256": "9c112f10e9fc1780c16b51a9607f8132c13067b16d562f39a002d3f5f03f32bd",
       "hashPolicy": "required"
     },
     {
       "path": ".agents/validators/sh/agent-kit.sh",
       "ownership": "kit-managed",
-      "sha256": "348e2965ee942b050400f926aceb86582da2af55cbf140579368c57044c6a918",
+      "sha256": "bb2aade8fd69d515d6825ac1856254da3d87099693ebcc63e9d48606a3e81d40",
       "hashPolicy": "required"
     },
     {
       "path": ".agents/validators/sh/lib.sh",
       "ownership": "kit-managed",
-      "sha256": "4f35af01064d29936a0e301dbf3c938813dd1869a593da74c2bbd28c66fcea4c",
+      "sha256": "aa2839c1783ab6b8d7e113e7abd5a44b986e4142ca538e041b87ea1933d34a28",
       "hashPolicy": "required"
     },
     {
@@ -1547,13 +1607,13 @@
     {
       "path": ".claude-plugin/marketplace.json",
       "ownership": "kit-managed",
-      "sha256": "6af386c21a20fb511d53ac1b2d464de8a713c500eca265ffd6a84ae2abd127c7",
+      "sha256": "ceb200fcc8c81c229f5578b04648e8ad3a7cd3cdf6947b182cb4efdcac3cdc74",
       "hashPolicy": "required"
     },
     {
       "path": ".claude-plugin/plugin.json",
       "ownership": "kit-managed",
-      "sha256": "502297e815fd5fc0213c27fabc599dc717f2bd8e12f6853590baeb9e664b4bbb",
+      "sha256": "72380d8b15f23954087d588ea2505343c8a6dcd390ca075009a2494e84819292",
       "hashPolicy": "required"
     },
     {
@@ -1625,7 +1685,7 @@
     {
       "path": ".codex-plugin/plugin.json",
       "ownership": "kit-managed",
-      "sha256": "5eb16a86bcf4087f1f468aceea25cf636038e787176d1e2dd6b5f67b84f239f7",
+      "sha256": "405d10bfba54d7ac76370087c3f092b9cc8b74c4a82c6fdd05b93598ce4203cc",
       "hashPolicy": "required"
     },
     {
@@ -1637,7 +1697,7 @@
     {
       "path": ".codex/hooks.json",
       "ownership": "adapter",
-      "sha256": "8edaba99cce3735880d62663ac67ec50865542ca2f48dfb6a8fcf8d2fcd782d0",
+      "sha256": "39743c498552847a75112c34d62b80d124e0efbf33935124d6001f5b65091845",
       "hashPolicy": "required"
     },
     {
@@ -1673,7 +1733,7 @@
     {
       "path": "CHANGELOG.md",
       "ownership": "kit-managed",
-      "sha256": "739249ffdaba49219bfa568101ec6b068c619824a39351ddac4532aa43ae8ec9",
+      "sha256": "a1ef7b72badeec479b23a1f452e9e01f5c9c45702fe51ba9fdc961a04e6a0d28",
       "hashPolicy": "required"
     },
     {
@@ -1685,7 +1745,7 @@
     {
       "path": "CONTRIBUTING.md",
       "ownership": "kit-managed",
-      "sha256": "30639839380186fbd77117f5ac2d2be31e9a17ac44339d72f2a5ac005d5f462d",
+      "sha256": "c065ce66330ae20c2d383fb7158f07ce17813ba6fae2e34f7db73a5f2f58357b",
       "hashPolicy": "required"
     },
     {
@@ -1697,7 +1757,7 @@
     {
       "path": "README.md",
       "ownership": "kit-managed",
-      "sha256": "44233d948d0195d9412141b5d74cbca25795a398ef8b71e51fc184a890257747",
+      "sha256": "acec77f9df388821e5219c92e0501018f9b737233486462efac2c221155f90f1",
       "hashPolicy": "required"
     },
     {
@@ -1739,7 +1799,7 @@
     {
       "path": "skills/checkpoint-work/SKILL.md",
       "ownership": "kit-managed",
-      "sha256": "f97f4bbb2d4791c4d31b6d77b023e73d651b8024d394953704eefdf4a329a486",
+      "sha256": "edfbb037968058e674584dc624bb5f4d1321d5e834ad65826ec5ff4fe002308e",
       "hashPolicy": "required"
     },
     {
@@ -1751,13 +1811,13 @@
     {
       "path": "skills/init/SKILL.md",
       "ownership": "kit-managed",
-      "sha256": "d5dccb3186776cc8def36fb2834fb23fe1a0697886be9faad34975d4dcd8e447",
+      "sha256": "3b941f96807c7907e31f7cc5e0f2ea39d199c9d31af6de8d0cee624b0c2aa853",
       "hashPolicy": "required"
     },
     {
       "path": "skills/kit-doctor/SKILL.md",
       "ownership": "kit-managed",
-      "sha256": "58b3b122a8db59d2f9310f102545b9139c9d614a8ba19a84bfd10fb121f2b257",
+      "sha256": "11dee8d5e1f0ee87bc0d0ffe82d865966685a474e50a447dbd1b2095a3cbada0",
       "hashPolicy": "required"
     },
     {
@@ -1769,7 +1829,7 @@
     {
       "path": "skills/resume-work/SKILL.md",
       "ownership": "kit-managed",
-      "sha256": "5a9babf81b84a2361037be7aa0c288bd78e6686f15c5182687b068eaa5c043ce",
+      "sha256": "3af20bd66a971377ce94d6675e7af60c411d973f41ea94b81a1b15a11f015088",
       "hashPolicy": "required"
     },
     {
@@ -1781,7 +1841,7 @@
     {
       "path": "skills/update/SKILL.md",
       "ownership": "kit-managed",
-      "sha256": "af2ef2a5d6489408918bbca8817b8de8c3a4ab325ee81dac7753f65b3a2a1ef3",
+      "sha256": "ce75d344de66561c5ba9cbb01ac7eb479e9d02147e79b27b2bae3bfc90a6c0d7",
       "hashPolicy": "required"
     }
   ]

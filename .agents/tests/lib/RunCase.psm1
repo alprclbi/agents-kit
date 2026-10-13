@@ -192,7 +192,7 @@ function Invoke-AgentKitCase {
       if ($info.LengthInTextElements -eq 8000) { $actual = 'PASS'; $evidence = 'utf8-8000-char-bound' }
     }
     '25' {
-      # Ayni kosul (AKE203), iki profil: fark yalniz uyari/deny olmali.
+      # Ayni kosul (AKE203), iki profil: solo sessiz, team deny olmali.
       $json = Get-Content -LiteralPath (Join-Path $testRoot 'fixtures\validator\team-missing-work\pre-tool-input.json') -Raw -Encoding UTF8
       $teamRepo = Join-Path $testRoot 'fixtures\validator\team-missing-work\repo'
       $tmpDir = Join-Path (Join-Path $ProjectRoot '.agents\runtime') ('acceptance-' + [guid]::NewGuid().ToString('N').Substring(0, 8))
@@ -207,8 +207,9 @@ function Invoke-AgentKitCase {
       $solo = Invoke-HookWithInput -Validator $validator -Json $json -Root $soloRepo
       $team = Invoke-HookWithInput -Validator $validator -Json $json -Root $teamRepo
       Remove-Item -LiteralPath $tmpDir -Recurse -Force
-      $soloDecision = $solo.hookSpecificOutput.PSObject.Properties.Name -contains 'permissionDecision'
-      if (-not $soloDecision -and [string]$solo.hookSpecificOutput.additionalContext -match 'AKE203' -and $team.hookSpecificOutput.permissionDecision -eq 'deny' -and [string]$team.hookSpecificOutput.permissionDecisionReason -match 'AKE203') { $actual = 'PASS'; $evidence = 'solo-warn-team-deny' }
+      $soloDecision = $null -ne $solo.hookSpecificOutput -and $solo.hookSpecificOutput.PSObject.Properties.Name -contains 'permissionDecision'
+      $soloContext = if ($null -ne $solo.hookSpecificOutput -and $solo.hookSpecificOutput.PSObject.Properties.Name -contains 'additionalContext') { [string]$solo.hookSpecificOutput.additionalContext } else { '' }
+      if (-not $soloDecision -and $soloContext -notmatch 'AKE203' -and $team.hookSpecificOutput.permissionDecision -eq 'deny' -and [string]$team.hookSpecificOutput.permissionDecisionReason -match 'AKE203') { $actual = 'PASS'; $evidence = 'solo-silent-team-deny' }
     }
     default {
       return [pscustomobject]@{ Id = $Id; Status = 'FAIL'; Observed = 'E_CASE_UNKNOWN'; Evidence = 'unknown-case-id' }

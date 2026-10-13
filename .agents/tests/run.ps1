@@ -303,6 +303,47 @@ try {
   if (Test-Path -LiteralPath $scopeTmp) { Remove-Item -LiteralPath $scopeTmp -Recurse -Force }
 }
 
+# CODEX WINDOWS HOOK KOMUTLARI GERCEKTEN CALISTIRILIR.
+#
+# sh tarafindaki provider-adapters.sh ve codex-hook-root.sh ile ayni amac:
+# komut metni sozlesmeye uysa bile calismayabilir. Komut alt dizinden
+# calistirilir; kok cozumu -DiscoverRoot ile dogrulayicida yapilir.
+# powershell.exe yerine bu oturumun kendi PowerShell'i kullanilir. Cocuk
+# surecin UTF-8 ciktisi ust surecte OEM kod sayfasiyla okunabilir; bu
+# yuzden yalniz ASCII isaretlere bakilir.
+try {
+  $codexHooks = (Get-Content -LiteralPath (Join-Path $ProjectRoot '.codex\hooks.json') -Raw -Encoding UTF8) | ConvertFrom-Json
+  $psHost = (Get-Process -Id $PID).Path
+  $windowsFailures = New-Object 'System.Collections.Generic.List[string]'
+  $hookInputs = @{ SessionStart = '{"source":"startup"}'; PreToolUse = '{"tool_name":"Bash","tool_input":{"command":"git status"}}'; Stop = '{}' }
+  Push-Location -LiteralPath (Join-Path $ProjectRoot '.agents\tests')
+  try {
+    foreach ($hookEvent in @('SessionStart', 'PreToolUse', 'Stop')) {
+      $commandWindows = [string]$codexHooks.hooks.$hookEvent[0].hooks[0].commandWindows
+      if ($commandWindows -notmatch '-Command "(.*)"$') { $windowsFailures.Add("$hookEvent-bicim"); continue }
+      $inner = $Matches[1]
+      $output = ($hookInputs[$hookEvent] | & $psHost -NoProfile -NonInteractive -Command $inner | Out-String)
+      if ($LASTEXITCODE -ne 0) { $windowsFailures.Add("$hookEvent-cikis-$LASTEXITCODE"); continue }
+      if ($hookEvent -eq 'SessionStart') {
+        # Baglamin KENDISI basilmali; nesne basilirsa PowerShell onu
+        # "context : ..." listesine cevirir ve hook'a bozuk metin gider.
+        if (-not ($output.TrimStart().StartsWith('Agents Kit') -and $output.Contains('Kaynak: startup'))) { $windowsFailures.Add('SessionStart-baglam') }
+      } elseif ($hookEvent -eq 'PreToolUse') {
+        if ([string]($output | ConvertFrom-Json).hookSpecificOutput.hookEventName -ne 'PreToolUse') { $windowsFailures.Add('PreToolUse-sozlesme') }
+      } else {
+        if ($null -eq ($output | ConvertFrom-Json)) { $windowsFailures.Add('Stop-sozlesme') }
+      }
+    }
+  } finally { Pop-Location }
+  if ($windowsFailures.Count -eq 0) {
+    $rows.Add([pscustomobject]@{ Id = 'static:codex-windows-hooks'; Status = 'PASS'; Observed = 'PASS'; Evidence = 'three-hooks-run-from-subdirectory' })
+  } else {
+    $rows.Add([pscustomobject]@{ Id = 'static:codex-windows-hooks'; Status = 'FAIL'; Observed = 'E_CODEX_WINDOWS_HOOKS'; Evidence = ($windowsFailures -join ',') })
+  }
+} catch {
+  $rows.Add([pscustomobject]@{ Id = 'static:codex-windows-hooks'; Status = 'FAIL'; Observed = 'E_CODEX_WINDOWS_HOOKS'; Evidence = $_.Exception.GetType().Name })
+}
+
 foreach ($line in $cases) {
   if ([string]::IsNullOrWhiteSpace($line)) { continue }
   $parts = $line -split "`t", 6

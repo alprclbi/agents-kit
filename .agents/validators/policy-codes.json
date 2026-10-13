@@ -1,5 +1,7 @@
 {
   "AKW101": "AGENTS.md hedef bütçeyi aşıyor",
+  "AKW102": "Profil değeri tanınmıyor veya desteklenmiyor",
+  "AKW103": "Geçerli iş işaretçisi aktif bir işi göstermiyor",
   "AKE102": "AGENTS.md kit üst sınırını aşıyor",
   "AKW110": "Codex etkin talimat limiti belirlenemedi",
   "AKW111": "Codex talimat zinciri referans limitini aşıyor",
@@ -11,6 +13,7 @@
   "AKE301": "Artifact hedefi kayıtlı değil veya proje dışında",
   "AKE302": "Bilinen kaçak Superpowers yolu",
   "AKE303": "Backend explicit artifact hedefini desteklemiyor",
+  "AKW301": "Aktif işin status.md dosyası son değişiklikten eski",
   "AKW401": "Etkin istemci hook güveni veya kapsamı doğrulanamadı",
   "AKS501": "İstemci veya platform canlı testi çalıştırılamadı",
   "AKE601": "Manifest eksik veya güncel değil",

@@ -7,7 +7,7 @@
 Kodlama ajanına kural veren ve yaptığı işi kayıt altına alan bir kit.
 Claude Code ve Codex ile çalışır.
 
-Dil: Türkçe.
+Dil: Türkçe · [English](README.en.md).
 
 ---
 
@@ -128,6 +128,9 @@ Hepsi `/agents-kit:` ön ekiyle çağrılır. Ön ek istemcinin çakışma önle
 | `close-work` | İş bitti. Kabul ölçütlerini kanıtla kapatır |
 | `archive-work` | Kapanan işi aktif listeden arşive taşır |
 
+Bir işin bu beş adımda diske ne bıraktığını [örnek iş](docs/ornek-is.md) sayfası
+gösterir.
+
 ### Kurulum ve bakım
 
 | Komut | Ne zaman |
@@ -179,7 +182,9 @@ Ajana şunu de:
 /agents-kit:update
 ```
 
-Soru sormaz, beş satırda ne yaptığını söyler.
+Soru sormaz, beş satırda ne yaptığını söyler. Önce neyin değişeceğini görmek
+istersen `/agents-kit:update önizle` de: hangi dosyanın yazılacağını,
+yedekleneceğini veya atlanacağını tabloyla gösterir, hiçbir şey yazmaz.
 
 **Üç yere hiçbir koşulda dokunmaz:**
 
@@ -228,8 +233,55 @@ Projene yazılanlar: `AGENTS.md`, `CLAUDE.md`, `AGENT-KIT-START.md`, `.agents/`,
 `.claude/`, `.codex/`.
 
 Kitin kendi deposuna ait olan ve **projene kurulmayanlar**: `README.md`,
-`LICENSE`, `CONTRIBUTING.md`, `SECURITY.md`, `CHANGELOG.md`, `.github/`,
-`.agents/tests/`, `.agents/evals/`.
+`README.en.md`, `LICENSE`, `CONTRIBUTING.md`, `SECURITY.md`, `CHANGELOG.md`,
+`.github/`, `docs/`, `.agents/tests/`, `.agents/evals/`.
+
+---
+
+## Nasıl çalışır
+
+Kit iki katmandan oluşur. Plugin katmanı komutları ve denetimi taşır; proje
+katmanı kuralları ve iş kayıtlarını. Denetim üç hook ile yapılır ve hepsi aynı
+doğrulayıcıyı çağırır.
+
+```mermaid
+flowchart LR
+  subgraph olay["Olay"]
+    e1(["Oturum başlar"])
+    e2(["Ajan yazmak ister"])
+    e3(["Ajan durur"])
+  end
+  subgraph plugin["Plugin (bütün projeler)"]
+    h1["SessionStart"]
+    h2["PreToolUse"]
+    h3["Stop"]
+    v["Doğrulayıcı<br/>.agents/validators/"]
+    k["Komutlar<br/>skills/"]
+  end
+  subgraph proje["Proje (senin deponda)"]
+    a["AGENTS.md, .agents/project.md<br/>kurallar"]
+    c[".agents/config.json<br/>profil, bütçeler"]
+    w[".agents/changes/<br/>iş kayıtları"]
+  end
+  e1 --> h1
+  e2 --> h2
+  e3 --> h3
+  h1 & h2 & h3 --> v
+  v -->|okur| c
+  v -->|okur| w
+  k -->|yazar| w
+  e1 -.->|istemci yükler| a
+```
+
+| Hook | Ne zaman | Neye bakar | Sonuç |
+| --- | --- | --- | --- |
+| `SessionStart` | Oturum açılınca, devam edince, bağlam sıkıştırılınca | Profil, aktif iş, kural sürümü | Ajana kısa bir durum bloğu verir |
+| `PreToolUse` | Ajan dosya yazmadan, kabuk komutu veya MCP aracı çalıştırmadan önce | Aktif iş kaydı, sahiplik çakışması | `team` engeller; `solo` yalnız sahiplik çakışmasında uyarır. Salt okunur komutlar ve okuma MCP araçları hep geçer |
+| `Stop` | Ajan cevabını bitirince | Kanonik yol dışına yazılmış spec ve planlar; aktif işte `status.md` son değişiklikten eskiyse | Kaçak yolda `solo` uyarır, `team` kapanışı engeller; eski `status.md` her profilde yalnız uyarır |
+
+Hook'lar ağa çıkmaz ve dosya yazmaz; yalnız okur ve karar verir. `.agents/config.json`
+olmayan projede hiçbir şey basmadan geçerler. Basılan
+kodların anlamı [Politika kodları](docs/politika-kodlari.md) sayfasında.
 
 ---
 
@@ -248,8 +300,11 @@ Hiçbir şeyi değiştirmez, sadece durumu söyler.
 | Komutlar görünmüyor | İstemci yeniden başlatılmadı | Claude Code'u kapat aç |
 | Projede hiçbir şey olmuyor | Kit o projede kurulu değil | `/agents-kit:init` — plugin kurulumu yetmez |
 | `Iskele: ... (plugin ...)` satırı | Kurallar geride kaldı | `/agents-kit:update` |
-| `AKE203` uyarısı | Aktif iş kaydı yok | `/agents-kit:start-work` veya salt okunur çalış |
+| `AKE203` engeli (`team`) | Aktif iş kaydı yok | `/agents-kit:start-work`; `solo` profilde bu kontrol yok |
 | Manifest hatası | Bir kit dosyası elle değişti | `/agents-kit:update` — değişikliğin yedeklenir |
+
+Başka bir `AK` kodu gördüysen anlamı, profil başına şiddeti ve çözümü
+[Politika kodları](docs/politika-kodlari.md) sayfasında.
 
 ---
 
@@ -293,6 +348,8 @@ Windows'ta `install.ps1`.
 
 | Konu | Dosya |
 | --- | --- |
+| Bir işin baştan sona diske bıraktıkları | [docs/ornek-is.md](docs/ornek-is.md) |
+| Politika kodları (`AKE203` vb.) | [docs/politika-kodlari.md](docs/politika-kodlari.md) |
 | Sürüm geçmişi | [CHANGELOG.md](CHANGELOG.md) |
 | Katkı rehberi | [CONTRIBUTING.md](CONTRIBUTING.md) |
 | Güvenlik bildirimi | [SECURITY.md](SECURITY.md) |

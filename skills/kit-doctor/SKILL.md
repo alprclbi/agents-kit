@@ -11,7 +11,7 @@ Kitin talimat, yapılandırma, aktif iş, hook, bütçe ve manifest durumunu sal
 
 ## İş akışı
 
-1. Proje kökünü, işletim sistemini ve doğrulayıcı girişini belirle. Girişi **sırayla** ara: önce plugin kökü `${CLAUDE_PLUGIN_ROOT}`, sonra proje kökü. Unix/macOS'ta `.agents/validators/sh/agent-kit.sh`, Windows'ta `.agents/validators/ps/agent-kit.ps1`. Plugin ile kurulmuş bir projede doğrulayıcı proje kökünde **yoktur**; yalnız oraya bakıp `SKIP` yazma. İkisinde de yoksa veya runtime eksikse `SKIP` kaydet ve nedenini bildir.
+1. Proje kökünü, işletim sistemini ve doğrulayıcı girişini belirle. Girişi **sırayla** ara: önce plugin kökü `${CLAUDE_PLUGIN_ROOT}`, sonra proje kökü. Unix/macOS'ta `.agents/validators/sh/agent-kit.sh`, Windows'ta `.agents/validators/ps/agent-kit.ps1`. Plugin ile kurulmuş bir projede doğrulayıcı proje kökünde **yoktur**; yalnız oraya bakıp `SKIP` yazma. İkisinde de yoksa veya runtime eksikse `SKIP` kaydet ve nedenini bildir. `${CLAUDE_PLUGIN_ROOT}` tanımlı ama altında `.agents/validators/` yoksa plugin paketi eksiktir: bunu `SKIP` değil Blocker yaz; hook'lar her çağrıda hata verir ve çözüm plugin'i yeniden kurmaktır.
 2. Uygun girişle `doctor` komutunu çalıştır. Önce metin çıktısını kullanıcı için özetle; ayrıntılı otomasyon gerekiyorsa JSON biçimini kullan.
 3. Her bulguyu ayır:
    - **Blocker:** mutasyondan önce çözülmesi gereken ve profil gereği fail-closed olan durum.

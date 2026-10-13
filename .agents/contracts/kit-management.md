@@ -29,6 +29,17 @@ Kiti mevcut projeye dosya ezmeden benimsetir; sürüm güncellemesini sahiplik v
 - Kullanıcıca bilinçli silinen dosya sessizce geri getirilmez.
 - Global ayar, plugin, GitHub ayarı veya harici yazma ayrıca açık yetki olmadan yapılmaz.
 
+## Proje komutları
+
+Kurulumdan sonra `.agents/project.md` boş şablon kalırsa ajan her oturumda komutları yeniden tahmin eder. `init` kapanışta bu boşluğu kullanıcı onayıyla doldurur.
+
+- Yalnız komut bölümü hâlâ yer tutucu metin taşıyorsa uygulanır; dolu bölüme dokunulmaz. `update` bu adımı hiç çalıştırmaz.
+- Adaylar yalnız depoda açıkça bildirilmiş komutlardan çıkar: `package.json` `scripts` alanı (kilit dosyasına göre `npm`, `pnpm`, `yarn` veya `bun`), `Makefile` ve `justfile` hedefleri, `pyproject.toml` içindeki araç tabloları, `Cargo.toml`, `go.mod`, `composer.json` `scripts` alanı ve CI iş akışlarındaki `run:` satırları.
+- Her aday kaynağıyla birlikte gösterilir (`npm test` ← `package.json`). Kaynağı olmayan komut önerilmez.
+- Aday komutlar çalıştırılmaz; kurulum, ağ veya yan etki doğurabilir.
+- Tek bir evet/hayır onayı istenir; kullanıcı listeden satır çıkarabilir. Yalnız onaylanan satırlar yazılır, yazılan her satır kaynağını taşır.
+- Aday yoksa veya kullanıcı reddederse soru tekrarlanmaz; bölüm olduğu gibi kalır ve kapanış raporu bunu bir satırla söyler.
+
 ## Doğrulama
 
 - Boş repo, mevcut talimat, modified managed, base içeriği eksik ve remove-preserves-work fixture'ları çalıştırılır.

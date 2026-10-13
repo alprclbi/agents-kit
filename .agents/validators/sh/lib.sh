@@ -13,6 +13,20 @@ ak_find_root() {
   done
 }
 
+# Hook girisleri icin kok kesfi. Once Git koku denenir ve orada iskele
+# varsa o secilir; yoksa ak_find_root ile cwd'den yukari isaretci aranir.
+# Codex hook komutlari bu mantigi uc hook x iki kabukta alti kez satir ici
+# tasiyordu; hata alti yerde ayri ayri duzeltilmek zorundaydi.
+# ps/AgentKit.psm1 Resolve-AgentKitDiscoveredRoot ile PARITE.
+ak_discover_root() {
+  ak_discover_start=$1
+  ak_discover_git=$(CDPATH= cd -- "$ak_discover_start" 2>/dev/null && git rev-parse --show-toplevel 2>/dev/null) || ak_discover_git=''
+  if [ -n "$ak_discover_git" ] && [ -f "$ak_discover_git/.agents/config.json" ]; then
+    CDPATH= cd -- "$ak_discover_git" 2>/dev/null && pwd -P && return 0
+  fi
+  ak_find_root "$ak_discover_start"
+}
+
 ak_json_get() {
   file=$1
   expression=$2
@@ -97,18 +111,52 @@ ak_list_active_work() {
 #
 # Amac kapiyi gevsetmek degil: engellenen kullanicinin durumu gorup
 # cozebilmesi. Tani komutlari da kapanirsa kapi kendi kendini kilitler.
+#
+# Boru hatti yalniz HER parcasi salt okunursa salt okunurdur; tee, xargs,
+# sh gibi yazabilen bir parca butun zinciri mutasyon yapar. Satir sonu
+# ikinci bir komut demektir; parantez PowerShell'de alt ifade calistirir.
 ak_readonly_command() {
-  command_text=$1
-  [ -n "$command_text" ] || return 1
-  case "$command_text" in
-    *'>'*|*'<'*|*'|'*|*'&'*|*';'*|*'`'*|*'$('*|*'${'*) return 1 ;;
+  ak_ro_text=$1
+  [ -n "$ak_ro_text" ] || return 1
+  ak_ro_newline='
+'
+  ak_ro_cr=$(printf '\r')
+  case "$ak_ro_text" in
+    *'>'*|*'<'*|*'||'*|*'&'*|*';'*|*'`'*|*'$('*|*'${'*|*'('*|*"$ak_ro_newline"*|*"$ak_ro_cr"*) return 1 ;;
   esac
-  verb=$(printf '%s' "$command_text" | awk '{print $1}')
-  case "$verb" in
-    ls|cat|head|tail|wc|pwd|echo) return 0 ;;
+  ak_ro_rest=$ak_ro_text
+  while :; do
+    ak_readonly_segment "${ak_ro_rest%%|*}" || return 1
+    case "$ak_ro_rest" in
+      *'|'*) ak_ro_rest=${ak_ro_rest#*|} ;;
+      *) return 0 ;;
+    esac
+  done
+}
+
+# Tek bir boru parcasi. Bayrak kontrolu tirnak ve ters bolu silinmis metin
+# uzerinde yapilir: kabuk '-ex''ec' yazimini -exec olarak calistirir.
+ak_readonly_segment() {
+  ak_ro_segment=$1
+  ak_ro_plain=$(printf '%s' "$ak_ro_segment" | tr -d "'\"\\\\")
+  ak_ro_verb=$(printf '%s' "$ak_ro_segment" | awk '{print $1}')
+  [ -n "$ak_ro_verb" ] || return 1
+  case "$ak_ro_verb" in
+    ls|cat|head|tail|wc|pwd|echo|grep|jq) return 0 ;;
+    rg)
+      # --pre her dosya icin keyfi bir komut calistirir.
+      case "$ak_ro_plain" in *--pre*) return 1 ;; esac
+      return 0
+      ;;
+    find)
+      case "$ak_ro_plain" in *-exec*|*-ok*|*-delete*|*-fprint*|*-fls*) return 1 ;; esac
+      return 0
+      ;;
     git)
-      sub=$(printf '%s' "$command_text" | awk '{print $2}')
-      case "$sub" in status|log|diff|show) return 0 ;; *) return 1 ;; esac
+      # --output diff/log ciktisini dosyaya yazar.
+      case "$ak_ro_plain" in *--output*) return 1 ;; esac
+      ak_ro_sub=$(printf '%s' "$ak_ro_segment" | awk '{print $2}')
+      case "$ak_ro_sub" in status|log|diff|show|rev-parse) return 0 ;; *) return 1 ;; esac
       ;;
     *) return 1 ;;
   esac
@@ -133,6 +181,26 @@ ak_kit_installed() {
 #
 # high-assurance ve auto kaldirildi; eski degerler reddedilmez, sirasiyla
 # team ve solo olarak calisir ve AKW102 ile uyarilir.
+# Salt okunur MCP araci siniflandirmasi. Ad mcp__<sunucu>__<eylem>
+# bicimindedir; karar yalniz eylem parcasinin fiilinden verilir:
+# get, list, read, search. Alt cizgi veya buyuk harfle ayrilmis fiil
+# sayilir (get_me, listIssues); "target" gibi rastlanti eslesmez. Bilesik
+# eylem (get_or_create, read_and_delete) mutasyondur. Fail-closed: taninmayan
+# her MCP araci mutasyondur. Ayni sozlesme Test-AgentKitReadOnlyMcpTool
+# (AgentKit.psm1) icinde; parite testi readonly-command.sh icinde.
+ak_readonly_mcp_tool() {
+  tool=$1
+  case "$tool" in mcp__?*__?*) ;; *) return 1 ;; esac
+  action=${tool##*__}
+  case "$action" in *_and_*|*_or_*) return 1 ;; esac
+  case "$action" in
+    get|list|read|search) return 0 ;;
+    get_?*|list_?*|read_?*|search_?*) return 0 ;;
+    get[[:upper:]]*|list[[:upper:]]*|read[[:upper:]]*|search[[:upper:]]*) return 0 ;;
+    *) return 1 ;;
+  esac
+}
+
 ak_profile() {
   root=$1
   configured=$(ak_json_get "$root/.agents/config.json" '.profile') || return $?
@@ -225,6 +293,66 @@ EOF
 # Yalniz work-id isteyen cagiranlar icin ince sarmalayici.
 ak_resolve_work_id() {
   ak_resolve_work "$@" | awk -F '\t' 'NR==1 {print $1}'
+}
+
+# Markdown bolumunun ilk anlamli satiri. Bolum "## <baslik>" satiriyla
+# baslar, sonraki "## " ile biter; bos satir ve alt baslik atlanir, madde
+# isareti silinir. Bolum yoksa veya bossa hicbir sey basmaz.
+ak_md_section_first() {
+  awk -v heading="## $2" '
+    { sub(/\r$/, "") }
+    $0 == heading { inside = 1; next }
+    inside && /^## / { exit }
+    inside && $0 !~ /^[[:space:]]*$/ && $0 !~ /^#/ {
+      sub(/^[[:space:]]*[-*][[:space:]]+/, "")
+      print
+      exit
+    }
+  ' "$1"
+}
+
+# Kabul kriterleri bolumundeki isaretlenmemis maddeler ("- [ ] ...").
+ak_md_open_criteria() {
+  awk '
+    { sub(/\r$/, "") }
+    $0 == "## Kabul kriterleri" { inside = 1; next }
+    inside && /^## / { exit }
+    inside && /^[[:space:]]*[-*][[:space:]]+\[[[:space:]]\][[:space:]]*/ {
+      sub(/^[[:space:]]*[-*][[:space:]]+\[[[:space:]]\][[:space:]]*/, "")
+      print
+    }
+  ' "$1"
+}
+
+# Oturum basi "nerede kalmistik" ozeti: asama, son checkpoint, siradaki
+# adim ve acik kabul olcutleri tek blokta. Kaynak yalniz is kaydidir;
+# tahmin uretmez, eksik alan "kayıtlı değil" yazar. Spec yolu proje
+# disina cikiyorsa okunmaz. ps/AgentKit.psm1 Get-AgentKitWorkSummary ile
+# METIN PARITESI tasir.
+ak_work_summary() {
+  sum_root=$1 sum_id=$2
+  sum_dir="$sum_root/.agents/changes/active/$sum_id"
+  sum_phase='' sum_next=''
+  if [ -f "$sum_dir/status.md" ]; then
+    sum_phase=$(ak_md_section_first "$sum_dir/status.md" 'Mevcut aşama')
+    sum_next=$(ak_md_section_first "$sum_dir/status.md" 'Sıradaki en küçük güvenli adım')
+  fi
+  sum_updated=$(ak_json_get "$sum_dir/work.json" '.updatedAt' 2>/dev/null) || sum_updated=''
+  sum_spec=$(ak_json_get "$sum_dir/work.json" '.artifacts.spec' 2>/dev/null) || sum_spec=''
+  case "$sum_spec" in /*|*..*|*'\'*|[A-Za-z]:*) sum_spec='' ;; esac
+  printf 'Özet:\n'
+  printf -- '- Aşama: %s\n' "${sum_phase:-kayıtlı değil}"
+  printf -- '- Son checkpoint: %s\n' "${sum_updated:-kayıtlı değil}"
+  printf -- '- Sıradaki adım: %s\n' "${sum_next:-kayıtlı değil}"
+  if [ -n "$sum_spec" ] && [ -f "$sum_root/$sum_spec" ]; then
+    sum_open=$(ak_md_open_criteria "$sum_root/$sum_spec")
+    sum_count=$(printf '%s' "$sum_open" | awk 'NF {n++} END {print n+0}')
+    printf -- '- Açık kabul ölçütü: %s\n' "$sum_count"
+    printf '%s\n' "$sum_open" | awk 'NF && n < 5 {print "  - " $0; n++}'
+    [ "$sum_count" -le 5 ] || printf '  - (+%s daha)\n' "$((sum_count - 5))"
+  else
+    printf -- '- Açık kabul ölçütü: spec kayıtlı değil\n'
+  fi
 }
 
 ak_instruction_budget() {

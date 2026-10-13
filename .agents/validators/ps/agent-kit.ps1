@@ -17,7 +17,8 @@ param(
   [ValidateSet('check', 'write')]
   [string]$ManifestMode = 'check',
   [string]$GeneratedAt,
-  [string]$PluginVersion
+  [string]$PluginVersion,
+  [switch]$DiscoverRoot
 )
 
 # Windows PowerShell 5.1 stdout'u varsayilan olarak konsol kod sayfasiyla
@@ -30,6 +31,11 @@ Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 Import-Module (Join-Path $PSScriptRoot 'AgentKit.psm1') -Force
 
+# -DiscoverRoot hook girisleri icindir: once Git koku, sonra isaretci
+# aramasi. sh tarafindaki --discover-root ile PARITE.
+if ($DiscoverRoot -and -not $PSBoundParameters.ContainsKey('Root')) {
+  $Root = Resolve-AgentKitDiscoveredRoot -Start (Get-Location).Path
+}
 $Root = [IO.Path]::GetFullPath($Root)
 if ($PSBoundParameters.ContainsKey('Cwd')) {
   $Cwd = [IO.Path]::GetFullPath($Cwd)
@@ -89,9 +95,9 @@ function Add-ResolutionDiagnostics {
   if (-not [string]::IsNullOrEmpty($resolution.StalePointer)) {
     $Diagnostics.Add((New-AgentKitDiagnostic -Code 'AKW103' -Severity 'warning' -Blocking $false -Message "Geçerli iş işaretçisi aktif bir işi göstermiyor: $($resolution.StalePointer)" -Path '.agents/runtime/current-work' -Remediation 'resume-work ile işi seç veya dosyayı sil.'))
   }
-  if ($resolution.Code -eq 1) {
-    $blocking = $Profile -ne 'solo'
-    $Diagnostics.Add((New-AgentKitDiagnostic -Code 'AKE203' -Severity $(if ($blocking) { 'error' } else { 'warning' }) -Blocking $blocking -Message 'Profil için gerekli aktif iş kaydı bulunamadı.' -Path '.agents/changes/active' -Remediation 'Kalıcı mutasyon için işi çözümle.'))
+  if ($resolution.Code -eq 1 -and $Profile -ne 'solo') {
+    # solo profilde aktif is zorunlu degil; uyari gurultuden ibaret.
+    $Diagnostics.Add((New-AgentKitDiagnostic -Code 'AKE203' -Severity 'error' -Blocking $true -Message 'Profil için gerekli aktif iş kaydı bulunamadı.' -Path '.agents/changes/active' -Remediation 'Kalıcı mutasyon için işi çözümle.'))
   } elseif ($resolution.Code -eq 2) {
     # Birden fazla aktif is normal durumdur, hata degil. Gercek risk sayi
     # degil cakismadir; onu AKE202 yol bazli olcer.
@@ -187,6 +193,7 @@ function Invoke-SessionContext {
     $statusPath = Join-Path $Root ".agents\changes\active\$($resolution.Id)\status.md"
     $work = Read-AgentKitJson -Path $workPath
     $context += "`nAktif iş: $($resolution.Id) — $($work.title)`nDurum: $($work.status)"
+    $context += "`n" + (Get-AgentKitWorkSummary -Root $Root -WorkId $resolution.Id)
     if (Test-Path -LiteralPath $statusPath) { $context += "`n" + (Get-Content -LiteralPath $statusPath -Encoding UTF8 | Select-Object -First 80 | Out-String) }
   } elseif ($resolution.Candidates.Count -gt 0) {
     $context += "`nAktif iş adayları: " + ($resolution.Candidates -join ',')
@@ -222,7 +229,13 @@ function Invoke-SessionContext {
   }
   $maxChars = [int](Get-Config).instructionBudgets.sessionContextMaxChars
   $context = Limit-AgentKitContext -Text $context -MaxChars $maxChars
-  Write-Result ([pscustomobject]@{ context = $context; profile = $profile; resolvedWorkId = $resolution.Id; workSource = $resolution.Source; client = $Client; source = $actualSource; diagnostics = $diagnostics.ToArray() })
+  # Metin biciminde baglamin KENDISI basilir (sh tarafiyla parite). Nesne
+  # basmak tablo bicimlendirmesine duser ve hook'a bos satir gider.
+  if ($Format -eq 'json') {
+    Write-Result ([pscustomobject]@{ context = $context; profile = $profile; resolvedWorkId = $resolution.Id; workSource = $resolution.Source; client = $Client; source = $actualSource; diagnostics = $diagnostics.ToArray() })
+  } else {
+    Write-Output $context
+  }
 }
 
 function Invoke-PreToolUse {
@@ -247,6 +260,8 @@ function Invoke-PreToolUse {
       $commandText = [string]$hook.toolInput.command
     }
     $readOnly = Test-AgentKitReadOnlyCommand -Command $commandText
+  } elseif ($toolName -like 'mcp__*') {
+    $readOnly = Test-AgentKitReadOnlyMcpTool -Tool $toolName
   }
   $diagnostics = New-Object 'System.Collections.Generic.List[object]'
   $decision = 'allow'
@@ -281,6 +296,40 @@ function Invoke-PreToolUse {
   }
 }
 
+# Kayit gunceligi: aktif is varken calisma agacinda status.md'den daha
+# yeni bir degisiklik varsa checkpoint atlanmistir. Uyaridir, hicbir
+# profilde kapi degildir. Git yoksa sessiz gecer.
+# sh/agent-kit.sh check_status_freshness ile PARITE.
+function Add-StatusFreshnessDiagnostics {
+  param([System.Collections.Generic.List[object]]$Diagnostics)
+  $git = Get-Command git -ErrorAction SilentlyContinue
+  if (-not $git) { return }
+  $resolution = Resolve-AgentKitWork -Root $Root -Branch $Branch -ExplicitId $WorkId
+  if ($resolution.Code -ne 0) { return }
+  $statusPath = Join-Path $Root ".agents\changes\active\$($resolution.Id)\status.md"
+  if (-not (Test-Path -LiteralPath $statusPath -PathType Leaf)) { return }
+  $statusTime = (Get-Item -LiteralPath $statusPath).LastWriteTimeUtc
+  # Windows PowerShell 5.1'de Stop tercihiyle yerel komutun stderr'i
+  # sonlandirici hataya donusur; git depo disinda stderr yazar.
+  $previousPreference = $ErrorActionPreference
+  $ErrorActionPreference = 'Continue'
+  try {
+    $changed = @(& $git.Source -C $Root -c core.quotepath=off ls-files -m -o --exclude-standard 2>$null)
+    if ($LASTEXITCODE -ne 0) { return }
+  } catch { return } finally { $ErrorActionPreference = $previousPreference }
+  foreach ($relative in $changed) {
+    $relative = [string]$relative
+    if ([string]::IsNullOrWhiteSpace($relative)) { continue }
+    if ($relative -like '.agents/changes/*' -or $relative -like '.agents/runtime/*' -or $relative -like '.agents/local/*') { continue }
+    $path = Join-Path $Root ($relative -replace '/', '\')
+    if (-not (Test-Path -LiteralPath $path -PathType Leaf)) { continue }
+    if ((Get-Item -LiteralPath $path).LastWriteTimeUtc -gt $statusTime) {
+      $Diagnostics.Add((New-AgentKitDiagnostic -Code 'AKW301' -Severity 'warning' -Blocking $false -Message "Aktif işte status.md son değişiklikten eski: $($resolution.Id) ($relative)" -Path ".agents/changes/active/$($resolution.Id)/status.md" -Remediation 'checkpoint-work ile status.md dosyasını güncelle.'))
+      return
+    }
+  }
+}
+
 function Invoke-StopCheck {
   # Kit kurulu degil: kapatilacak is kaydi da, uzlastirilacak artifact yolu
   # da yok. Invoke-PreToolUse ile ayni gerekce. sh PARITE.
@@ -297,6 +346,7 @@ function Invoke-StopCheck {
       $diagnostics.Add((New-AgentKitDiagnostic -Code 'AKE302' -Severity $(if ($blocking) { 'error' } else { 'warning' }) -Blocking $blocking -Message "Kaçak Superpowers artifact yolu bulundu: $relative" -Path ($relative -replace '\\', '/') -Remediation 'Kanonik artifact yoluyla uzlaştır.'))
     }
   }
+  Add-StatusFreshnessDiagnostics -Diagnostics $diagnostics
   $blocking = @($diagnostics | Where-Object { $_.blocking }).Count -gt 0
   if ($Format -eq 'json') {
     $codes = @($diagnostics | ForEach-Object { $_.code }) -join ', '
@@ -304,7 +354,9 @@ function Invoke-StopCheck {
       $reason = "Agents Kit kapanış kapısı engelledi: $codes. Artifact yollarını uzlaştır ve yeniden doğrula."
       Write-Result ([pscustomobject]@{ decision = 'block'; reason = $reason; systemMessage = $reason })
     } elseif (-not [string]::IsNullOrEmpty($codes)) {
-      Write-Result ([pscustomobject]@{ continue = $true; systemMessage = "Agents Kit kapanış uyarısı: $codes." })
+      # Kod tek basina anlamsizdir; uyarinin kendisi de basilir (sh ile parite).
+      $details = @($diagnostics | ForEach-Object { "$($_.code): $($_.message)" }) -join "`n"
+      Write-Result ([pscustomobject]@{ continue = $true; systemMessage = "Agents Kit kapanış uyarısı: $codes.`n$details" })
     } else {
       Write-Result ([pscustomobject]@{ continue = $true })
     }

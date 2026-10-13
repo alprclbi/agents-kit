@@ -2,7 +2,7 @@
 
 Teşekkürler. Bu dosya ne göndereceğini ve neyin kabul edildiğini anlatır.
 
-Proje şu an **Türkçe**. İngilizce çeviri planlı ama henüz yok; PR'ını Türkçe gönder.
+Proje şu an **Türkçe**. README'nin İngilizcesi [README.en.md](README.en.md) dosyasında; diğer belgeler ve kit kuralları Türkçe. PR'ını Türkçe gönder; README.md değiştiriyorsan README.en.md karşılığını da güncelle.
 
 ## Önce konuş
 
